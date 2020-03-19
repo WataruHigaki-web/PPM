@@ -1,0 +1,2 @@
+class InPoint < ApplicationRecord
+end

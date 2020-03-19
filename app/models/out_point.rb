@@ -1,0 +1,2 @@
+class OutPoint < ApplicationRecord
+end
