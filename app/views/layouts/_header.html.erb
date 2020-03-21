@@ -1,0 +1,53 @@
+<nav>
+<%= link_to "PPM",root_path %>
+
+<% if user_signed_in? %>
+  <li>
+    <%= link_to 'TOP',users_root_path(current_user) %>
+  </li>
+  <li>
+    <%= link_to '商品一覧',users_products_path %>
+  </li>
+  <li>
+    <%= link_to 'お気に入り',users_favorites_path(current_user) %>
+  </li>
+  <li>
+    <%= link_to '設定',users_user_path(current_user) %>
+  </li>
+  <li>
+    <%= link_to 'logout',destroy_user_session_path,method: :delete %>
+  </li>
+
+<% elsif admin_signed_in? %>
+  <li>
+    <%= link_to 'TOP',admins_root_path(current_admin) %>
+  </li>
+  <li>
+    <%= link_to '商品一覧',admins_products_path %>
+  </li>
+  <li>
+    <%= link_to '会員一覧',admins_users_path %>
+  </li>
+  <li>
+    <%= link_to '管理者情報設定',admins_admin_path(current_admin) %>
+  </li>
+  <li>
+    <%= link_to 'logout',destroy_admin_session_path,method: :delete %>
+  </li>
+
+<% else %>
+  <li>
+    <%= link_to 'TOP',root_path %>
+  </li>
+  <li>
+    <%= link_to '商品一覧',users_products_path %>
+  </li>
+  <li>
+    <%= link_to 'login',new_user_session_path %>
+  </li>
+  <li>
+    <%= link_to 'signup',new_user_registration_path %>
+  </li>
+
+<% end %>
+</nav>

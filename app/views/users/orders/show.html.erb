@@ -1,0 +1,91 @@
+<div class="row">
+
+  <h2>注文履歴詳細</h2>
+
+ <div class="col-xs-7">
+  <div class="order-show1">
+  <h4>注文情報</h4>
+  <table class="table-bordered">
+  <tr>
+    <th>注文日</th>
+    <td width="300">
+      <%= @order.created_at.strftime('%Y/%m/%d　%H:%M') %>
+    </td>
+  </tr>
+  <tr>
+    <th>受取場所</th>
+    <td width="300">
+      <%= @order.zip_code %></br>
+      <%= @order.address %></br>
+      <%= @order.name %>
+    </td>
+  </tr>
+  <tr>
+    <th>クレジット情報</th>
+    <td width="300">
+      <%= @order.pay_status %>
+    </td>
+  </tr>
+  <tr>
+    <th>貸し出し返却ステータス</th>
+    <td width="300"></td>
+  </tr>
+  </table>
+  </div>
+ </div>
+<% @sum = 0 %>
+<% @order.order_records.each do |order_record| %>
+  <% @sum += ((order_record.end_price.to_i) * 1.1.floor) * order_record.count.to_i %>
+<% end %>
+ <div class="col-xs-5">
+  <div class="order-show2">
+  <h4>請求情報</h4>
+ 
+  <table class="table-bordered">
+  <tr>
+    <th width="100">商品合計</th>
+    <td width="100"><%= @sum %></td>
+  </tr>
+  <tr>
+    <th width="100">配送料</th>
+    <td width="100">800</td>
+  </tr>
+  <tr>
+    <th width="100">ご請求金額</th>
+    <td width="100"><%= @sum += 800 %></td>
+  </tr>
+  </table>
+  </div>
+ </div>
+</div>
+
+<div class="order-show3">
+<h4>注文内容</h4>
+<table class="table-bordered">
+  <tr>
+    <th>商品</th>
+    <th>価格</th>
+    <th>日数</th>
+    <th>個数</th>
+    <th>小計</th>
+  </tr>
+
+  <% @order.order_records.each do |order_record| %>
+  <tr>
+    <td width="300">
+        <%= order_record.product.name %>
+    </td>
+    <td width="100">
+        <%= (order_record.end_price.to_i) * 1.1.floor %>
+    </td>
+    <td width="100">
+      <%= order_record.count.to_i %>
+    </td>
+    <td width="100">
+      <%= ((order_record.end_price.to_i) * 1.1.floor) * order_record.count.to_i %>
+    </td>
+  </tr>
+  <% @sum += ((order_record.end_price.to_i) * 1.1.floor) * order_record.count.to_i %>
+  <% end %>
+</table>
+</div>

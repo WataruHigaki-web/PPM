@@ -20,21 +20,23 @@ Rails.application.routes.draw do
     resources :users,        only:[:index,:show,:edit,:update]
     resources :products
     resources :orders,       only:[:index,:show,:update]
-    resources :order_records,only:[:index,:show,:update]
     resources :product_kinds
     resources :admins,       only:[:index,:show,:edit,:update]
   end
 
   namespace :users do
+    root 'users#top'
     get 'users/point'
     get 'users/confirm'
     get 'orders/confirm'
+    get 'products/set_show'
+    get 'orders/thanks'
     resources :users,        only:[:show,:edit,:update]
     resources :products,     only:[:index,:show]
-    resources :orders,       only:[:new,:create]
-    resources :cart_items,   only:[:index,:edit,:update,:destroy,:create]
-    resources :creditcards
-    resources :favorites,    only:[:index,:show]
+    resources :orders,       only:[:index,:show,:new,:create]
+    resources :cart_items,   only:[:index,:update,:destroy,:create]
+    resources :creditcards,  only:[:index,:edit,:update,:destroy,:create]
+    resources :favorites,    only:[:index,:create,:destroy]
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

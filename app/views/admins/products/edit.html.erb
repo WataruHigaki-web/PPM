@@ -1,0 +1,42 @@
+<h2>商品　編集画面</h2>
+<div class="row">
+  <%= form_for @product,url: admins_product_path do |f|%>
+  <div class="col-xs-6">
+
+      <%= attachment_image_tag @product,:product_image, :fill, 300, 200, format: 'jpeg', class: "product-img"%>
+      <%= f.attachment_field :product_image %>
+  </div>
+    <div class="col-xs-6">
+      <table class="products-table">
+      <tr>
+        <th>商品名</th>
+        <td><%= f.text_field :name %></td>
+      </tr>
+      <tr>
+        <th>商品説明</th>
+        <td><%= f.text_field :introduction %></td>
+      </tr>
+      <tr>
+        <th>ジャンル</th>
+        <td><%= f.collection_select :category_id,Category.all, :id, :name %></td>
+      </tr>
+      <tr>
+        <th>税込価格(税抜き価格)</th>
+        <td><%= f.number_field :price %></td>
+      </tr>
+      <tr>
+        <th>販売ステータス</th>
+        <td><%= f.select :status,[['売切', false], ['販売中', true]] %>
+      </tr>
+
+      <tr>
+        <th>セットステータス</th>
+        <td><%= f.select :status,[['売切', false], ['販売中', true]] %>
+      </tr>
+      </table>
+    </div>
+         <div class="text-right">
+            <%= f.submit "変更を保存", class:"btn btn-primary" %>
+         </div>
+  <% end %>
+</div>

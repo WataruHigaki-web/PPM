@@ -1,0 +1,48 @@
+<h2>会員詳細画面</h2>
+
+
+  <tr>
+    <th>顧客ID</th>
+    <td><%= @customer.id %>
+      <span class="bg-primary">
+        <% if @customer.status %>
+         有効会員
+        <% else %>
+         無効会員
+        <% end %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <th>氏名</th>
+    <td><%= @customer.name %>
+    </td>
+  </tr>
+  <tr>
+    <th>フリガナ</th>
+    <td><%= @customer.name_kana %>
+    </td>
+  </tr>
+  <tr>
+    <th>郵便番号</th>
+    <td><%= @customer.zip_code %></td>
+  </tr>
+  <tr>
+    <th>住所</th>
+    <td><%= @customer.address %></td>
+  </tr>
+  <tr>
+    <th>電話番号</th>
+    <td><%= @customer.phone_number %></td>
+  </tr>
+  <tr>
+    <th>メールアドレス</th>
+    <td><%= @customer.email %></td>
+  </tr>
+</table>
+</div>
+
+
+  <%= link_to '編集する',edit_admins_customer_path(@customer),class:'btn btn-success' %>
+  <%= link_to '注文一覧を見る',admins_orders_path,class:"btn btn-success" %>
+
