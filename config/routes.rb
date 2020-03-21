@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     resources :users,        only:[:index,:show,:edit,:update]
     resources :products
     resources :orders,       only:[:index,:show,:update]
-    resources :product_kinds
+    resources :product_kinds,only:[:index,:create,:edit,:update,:destroy]
     resources :admins,       only:[:index,:show,:edit,:update]
   end
 
