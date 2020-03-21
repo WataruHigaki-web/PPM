@@ -1,0 +1,58 @@
+<h2>会員編集画面</h2>
+<%= form_with model: @customer,url:admins_customer_path do |f| %>
+<table class="customer-edit">
+  <tr>
+    <th class="edit-th">会員ID</th>
+    <td><%= @customer.id %></td>
+  </tr>
+  <tr>
+    <th class="edit-th">氏名</th>
+    <td>
+      <%= f.text_field :name %>
+    </td>
+  </tr>
+    <tr>
+    <th class="edit-th">フリガナ</th>
+    <td>
+      <%= f.text_field :name_kana %>
+
+    </td>
+  </tr>
+  <tr>
+    <th class="edit-th">郵便番号</th>
+    <td>
+      <%= f.text_field :zip_code %>
+    </td>
+  </tr>
+  <tr>
+    <th class="edit-th">住所</th>
+    <td>
+      <%= f.text_field :address %>
+    </td>
+  </tr>
+  <tr>
+    <th class="edit-th">電話番号</th>
+    <td>
+      <%= f.text_field :phone_number %>
+    </td>
+  </tr>
+  <tr>
+    <th class="edit-th">メールアドレス</th>
+    <td>
+      <%= f.text_field :email %>
+    </td>
+  </tr>
+  <tr>
+    <th class="edit-th">会員ステータス</th>
+    <td>
+      <%= f.radio_button :status,['有効', true] %>
+      <%= f.label :有効　%>
+      <%= f.radio_button :status,['無効', false] %>
+      <%= f.label :無効　%>
+    </td>
+  </tr>
+</table>
+
+    <%= f.submit "変更を保存",class: "btn btn-primary" %>
+
+<% end %>

@@ -1,0 +1,26 @@
+<h2>セット一覧画面</h2>
+
+<%= link_to new_admins_product_path do %>
+<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+<% end %>
+
+<table>
+  <tr>
+    <th>セットid</th>
+    <td></td>
+  </tr>
+  <tr>
+    <th>セット名</th>
+    <td></td>
+  </tr>
+  <tr>
+    <th>価格/1日</th>
+    <td></td>
+  </tr>
+  <tr>
+    <th></th>
+    <%= link_to admins_products_set_show_path do %>
+    <td>詳細</td>
+    <% end %>
+  </tr>
+</table>
