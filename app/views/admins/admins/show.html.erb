@@ -1,49 +1,51 @@
 <h2>マイページ</h2>
 <h4>
   登録情報
-  <%= link_to '編集する',edit_users_user_path(current_user) %>
-  <%= link_to 'クレジット情報',users_creditcards_path(current_user) %>
+  <%= link_to '編集する',edit_admins_admin_path(@admin) %>
+
 </h4>
 
 <table>
   <tr>
-    <th>名前</th>
-    <td></td>
+    <th>profile画像</th>
+    <td>
+      
+    </td>
   </tr>
+
+  <tr>
+    <th>名前</th>
+    <td>
+      <%= current_admin.name %>
+    </td>
+  </tr>
+
   <tr>
     <th>カナ</th>
-    <td></td>
+    <td>
+      <%= current_admin.name_kana %>
+    </td>
   </tr>
-  <tr>
-    <th>郵便番号</th>
-    <td></td>
-  </tr>
-  <tr>
-    <th>住所</th>
-    <td></td>
-  </tr>
+
   <tr>
     <th>電話番号</th>
-    <td></td>
+    <td>
+      <%= current_admin.phone_number %>
+    </td>
   </tr>
   <tr>
     <th>メールアドレス</th>
-    <td></td>
+    <td>
+      <%= current_admin.email %>
+    </td>
   </tr>
 </table>
 
 <table>
   <tr>
-    <th>退会</th>
+    <th>担当履歴</th>
     <td>
-      <%= link_to '退会する',users_users_confirm_path %>
-    </td>
-  </tr>
-
-  <tr>
-    <th>注文履歴</th>
-    <td>
-      <%= link_to '一覧を見る',users_orders_path(current_user) %>
+      <%= link_to '一覧を見る',admins_orders_path(current_admin) %>
     </td>
   </tr>
 </table>
