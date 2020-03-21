@@ -29,7 +29,7 @@
     <%= link_to '会員一覧',admins_users_path %>
   </li>
   <li>
-    <%= link_to '管理者情報設定',admins_admin_path(current_admin) %>
+    <%= link_to 'マイページ',admins_admin_path(current_admin) %>
   </li>
   <li>
     <%= link_to 'logout',destroy_admin_session_path,method: :delete %>

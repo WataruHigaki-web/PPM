@@ -1,6 +1,6 @@
 <h2>ジャンル編集画面</h2>
 <h3>ジャンル</h3>
-<%= form_for(@category,url:admins_category_path) do |f| %>
+<%= form_for((@product_kind),url:admins_product_kind_path) do |f| %>
   <%= f.text_field :name %>
   <%= f.radio_button :status,true, checked: "checked" %>
   <%= f.label :有効　%>

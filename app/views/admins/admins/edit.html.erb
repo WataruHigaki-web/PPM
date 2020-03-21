@@ -1,9 +1,9 @@
 <h2>会員編集画面</h2>
-<%= form_with model: @customer,url:admins_customer_path do |f| %>
+<%= form_with model: @admin,url:admins_admin_path do |f| %>
 <table class="customer-edit">
   <tr>
     <th class="edit-th">会員ID</th>
-    <td><%= @customer.id %></td>
+    <td><%= @admin.id %></td>
   </tr>
   <tr>
     <th class="edit-th">氏名</th>
