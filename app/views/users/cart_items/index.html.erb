@@ -1,0 +1,32 @@
+<h2>カート内一覧</h2>
+
+<h4>選択した商品</h4>
+
+<table>
+  <tr>
+    <th>セット名</th>
+    <td>
+    　ノーマルセット
+  　</td>
+  </tr>
+  <tr>
+    <th>単品商品名</th>
+    <td>ドライヤー</td>
+  </tr>
+  <tr>
+    <th>日数</th>
+    <td>5日</td>
+  </tr>
+  <tr>
+    <th>計</th>
+    <td>４０００円</td>
+  </tr>
+</table>
+
+<% if user_signed_in? %>
+ <%= link_to '予約情報入力へ進む',users_creditcards(current_user) %>
+<% else %>
+ <%= link_to 'ユーザー登録して予約する',new_user_registration_path %>
+<% end %>
+
+<%= link_to '買い物を続ける',users_products_path %>
