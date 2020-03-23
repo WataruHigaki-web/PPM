@@ -3,22 +3,18 @@
 <div class="row">
   <%= form_with model:@product,url:admins_products_path,local: true do |f| %>
     <div class="col-xs-5">
-        <%= f.attachment_field :product_image %>
+        <%= "画像" %>
       </div>
     <div class="col-xs-7">
       <%= f.label :商品名 %>
-      <%= f.text_field :name,class: "new-productname" %></br>
+      <%= f.text_field :name %></br>
       <%= f.label :商品説明 %>
-      <%= f.text_area :introduction,class: "new-introbox" %></br>
+      <%= f.text_area :introduction %></br>
       <%= f.label :ジャンル %>
-      <%= f.collection_select :category_id,Category.all,:id,:name %></br>
-      <%= f.label :税抜価格 %>
-      <%= f.text_field :price,class: "new-productname" %>円</br>
+      <%= f.collection_select :product_kind_id,ProductKind.all,:id,:name %></br>
       <%= f.label :販売ステータス %>
-      <%= f.select :status, [['売切', false], ['販売中', true]], class: "new-productname" %>
+      <%= f.select :status, [['売切', false], ['販売中', true]] %><br/>
 
-      <%= f.label :セットステータス %>
-      <%= f.select :status, [['売切', false], ['販売中', true]], class: "new-productname" %>
     </div>
       <div class="text-right">
       <%= f.submit '新規登録',class: "btn btn-primary" %>

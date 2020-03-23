@@ -1,43 +1,40 @@
 <h2>クレジット情報一覧</h2>
 
-<table>
+<%= form_with model: @creditcard,url:users_creditcards_path do |f| %>
+  <table class="table table-bordered">
+    <tr>
+      <th>クレジット番号</th>
+      <td><%= f.text_field :credit_number %></td>
+    </tr>
+
+    <tr>
+      <th>クレジット名義</th>
+      <td><%= f.text_field :credit_name %></td>
+    </tr>
+
+    <tr>
+      <th>セキュリティーコード</th>
+      <td><%= f.text_field :security_code %></td>
+    </tr>
+  </table>
+  <%= f.submit '新規登録',class: "btn btn-primary" %>
+<% end %>
+
+<table class="table table-bordered">
   <tr>
     <th>クレジット番号</th>
-    <td></td>
-  </tr>
-
-  <tr>
     <th>クレジット名義</th>
-    <td></td>
-  </tr>
-
-  <tr>
     <th>セキュリティーコード</th>
-    <td></td>
   </tr>
-</table>
-
-<table>
-  <tr>
-    <th>クレジット番号</th>
-    <td></td>
-  </tr>
-
-  <tr>
-    <th>クレジット名義</th>
-    <td></td>
-  </tr>
-
-  <tr>
-    <th>セキュリティーコード</th>
-    <td></td>
-  </tr>
-
-  <tr>
-    <th></th>
-    <td>
-      <%= link_to '編集する',edit_users_creditcard_path %>
-      <%= link_to '削除する',users_creditcard_path,method: :delete,data:{confirm:"本当に削除しますか？"} %>
-    </td>
-  </tr>
+  <% @creditcards.each do |creditcard| %>
+    <tr>
+      <td><%= creditcard.credit_number %></td>
+      <td><%= creditcard.credit_name %></td>
+      <td><%= creditcard.security_code %></td>
+      <td>
+        <%= link_to '編集する',edit_users_creditcard_path %>
+        <%= link_to '削除する',users_creditcard_path,method: :delete,data:{confirm:"本当に削除しますか？"} %>
+      </td>
+    </tr>
+    <% end %>
 </table>

@@ -1,53 +1,53 @@
 <h2>会員編集画面</h2>
-<%= form_with model: @customer,url:admins_customer_path do |f| %>
-<table class="customer-edit">
+<%= form_with model: @user,url:admins_user_path(@user) do |f| %>
+<table>
   <tr>
-    <th class="edit-th">会員ID</th>
-    <td><%= @customer.id %></td>
+    <th>会員ID</th>
+    <td><%= @user.id %></td>
   </tr>
   <tr>
-    <th class="edit-th">氏名</th>
+    <th>氏名</th>
     <td>
-      <%= f.text_field :name %>
+      <%= @user.name %>
     </td>
   </tr>
     <tr>
-    <th class="edit-th">フリガナ</th>
+    <th>フリガナ</th>
     <td>
-      <%= f.text_field :name_kana %>
+      <%= @user.name_kana %>
 
     </td>
   </tr>
   <tr>
-    <th class="edit-th">郵便番号</th>
+    <th>郵便番号</th>
     <td>
-      <%= f.text_field :zip_code %>
+      <%= @user.zip_code %>
     </td>
   </tr>
   <tr>
-    <th class="edit-th">住所</th>
+    <th>住所</th>
     <td>
-      <%= f.text_field :address %>
+      <%= @user.address %>
     </td>
   </tr>
   <tr>
-    <th class="edit-th">電話番号</th>
+    <th>電話番号</th>
     <td>
-      <%= f.text_field :phone_number %>
+      <%= @user.phone_number %>
     </td>
   </tr>
   <tr>
-    <th class="edit-th">メールアドレス</th>
+    <th>メールアドレス</th>
     <td>
-      <%= f.text_field :email %>
+      <%= @user.email %>
     </td>
   </tr>
   <tr>
-    <th class="edit-th">会員ステータス</th>
+    <th>会員ステータス</th>
     <td>
-      <%= f.radio_button :status,['有効', true] %>
+      <%= f.radio_button(:status, true) %>
       <%= f.label :有効　%>
-      <%= f.radio_button :status,['無効', false] %>
+      <%= f.radio_button(:status,false)%>
       <%= f.label :無効　%>
     </td>
   </tr>

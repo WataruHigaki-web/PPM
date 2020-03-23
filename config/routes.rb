@@ -15,12 +15,12 @@ Rails.application.routes.draw do
 
   namespace :admins do
     root 'orders#top'
-    get 'products/set_index'
-    get 'products/set_show'
     resources :users,        only:[:index,:show,:edit,:update]
     resources :products
     resources :orders,       only:[:index,:show,:update]
     resources :product_kinds,only:[:index,:create,:edit,:update,:destroy]
+    resources :combos,       only:[:index,:edit,:create,:update,:destroy]
+    resources :combo_items,  only:[:show,:index,:create,:update,:destroy]
     resources :admins,       only:[:index,:show,:edit,:update]
   end
 
@@ -29,14 +29,16 @@ Rails.application.routes.draw do
     get 'users/point'
     get 'users/confirm'
     get 'orders/confirm'
-    get 'products/set_show'
+    post 'orders/save'
     get 'orders/thanks'
+    delete 'cart_items/destroy_all'
     resources :users,        only:[:show,:edit,:update]
-    resources :products,     only:[:index,:show]
+    resources :products,     only:[:show]
     resources :orders,       only:[:index,:show,:new,:create]
     resources :cart_items,   only:[:index,:update,:destroy,:create]
     resources :creditcards,  only:[:index,:edit,:update,:destroy,:create]
     resources :favorites,    only:[:index,:create,:destroy]
+    resources :combo_items,  only:[:index]
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

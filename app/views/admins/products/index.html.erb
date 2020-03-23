@@ -1,38 +1,55 @@
-<table>
+<table class="table table-bordered">
   <tr>
     <th>ジャンル検索</th>
   </tr>
-
+  <% @product_kinds.each do |product_kind| %>
   <tr>
-    <td>洗面用具</td>
-    <td>洗面用具</td>
+    <td>
+      <%= link_to("#{product_kind.name}",admins_products_path(product_kind_id: product_kind.id)) %>
+    </td>
   </tr>
+  <% end %>
 </table>
 
+
 <%= link_to 'ジャンル新規作成',admins_product_kinds_path %>
-<%= link_to 'セット一覧を見る',admins_products_set_index_path %>
+
+<%= link_to 'セット新規作成',admins_combos_path %>
+
+<%= link_to 'セット、単品商品一覧',admins_combo_items_path %>
 
 <%= link_to new_admins_product_path do %>
 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
 <% end %>
 
 <h4>全商品一覧</h4>
-<table>
+<table class="table table-bordered">
   <tr>
     <th>商品id</th>
     <th>商品名</th>
-    <th>価格</th>
     <th>ジャンル</th>
     <th>販売ステータス</th>
-    <th>セットステータス</th>
   </tr>
 
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td>販売中</td>
-    <td>ノーマルセット</td>
-  </tr>
+  <% @products.each do |product| %>
+    <tr>
+      <td>
+        <%= link_to product.id,admins_product_path(product.id) %>
+      </td>
+      <td>
+        <%= product.name %>
+      </td>
+
+      <td>
+        <%= product.product_kind %>
+      </td>
+
+      <% if product.status %>
+        <td>販売中</td>
+      <% else %>
+        <td>売切</td>
+      <% end %>
+
+    </tr>
+  <% end %>
 </table>

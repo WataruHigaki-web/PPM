@@ -1,5 +1,3 @@
-
-
 <h2>会員一覧画面</h2>
 <table class="table table-bordered">
   <tr>
@@ -8,14 +6,14 @@
     <th>メールアドレス</th>
     <th>ステータス</th>
   </tr>
-  <% @customer.each do |customer| %>
+  <% @users.each do |user| %>
   <tr>
-    <td><%= customer.id %></td>
-    <td><%= link_to customer.name,admins_customer_path(customer) %>
+    <td><%= user.id %></td>
+    <td><%= link_to user.name,admins_user_path(user) %>
     </td>
-    <td><%= customer.email %></td>
+    <td><%= user.email %></td>
 
-      <% if customer.status %>
+      <% if user.status %>
         <td>有効</td>
       <% else %>
         <td>無効</td>
