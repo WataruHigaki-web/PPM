@@ -1,20 +1,23 @@
 <h2>クレジット情報編集</h2>
 
-<table>
-  <tr>
-    <th>クレジット番号</th>
-    <td></td>
-  </tr>
+<%= form_with model:@creditcard,url:users_creditcards_path do |f|%>
+  <table class="table table-bordered">
+    <tr>
+      <th>クレジット番号</th>
+      <td><%= f.text_field :credit_number %></td>
+    </tr>
 
-  <tr>
-    <th>クレジット名義</th>
-    <td></td>
-  </tr>
+    <tr>
+      <th>クレジット名義</th>
+      <td><%= f.text_field :credit_name %></td>
+    </tr>
 
-  <tr>
-    <th>セキュリティーコード</th>
-    <td></td>
-  </tr>
-</table>
+    <tr>
+      <th>セキュリティーコード</th>
+      <td><%= f.text_field :security_code %></td>
+    </tr>
+  </table>
+  <%= f.submit '変更を保存'class: "btn btn-primary" %>
+<% end %>
 
-<% 編集内容を保存%>
+

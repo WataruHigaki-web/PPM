@@ -1,0 +1,60 @@
+<h2>商品詳細</h2>
+
+
+<div class="row">
+   <%= form_for @combo_item,url:admins_combo_items_path(@combo_item) do |f| %>
+    <%= f.hidden_field :product_id, :value => @product.id %>
+    <div class="col-xs-5">
+        <%= "画像" %>
+    </div>
+    <div class="col-xs-7">
+     <table class="products-table">
+          <tr>
+            <th>商品id</th>
+            <td><%= @product.id %></td>
+          </tr>
+
+          <tr>
+            <th>商品名</th>
+            <td><%= @product.name %></td>
+          </tr>
+
+          <tr>
+            <th>商品説明</th>
+            <td><%= @product.introduction %></td>
+          </tr>
+
+          <tr>
+            <th>ジャンル</th>
+            <td><%= @product.product_kind.name %></td>
+          </tr>
+
+          <tr>
+            <th>ステータス</th>
+              <% if @product.status %>
+                <td>販売中</td>
+              <% else %>
+                <td>売切</td>
+              <% end %>
+         </tr>
+
+         <tr>
+           <th>個数</th>
+           <td>
+             <%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %>
+           </td>
+         </tr>
+
+         <tr>
+           <th>セット</th>
+           <td>
+             <%= f.collection_select :combo_id,Combo.all, :id, :name %>
+           </td>
+         </tr>
+    </table>
+      <%= link_to '編集する',edit_admins_product_path(@product) %>
+
+      <%= f.submit 'セットアイテムに追加',class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

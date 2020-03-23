@@ -1,8 +1,18 @@
 <h2>購入情報入力</h2>
 
+<%= form_with url:users_orders_save_path,method: :post do |f| %>
 <h4>クレジットカード選択</h4>
- ラジオ
-<h4>受取場所</h4>
-セレクトボックス
+
+<h4>受取場所選択</h4>
+  <%= f.select :get_status, Order.get_statuses.keys.to_a, {} %>
 <h4>返却場所</h4>
-セレクトボックス　ラジオ
+  <%= f.radio_button(:return_status,0) %>受取場所と同様<br/>
+  <%= f.radio_button(:return_status,1) %>現住所から郵送返却<br/>
+    <%= current_user.zip_code %>
+    <%= current_user.address %><br/>
+  <%= f.radio_button(:return_status,2) %>新しい住所から郵送返却<br/>
+    <%= f.text_field :zip_code %>
+    <%= f.text_field :address %><br/>
+
+  <%= f.submit '注文確認画面へ進む',class: "btn btn-primary" %>
+<% end %>

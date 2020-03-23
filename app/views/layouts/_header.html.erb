@@ -6,7 +6,10 @@
     <%= link_to 'TOP',users_root_path(current_user) %>
   </li>
   <li>
-    <%= link_to '商品一覧',users_products_path %>
+    <%= link_to '商品一覧',users_combo_items_path %>
+  </li>
+    <li>
+    <%= link_to 'カート',users_cart_items_path(current_user) %>
   </li>
   <li>
     <%= link_to 'お気に入り',users_favorites_path(current_user) %>
@@ -40,7 +43,7 @@
     <%= link_to 'TOP',root_path %>
   </li>
   <li>
-    <%= link_to '商品一覧',users_products_path %>
+    <%= link_to '商品一覧',users_combo_items_path %>
   </li>
   <li>
     <%= link_to 'login',new_user_session_path %>
