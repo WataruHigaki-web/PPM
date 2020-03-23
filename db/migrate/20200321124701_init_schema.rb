@@ -23,6 +23,17 @@ class InitSchema < ActiveRecord::Migration[5.2]
       t.datetime "created_at", null: false
       t.datetime "updated_at", null: false
     end
+    create_table "combo_items" do |t|
+      t.integer "product_id"
+      t.integer "combo_id"
+      t.datetime "created_at", null: false
+      t.datetime "updated_at", null: false
+    end
+    create_table "combos" do |t|
+      t.string "name"
+      t.datetime "created_at", null: false
+      t.datetime "updated_at", null: false
+    end
     create_table "creditcards" do |t|
       t.integer "user_id"
       t.integer "credit_number"
@@ -84,9 +95,9 @@ class InitSchema < ActiveRecord::Migration[5.2]
     end
     create_table "product_kinds" do |t|
       t.string "name"
-      t.integer "status"
       t.datetime "created_at", null: false
       t.datetime "updated_at", null: false
+      t.boolean "status", default: false, null: false
     end
     create_table "products" do |t|
       t.integer "product_kind_id"

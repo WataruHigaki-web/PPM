@@ -1,32 +1,80 @@
 <h2>カート内一覧</h2>
 
-<h4>選択した商品</h4>
+<%=link_to "カートを空にする",users_cart_items_destroy_all_path,class: "btn btn-danger",method: :delete, "data-confirm" => "本当に削除しますか？" %>
 
-<table>
+<table class="table table-bordered">
   <tr>
-    <th>セット名</th>
+    <th>セットまたは商品名</th>
+    <th>個数</th>
+    <th>金額</th>
+    <th></th>
+  </tr>
+  <% @sum = 0 %>
+  <% @cart_items.each do |cart_item| %>
+  <tr>
+    <% if cart_item.combo.id == 1 %>
+      <td><%= cart_item.product.name %></td>
+    <% else %>
+      <td><%= cart_item.combo.name %></td>
+    <% end %>
+
+    <%= form_with model: cart_item,url:users_cart_item_path(cart_item) do |f| %>
+      <td>
+        <%= f.number_field :quantity %>
+        <%= f.submit "更新",class: "btn btn-info" %>
+      </td>
+      <td><%= (cart_item.combo.price).to_i * (cart_item.quantity).to_i %></td>
+      <td>
+        <%= link_to '削除',users_cart_item_path(cart_item),method: :delete,class: "btm btn-danger" %>
+      </td>
+    <% end %>
+  </tr>
+
+  <% @sum += (cart_item.combo.price).to_i * (cart_item.quantity).to_i %>
+  <% end %>
+</table>
+
+<table class="table table-bordered">
+  <tr>
+    <th>合計金額</th>
+    <td><%= @sum %>円</td>
+  </tr>
+
+  <tr>
+    <th>日付入力</th>
     <td>
-    　ノーマルセット
-  　</td>
+      <%= date_field_tag :day %> ~ 
+      <%= date_field_tag :day %>
+    </td>
   </tr>
+
   <tr>
-    <th>単品商品名</th>
-    <td>ドライヤー</td>
+    <th>レンタル期間</th>
+    <td></td>
   </tr>
+
   <tr>
-    <th>日数</th>
-    <td>5日</td>
+    <th>ボーナス金額計</th>
+
+    <% if current_user.cart_items.count > 2 %>
+      <td class="discount">1000</td>円
+    <% elsif current_user.cart_items.count > 4 %>
+      <td class="discount">2000</td>円
+    <% end %>
   </tr>
+　
   <tr>
-    <th>計</th>
-    <td>４０００円</td>
+    <th>最終支払金額</th>
+    <td>
+      <%= @sum - ("discount").to_i %>円
+    </td>
   </tr>
 </table>
 
 <% if user_signed_in? %>
- <%= link_to '予約情報入力へ進む',users_creditcards(current_user) %>
+ <%= link_to '情報入力へ進む',new_users_order_path(current_user) %>
 <% else %>
  <%= link_to 'ユーザー登録して予約する',new_user_registration_path %>
 <% end %>
 
-<%= link_to '買い物を続ける',users_products_path %>
+<%= link_to '買い物を続ける',users_combo_items_path %>

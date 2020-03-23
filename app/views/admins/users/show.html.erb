@@ -1,11 +1,11 @@
 <h2>会員詳細画面</h2>
 
-
+<table class="table table-bordered">
   <tr>
     <th>顧客ID</th>
-    <td><%= @customer.id %>
+    <td><%= @user.id %>
       <span class="bg-primary">
-        <% if @customer.status %>
+        <% if @user.status %>
          有効会員
         <% else %>
          無効会員
@@ -15,34 +15,34 @@
   </tr>
   <tr>
     <th>氏名</th>
-    <td><%= @customer.name %>
+    <td><%= @user.name %>
     </td>
   </tr>
   <tr>
     <th>フリガナ</th>
-    <td><%= @customer.name_kana %>
+    <td><%= @user.name_kana %>
     </td>
   </tr>
   <tr>
     <th>郵便番号</th>
-    <td><%= @customer.zip_code %></td>
+    <td><%= @user.zip_code %></td>
   </tr>
   <tr>
     <th>住所</th>
-    <td><%= @customer.address %></td>
+    <td><%= @user.address %></td>
   </tr>
   <tr>
     <th>電話番号</th>
-    <td><%= @customer.phone_number %></td>
+    <td><%= @user.phone_number %></td>
   </tr>
   <tr>
     <th>メールアドレス</th>
-    <td><%= @customer.email %></td>
+    <td><%= @user.email %></td>
   </tr>
 </table>
 </div>
 
 
-  <%= link_to '編集する',edit_admins_customer_path(@customer),class:'btn btn-success' %>
+  <%= link_to '編集する',edit_admins_user_path(@user),class:'btn btn-success' %>
   <%= link_to '注文一覧を見る',admins_orders_path,class:"btn btn-success" %>
 
