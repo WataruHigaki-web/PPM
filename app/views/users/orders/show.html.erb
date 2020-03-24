@@ -17,18 +17,22 @@
     <td width="300">
       <%= @order.zip_code %></br>
       <%= @order.address %></br>
-      <%= @order.name %>
     </td>
   </tr>
   <tr>
     <th>クレジット情報</th>
     <td width="300">
-      <%= @order.pay_status %>
+      <%#= @order.credit_number %>
     </td>
   </tr>
   <tr>
     <th>貸し出し返却ステータス</th>
-    <td width="300"></td>
+    <td width="300">
+      <%= form_with model:@order,url:users_order_path(@order) do |f| %>
+
+       <%= f.select :status, Order.statuses.keys.to_a, {} %>
+      <% end %>
+    </td>
   </tr>
   </table>
   </div>

@@ -15,6 +15,7 @@ class Users::UsersController < ApplicationController
   end
 
   def top
+    @orders = current_user.orders
   end
 
   private

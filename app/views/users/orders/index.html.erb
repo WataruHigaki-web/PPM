@@ -1,6 +1,6 @@
 <h2>注文履歴一覧</h2>
-
-<table>
+<% @orders.each do |order| %>
+<table class="table-bordered">
   <tr>
     <th>受取日</th>
     <th>受取場所</th>
@@ -11,16 +11,19 @@
     <th>注文詳細</th>
     <th></th>
   </tr>
-
+  <% order.order_records.each do |order_record| %>
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td>ブックマーク</td>
+    <td><%= order.created_at.strftime('%Y/%m/%d　%H:%M') %></td>
+    <td><%= order.get_status %></td>
+    <td><%= order_record.product.name %></td>
+    <td><%= order.day %></td>
+    <td><%= order.order_records.sum(:end_price) %></td>
 
+    <td><%= order_record.status %></td>
+
+    <td><%= link_to '注文詳細',users_order_path(order),class: "btn btn-info" %></td>
+    <td>ブックマーク</td>
   </tr>
+  <% end %>
 </table>
+<% end %>

@@ -1,11 +1,12 @@
 <%= current_user.name %>さんのページ
 <p>現在のポイント数</p>
 
-<h2>次回予約</h2>
-
+<h2>次回予約一覧</h2>
+<%#= @orders.each do |order|%>
+<%# if order.order_record.status == "0" %>
 <table>
   <tr>
-    <th>受け取り予定日</th>
+    <th>受取予定日</th>
     <td>
     　12月19日水曜日<br/>
       17時頃　受け取り予定
@@ -34,6 +35,9 @@
     </td>
   </tr>
 </table>
+
+<%# elsif  %>
+
 
 <h2>未返却物</h2>
 

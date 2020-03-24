@@ -8,8 +8,7 @@
     <th>商品名</th>
     <th>受取場所</th>
     <th>返却場所</th>
-    <th>貸出中</th>
-    <th>返却済</th>
+    <th>貸出返却ステータス</th>
     <th>担当者名</th>
   </tr>
 
@@ -20,8 +19,14 @@
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <%= form_with model:@order,url:users_order_path(@order) do |f| %>
+    <td>
+    　<%= f.select :status, OrderRecord.statuses.keys.to_a, {} %>
+    </td>
+    <td>
+    　<%= f.text_feild :admin_name %>
+    </td>
+    <%= f.submit '更新',class: "btn btn-info" %>
+    <% end %>
   </tr>
 </table>

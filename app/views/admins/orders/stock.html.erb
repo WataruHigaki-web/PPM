@@ -7,11 +7,12 @@
     <th>現貸出数</th>
     <th>現注文数</th>
   </tr>
-
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
+  <%= @products.each do |product| %>
+    <tr>
+      <td><%= product.name %></td>
+      <td><%= product.stock %></td>
+      <td><%= product.order_record.status.count %></td>
+      <td><%= product.order_record.status.count %></td>
+    </tr>
+  <% end %>
 </table>
