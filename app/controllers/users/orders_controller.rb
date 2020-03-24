@@ -17,29 +17,41 @@ class Users::OrdersController < ApplicationController
       session[:order]["zip_code"] = params["zip_code"]
     end
     session[:order]["get_status"] = params["get_status"]
+    session[:order]["start_date"] = params["start_date"]
+    session[:order]["finish_date"] = params["finish_date"]
+    session[:order]["day"] = params["day"]
     redirect_to users_orders_confirm_path
   end
 
   def create
     order = Order.new(
-      get_status:      session[:order]["get_status"],
-      return_status:   session[:order]["return_status"],
+      get_status:    session[:order]["get_status"],
+      return_status: session[:order]["return_status"],
+      user_id:       current_user.id,
+      start_date:    session[:order]["start_date"],
+      finish_date:   session[:order]["finish_date"],
+      day:           session[:order]["day"],
+      zip_code:      session[:order]["zip_code"],
+      address:       session[:order]["address"]
       )
     order.user_id = current_user.id
     order.save!
-
     cart_items = current_user.cart_items
     cart_items.each do |item|
       order_record = OrderRecord.new(
+        user_id:  current_user.id,
         order_id:   order.id,
         combo_id:   item.combo.id,
         product_id: item.product.id,
         end_price:  item.combo.price,
+        status:     0,
+        quantity:   item.quantity,
+
         )
-    　order_record.save
+      order_record.save!
     end
     current_user.cart_items.destroy_all
-    redirect_to users_orders_thamks_path
+    redirect_to users_orders_thanks_path
   end
 
   def index
@@ -56,7 +68,7 @@ class Users::OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:get_status,:zip_code,:address,:return_status)
+    params.require(:order).permit(:get_status,:zip_code,:address,:return_status,:start_date,:finish_date,:user_id,:date)
   end
 
 end

@@ -1,5 +1,6 @@
 class Admins::AdminsController < ApplicationController
   def index
+    @orders = current_admin.order
   end
 
   def show

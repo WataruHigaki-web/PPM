@@ -6,4 +6,8 @@ class Product < ApplicationRecord
   has_many :favorites,dependent: :destroy
   has_many :combo_items
   belongs_to :product_kind
+
+  def favorited_by?(user)
+    favorites.where(user_id: user.id).exists?
+  end
 end

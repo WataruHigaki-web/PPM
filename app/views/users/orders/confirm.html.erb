@@ -8,6 +8,12 @@
     <%= session[:order]["zip_code"] %>
     <%= session[:order]["address"] %>
   </p>
+  <p>利用期間:
+    <%= session[:order]["start_date"]%>~
+    <%= session[:order]["finish_date"] %>
+  </p>
+  <p>レンタル期間:<%= session[:order]["day"] %></p>
+
     <table class="table table-bordered">
       <tr>
         <th>商品名</th>
@@ -18,8 +24,14 @@
       <% @cart_items.each do |item| %>
       <tr>
         <td>
-          <%= link_to users_combo_items_path do %>
-            <%= item.combo.name %>
+            <% if item.combo.id == 1 %>
+              <%= link_to users_product_path(item.product) do %>
+      　　　     <%= item.product.name %>
+              <% end %>
+    　　　　 <% else %>
+              <%= link_to users_combo_items_path do %>
+               <%= item.combo.name %>
+              <% end %>
           <% end %>
         </td>
         <td><%= item.quantity %></td>

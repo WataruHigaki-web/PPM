@@ -19,7 +19,6 @@ class Admins::ProductKindsController < ApplicationController
   end
 
   def update
-
     product_kind = ProductKind.find(params[:id])
     if product_kind.update(product_kind_params)
       flash[:notice] = "ジャンル編集完了しました"
