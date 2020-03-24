@@ -3,18 +3,14 @@ class Users::ProductsController < ApplicationController
   end
   
   def index
-    @product_kinds = ProductKind.all
-    if params[:product_kind_id].present?
-      @product_kind = ProductKind.find(params[:product_kind_id])
-      @products = Product.where(product_kind_id: @product_kind.id)
-    else
-      @products = Product.all
-    end
+    @favorites = current_user.favorites
+    @cart_item = CartItem.new
   end
 
   def show
     @product = Product.find(params[:id])
     @cart_item = CartItem.new
+    
   end
   
   def create
