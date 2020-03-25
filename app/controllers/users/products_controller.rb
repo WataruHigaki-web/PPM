@@ -3,7 +3,7 @@ class Users::ProductsController < ApplicationController
   end
   
   def index
-    @favorites = current_user.favorites
+    @favorites = Favorite.all
     @cart_item = CartItem.new
   end
 

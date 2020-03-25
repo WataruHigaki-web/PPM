@@ -32,7 +32,8 @@ class Users::OrdersController < ApplicationController
       finish_date:   session[:order]["finish_date"],
       day:           session[:order]["day"],
       zip_code:      session[:order]["zip_code"],
-      address:       session[:order]["address"]
+      address:       session[:order]["address"],
+      status:  0
       )
     order.user_id = current_user.id
     order.save!
@@ -44,7 +45,6 @@ class Users::OrdersController < ApplicationController
         combo_id:   item.combo.id,
         product_id: item.product.id,
         end_price:  item.combo.price,
-        status:     0,
         quantity:   item.quantity,
 
         )
@@ -54,12 +54,20 @@ class Users::OrdersController < ApplicationController
     redirect_to users_orders_thanks_path
   end
 
+  def update
+    order = Order.find(params[:id])
+    order.update(order_params)
+    flash[:notice] = "返却情報を送信しました。"
+    redirect_to users_root_path(current_user)
+  end
+
   def index
     @orders = current_user.orders
   end
 
   def show
-    @orders = current_user.orders
+    # @orders = current_user.orders
+    @order = Order.find(params[:id])
   end
 
   def thanks
@@ -68,7 +76,7 @@ class Users::OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:get_status,:zip_code,:address,:return_status,:start_date,:finish_date,:user_id,:date)
+    params.require(:order).permit(:get_status,:zip_code,:address,:return_status,:start_date,:finish_date,:user_id,:day)
   end
 
 end

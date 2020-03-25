@@ -12,15 +12,15 @@
     <%= session[:order]["start_date"]%>~
     <%= session[:order]["finish_date"] %>
   </p>
-  <p>レンタル期間:<%= session[:order]["day"] %></p>
+  <p>レンタル期間:<%= session[:order]["day"] %>日間</p>
 
     <table class="table table-bordered">
       <tr>
         <th>商品名</th>
         <th>個数</th>
-        <th>予約日付</th>
-        <th>レンタル日数</th>
+        <th>価格/1日</th>
       </tr>
+      <% @sum = 0 %>
       <% @cart_items.each do |item| %>
       <tr>
         <td>
@@ -35,13 +35,35 @@
           <% end %>
         </td>
         <td><%= item.quantity %></td>
-        <td><%= item.day %></td>
-        <td><%= item.day %></td>
+        <td><%= item.combo.price %></td>
       </tr>
+      <% @sum += (item.quantity).to_i * (item.combo.price).to_i %>
       <% end %>
     </table>
 
-    
+    <table class="table table-bordered">
+      <tr>
+        <th>合計金額/1日</th>
+        <td><%= @sum %></td>
+      </tr>
+      <tr>
+        <th>請求金額</th>
+        <td><%= @sum.to_i * (session[:order]["day"]).to_i %></td>
+      </tr>
+
+      <tr>
+        <th>ボーナス</th>
+          <% if session[:order]["day"] >= 5 %>
+            <td>2000</td>
+          <% elsif session[:order]["day"] >= 3  %>
+            <td>1000</td>
+          <% end %>
+      </tr>
+      <tr>
+        <th>最終請求金額</th>
+        <td><%= (@sum.to_i * (session[:order]["day"]).to_i) - 2000 %></td>
+      </tr>
+    </table>
 
     <%= f.submit '注文を確定',class: "btn btn-danger" %>
 <% end %>

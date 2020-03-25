@@ -3,17 +3,17 @@ class Admins::OrdersController < ApplicationController
   end
   
   def index
-    @orders = Orders.all
+    @orders = Order.all
   end
 
   def show
-    @order = Order.find(parms[:id])
+    @order = Order.find(params[:id])
   end
 
   def update
-    order_record = OrderRecord.find(parms[:id])
-    order.update(order_record_params)
-    redirect_to admins_order_path(order_record.order)
+    order = Order.find(params[:id])
+    order.update(order_params)
+    redirect_to admins_orders_path
   end
 
   def stock
@@ -23,11 +23,7 @@ class Admins::OrdersController < ApplicationController
   private
 
   def order_params
-    params.reqiure(:order).permit(:get_status,:return_status,:address,:zipcode)
-  end
-
-  def order_record_params
-    params.require(:order_record).permit(:status)
+    params.require(:order).permit(:get_status,:return_status,:address,:zipcode,:status,:day,:start_date,:finish_date,:user_id)
   end
 
 end

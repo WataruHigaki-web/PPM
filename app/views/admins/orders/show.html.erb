@@ -13,18 +13,26 @@
   </tr>
 
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <%= form_with model:@order,url:users_order_path(@order) do |f| %>
+    <td><%= @order.id %></td>
+    <td><%= @order.user.name %></td>
+    <td><%= @order.user.name_kana %></td>
     <td>
-    　<%= f.select :status, OrderRecord.statuses.keys.to_a, {} %>
+        <% @order.order_records.each do |order_record| %>
+          <% if order_record.combo_id == 1 %>
+            <%= order_record.product.name %>
+          <% else %>
+            <%= order_record.combo.name %>
+          <% end %>
+        <% end %>
+    </td>
+    <td><%= @order.get_status %></td>
+    <td><%= @order.return_status %></td>
+    <%= form_with model:@order,url:admins_order_path(@order) do |f| %>
+    <td>
+    　<%= f.select :status, Order.statuses.keys.to_a, {} %>
     </td>
     <td>
-    　<%= f.text_feild :admin_name %>
+    　<%#= f.text_feild :admin_name %>
     </td>
     <%= f.submit '更新',class: "btn btn-info" %>
     <% end %>
