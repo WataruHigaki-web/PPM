@@ -73,5 +73,9 @@ gem 'squasher'
 gem 'kaminari', '~> 1.1.1'
 gem 'dotenv-rails'
 gem 'omniauth-facebook'
+gem 'dotenv-rails'
+group :production do
+  gem 'mysql2'
+end
 
 
