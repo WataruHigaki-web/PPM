@@ -22,17 +22,21 @@ class InitSchema < ActiveRecord::Migration[5.2]
       t.integer "day"
       t.datetime "created_at", null: false
       t.datetime "updated_at", null: false
+      t.integer "combo_id"
+      t.index ["combo_id"], name: "index_cart_items_on_combo_id"
     end
     create_table "combo_items" do |t|
       t.integer "product_id"
       t.integer "combo_id"
       t.datetime "created_at", null: false
       t.datetime "updated_at", null: false
+      t.integer "quantity"
     end
     create_table "combos" do |t|
       t.string "name"
       t.datetime "created_at", null: false
       t.datetime "updated_at", null: false
+      t.integer "price"
     end
     create_table "creditcards" do |t|
       t.integer "user_id"
@@ -65,11 +69,13 @@ class InitSchema < ActiveRecord::Migration[5.2]
       t.integer "product_id"
       t.integer "order_id"
       t.integer "quantity"
-      t.integer "day"
       t.integer "end_price"
-      t.boolean "status", default: false, null: false
       t.datetime "created_at", null: false
       t.datetime "updated_at", null: false
+      t.integer "combo_id"
+      t.integer "user_id"
+      t.index ["combo_id"], name: "index_order_records_on_combo_id"
+      t.index ["user_id"], name: "index_order_records_on_user_id"
     end
     create_table "orders" do |t|
       t.integer "user_id"
@@ -78,6 +84,12 @@ class InitSchema < ActiveRecord::Migration[5.2]
       t.integer "create_point"
       t.datetime "created_at", null: false
       t.datetime "updated_at", null: false
+      t.string "zip_code"
+      t.string "address"
+      t.integer "start_date"
+      t.integer "finish_date"
+      t.integer "day"
+      t.integer "status"
     end
     create_table "out_points" do |t|
       t.integer "user_id"

@@ -1,106 +1,107 @@
 <%= current_user.name %>さんのページ
 <p>現在のポイント数</p>
 
-<h2>次回予約一覧</h2>
-<%#= @orders.each do |order|%>
-<%# if order.order_record.status == "0" %>
-<table>
-  <tr>
-    <th>受取予定日</th>
-    <td>
-    　12月19日水曜日<br/>
-      17時頃　受け取り予定
-  　</td>
-  </tr>
+<h2>注文予約一覧</h2>
+<% @orders.each do |order|%>
+  <% if order.status == 0 %>
+    <table class="table table-bordered">
+      <tr>
+        <th>受取予定日</th>
+        <td><%= order.start_date %></td>
+      </tr>
 
-  <tr>
-    <th>商品</th>
-    <td>
-      セット: ノーマルセット
-      単品商品 : ドライヤー
-                髭剃り
-                保湿クリーム
-    </td>
-  </tr>
+      <tr>
+        <th>商品</th>
+        <td>
+          <% order.order_records.each do |order_record| %>
+            <% if order_record.combo_id == 1 %>
+              <%= order_record.product.name %>
+            <% else %>
+              <%= order_record.combo.name %>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
 
-　<tr>
-    <th>レンタル期間</th>
-    <td>5日間</td>
-  </tr>
+    　<tr>
+        <th>レンタル期間</th>
+        <td><%= order.day %>日間</td>
+      </tr>
 
-  <tr>
-    <th>受け取り場所</th>
-    <td>
-      成田空港　第３ターミナル @@付近
-    </td>
-  </tr>
-</table>
+      <tr>
+        <th>受け取り場所</th>
+        <td><%= order.get_status %></td>
+      </tr>
+    </table>
+  <% else %>
+  <% end %>
+<% end %>
 
-<%# elsif  %>
+<h2>未返却物一覧</h2>
 
+<% @orders.each do |order|%>
+  <% if order.status == 1  %>
+    <table class="table table-bordered">
+      <tr>
+        <th>受渡日</th>
+        <td><%= order.finish_date %></td>
+      </tr>
 
-<h2>未返却物</h2>
+      <tr>
+        <th>商品</th>
+          <td>
+            <% order.order_records.each do |order_record| %>
+              <% if order_record.combo_id == 1 %>
+                <%= order_record.product.name %>
+              <% else %>
+                <%= order_record.combo.name %>
+              <% end %>
+            <% end %>
+          </td>
+      </tr>
 
-<table>
-  <tr>
-    <th>受渡日</th>
-    <td>
-    　11月19日水曜日<br/>
-      17時23分　受け渡し完了
-  　</td>
-  </tr>
+    　<tr>
+        <th>レンタル期間</th>
+        <td><%= order.day %>日間</td>
+      </tr>
 
-  <tr>
-    <th>商品</th>
-    <td>
-      セット: ノーマルセット
-      単品商品 : ドライヤー
-                髭剃り
-                保湿クリーム
-      商品ナンバー: 1234456
-    </td>
-  </tr>
+      <tr>
+        <th>受取場所</th>
+        <td><%= order.return_status %></td>
+      </tr>
 
-　<tr>
-    <th>レンタル期間</th>
-    <td>5日間</td>
-  </tr>
+    　<%= form_with model:order,url:users_order_path(order),method: :patch do |f| %>
+        <tr>
+          <th>いますぐ返却ご希望の方(返却方法を選択、送信)</th>
+            <td>
+              <%= f.radio_button(:return_status,0) %>受取場所と同様<br/>
+              <%= f.radio_button(:return_status,1) %>現住所から郵送返却<br/>
+              <%= current_user.zip_code %>
+              <%= current_user.address %><br/>
+              <%= f.radio_button(:return_status,2) %>新しい住所から郵送返却<br/>
+              <%= f.text_field :zip_code %>
+              <%= f.text_field :address %><br/>
+              <% f.submit '送信',class: "btn btn-info" %>
+            </td>
+        </tr>
+      <% end %>
 
-  <tr>
-    <th>受渡場所</th>
-    <td>
-      成田空港　第３ターミナル @@付近
-    </td>
-  </tr>
+      <%= form_with model: order, url:users_order_path(order),method: :patch do |f| %>
+        <tr>
+          <th>郵送返却完了の方はチェックと完了ボタンを押してください。</th>
+          <td>
+            <%= f.radio_button(:status,3) %>ここをチェック
+            <%= f.submit '郵送完了',class: "btn btn-info" %>
+          </td>
+        </tr>
+      <% end %>
 
-  <p>これから返却予定の方</p>
-  <tr>
-    <th>返却方法を選択</th>
-    <td>
-      セレクトボックス 自宅から配送
-    </td>
-  </tr>
+      <tr>
+        <th>延滞をご希望の方はこちら(ご返却日時の選択)</th>
+        <td><%= date_field_tag :finish_date %></td>
+      </tr>
 
-  <tr>
-    <th>配送完了ボタン</th>
-    <td>送信</td>
-  </tr>
-
-  <p>延滞をご希望の方</p>
-  <tr>
-    <th>ご返却日時の選択</th>
-    <td>カレンダーから選択　</td>
-  </tr>
-
-  <tr>
-    <th>返却方法を選択</th>
-    <td>
-      セレクトボックス 自宅から配送
-    </td>
-  </tr>
-
-  <tr>
-    <th>延滞希望ボタン</th>
-    <td>送信</td>
-  </tr>
-</table>
+    </table>
+  <% else %>
+  <% end %>
+<% end %>

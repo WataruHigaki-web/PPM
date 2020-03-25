@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     resources :products,     only:[:index,:show] do
       resource :favorites, only: [:create,:destroy]
     end
-    resources :orders,       only:[:index,:show,:new,:create]
+    resources :orders,       only:[:index,:show,:new,:create,:update]
     resources :cart_items,   only:[:index,:update,:destroy,:create]
     resources :creditcards,  only:[:index,:edit,:update,:destroy,:create]
     resources :combo_items,  only:[:index]
