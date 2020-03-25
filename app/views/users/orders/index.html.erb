@@ -1,29 +1,42 @@
 <h2>注文履歴一覧</h2>
-<% @orders.each do |order| %>
+
 <table class="table-bordered">
   <tr>
-    <th>受取日</th>
-    <th>受取場所</th>
+    <th>注文日</th>
+    <th>レンタル期間</th>
+    <th>レンタル日数</th>
+    <th>セット名</th>
     <th>商品</th>
-    <th>日数</th>
-    <th>金額</th>
+    <th>支払金額</th>
     <th>貸出返却ステータス</th>
     <th>注文詳細</th>
     <th></th>
   </tr>
-  <% order.order_records.each do |order_record| %>
-  <tr>
-    <td><%= order.created_at.strftime('%Y/%m/%d　%H:%M') %></td>
-    <td><%= order.get_status %></td>
-    <td><%= order_record.product.name %></td>
-    <td><%= order.day %></td>
-    <td><%= order.order_records.sum(:end_price) %></td>
+  <% @orders.each do |order| %>
+      <tr>
+        <td>
+          <%= order.created_at.strftime("%Y-%m-%d %H:%M") %>
+        </td>
+        <td>
+          <%= order.start_date %>~<%= order.finish_date %>
+        </td>
+        <td><%= order.day %></td>
+        <td>
+          <% order.order_records.each do |order_record| %>
+            <%= order_record.combo.name %>
+          <% end %>
+        </td>
+        <td>
+          <% order.order_records.each do |order_record| %>
+            <%= order_record.product.name %>
+          <% end %>
+        </td>
+          <td><%= order.order_records.sum(:end_price) %></td>
 
-    <td><%= order_record.status %></td>
+          <td><%= order.status %></td>
 
-    <td><%= link_to '注文詳細',users_order_path(order),class: "btn btn-info" %></td>
-    <td>ブックマーク</td>
-  </tr>
+          <td><%= link_to '注文詳細',users_order_path(order),class: "btn btn-info" %></td>
+          <td>ブックマーク</td>
+      </tr>
   <% end %>
 </table>
-<% end %>

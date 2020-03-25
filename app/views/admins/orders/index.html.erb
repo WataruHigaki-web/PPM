@@ -1,28 +1,40 @@
-<h2>貸出返却一覧</h2>
+<h2>貸出返却履歴一覧</h2>
 
-<table>
-  
+<table class="table-bordered">
   <tr>
-    <th>注文id</th>
-    <th>注文者名</th>
-    <th>注文者名（カナ）</th>
-    <th>商品名</th>
-    <th>受取場所</th>
-    <th>返却場所</th>
-    <th>貸出中</th>
-    <th>返却済</th>
-    <th>担当者名</th>
+    <th>注文日</th>
+    <th>レンタル期間</th>
+    <th>レンタル日数</th>
+    <th>セット名</th>
+    <th>商品</th>
+    <th>支払金額</th>
+    <th>貸出返却ステータス</th>
+    <th>注文詳細</th>
   </tr>
+  <% @orders.each do |order| %>
+      <tr>
+        <td>
+          <%= order.created_at.strftime('%Y/%m/%d　%H:%M') %>
+        </td>
+        <td>
+          <%= order.start_date %>~<%= order.finish_date %>
+        </td>
+        <td><%= order.day %></td>
+        <td>
+          <% order.order_records.each do |order_record| %>
+            <%= order_record.combo.name %>
+          <% end %>
+        </td>
+        <td>
+          <% order.order_records.each do |order_record| %>
+            <%= order_record.product.name %>
+          <% end %>
+        </td>
+          <td><%= order.order_records.sum(:end_price) %></td>
 
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
+          <td><%= order.status %></td>
+
+          <td><%= link_to '注文詳細',admins_order_path(order),class: "btn btn-info" %></td>
+      </tr>
+  <% end %>
 </table>

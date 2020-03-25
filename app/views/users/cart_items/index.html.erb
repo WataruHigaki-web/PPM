@@ -13,9 +13,17 @@
   <% @cart_items.each do |cart_item| %>
   <tr>
     <% if cart_item.combo.id == 1 %>
-      <td><%= cart_item.product.name %></td>
+      <td>
+        <%= link_to users_product_path(cart_item) do %>
+          <%= cart_item.product.name %>
+        <% end %>
+      </td>
     <% else %>
-      <td><%= cart_item.combo.name %></td>
+      <td>
+        <%= link_to users_combo_items_path(cart_item) do %>
+          <%= cart_item.combo.name %>
+        <% end %>
+      </td>
     <% end %>
 
     <%= form_with model: cart_item,url:users_cart_item_path(cart_item) do |f| %>
@@ -38,7 +46,7 @@
 
 <table class="table table-bordered">
   <tr>
-    <th>合計金額</th>
+    <th>合計金額/1日</th>
     <td><%= @sum  %>  円</td>
   </tr>
 　
@@ -73,7 +81,7 @@
 </table>
 
 <% if user_signed_in? %>
- <%= link_to '購入手続き',new_users_order_path(current_user),class: "btn btn-primary" %>
+ <%= link_to '購入手続きへ進む',new_users_order_path(current_user),class: "btn btn-primary" %>
 <% else %>
  <%= link_to 'ユーザー登録して注文する',new_user_registration_path,class: "btn btn-primary" %>
 <% end %>

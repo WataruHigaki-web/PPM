@@ -20,20 +20,33 @@
 
 
   <script type="text/javascript">
-   var d1 = new Date(document.getElementById("start_date").value);
-  
-   var d2 = new Date(document.getElementById("finish_date").value);
 
-   var date = (d2-d1)/(24*60*60*1000);
+    $('#start_date').change(function() {
+      d1 = new Date(document.getElementById("start_date").value);
+      d2 = new Date(document.getElementById("finish_date").value);
+      get_date(d1, d2)
+    });
 
-   console.log(date);
+    $('#finish_date').change(function() {
+      d1 = new Date(document.getElementById("start_date").value);
+      d2 = new Date(document.getElementById("finish_date").value);
+      get_date(d1, d2)
+    });
 
-  var q = document.createElement('input');
-    q.type = 'hidden';
-    q.name = "day";
-    q.value = date;
-    document.forms[0].appendChild(q);
-    console.log(document.forms[0]);
+    function get_date(start_date, finish_date){
+      if (d1 && d2){
+        var date = (d2-d1)/(24*60*60*1000);
+        var q = document.createElement('input');
+        q.type = 'hidden';
+        q.name = "day";
+        q.value = date;
+        document.forms[0].appendChild(q);
+        console.log(document.forms[0]);
+      }else{
+        alert ('利用期間の入力に誤りがあります');
+        return
+      }
+    }
 //     $('#start_date').change(function() {
 //    console.log( $(this).val() );
 // });
