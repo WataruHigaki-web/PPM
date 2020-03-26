@@ -21,6 +21,8 @@
     <%= link_to 'logout',destroy_user_session_path,method: :delete %>
   </li>
 
+
+
 <% elsif admin_signed_in? %>
   <li>
     <%= link_to 'TOP',admins_root_path(current_admin) %>

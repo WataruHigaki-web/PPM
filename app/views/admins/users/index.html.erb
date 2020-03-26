@@ -1,4 +1,11 @@
 <h2>会員一覧画面</h2>
+<h4>ユーザー検索</h4>
+  <%= form_tag(search_admins_users_path, method: :get) do %>
+    <%= select(@search_content, :search_method,[["部分一致","partial_match"],["前方一致","forward_match"],["後方一致","backward_match"],["完全一致","perfect_match"]]) %>
+
+    <%= text_field(@search_content, :search) %>
+    <%= submit_tag '検索',:name => nil %>
+  <% end %>
 <table class="table table-bordered">
   <tr>
     <th>会員ID</th>

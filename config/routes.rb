@@ -15,9 +15,17 @@ Rails.application.routes.draw do
 
   namespace :admins do
     root 'orders#top'
-    resources :users,        only:[:index,:show,:edit,:update]
+    resources :users,        only:[:index,:show,:edit,:update] do
+      collection do
+        get :search
+      end
+    end
     resources :products
-    resources :orders,       only:[:index,:show,:update]
+    resources :orders,       only:[:index,:show,:update] do
+        collection do
+        get :search
+      end
+    end
     resources :product_kinds,only:[:index,:create,:edit,:update,:destroy]
     resources :combos,       only:[:index,:edit,:create,:update,:destroy]
     resources :combo_items,  only:[:show,:index,:create,:update,:destroy]
@@ -35,6 +43,7 @@ Rails.application.routes.draw do
     resources :users,        only:[:show,:edit,:update]
     resources :products,     only:[:index,:show] do
       resource :favorites, only: [:create,:destroy]
+      resource  :likes,        only:[:create,:destroy]
     end
     resources :orders,       only:[:index,:show,:new,:create,:update]
     resources :cart_items,   only:[:index,:update,:destroy,:create]
