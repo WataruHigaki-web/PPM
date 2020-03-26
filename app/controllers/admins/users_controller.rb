@@ -21,6 +21,14 @@ class Admins::UsersController < ApplicationController
     end
   end
 
+  def search
+    @user = current_user
+    method = params[:search_method]
+    search = params[:search]
+    @users = User.search(method,search)
+    render 'index'
+  end
+
   def destroy
   end
 

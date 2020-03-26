@@ -12,4 +12,21 @@ class User < ApplicationRecord
   has_many :out_points
   has_many :in_points
 
+  def self.search(method,search)
+    if method == "partial_match"
+      User.where("name LIKE?","%#{search}%")
+    elsif method == "forward_match"
+      User.where("name LIKE?","#{search}%")
+    elsif method == "backward_match"
+      User.where("name LIKE?","%#{search}")
+    elsif method == "perfect_match"
+      User.where(name: "#{search}")
+    else
+      User.all
+    end
+  end
+
+  def already_liked?(product)
+    self.likes.exists?(product_id: product.id)
+  end
 end

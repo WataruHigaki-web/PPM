@@ -50,10 +50,30 @@
           <th></th>
           <td>
           <% if @product.favorited_by?(current_user) %>
-            <%= link_to'お気に入りを外す',users_product_favorites_path(product_id: @product.id,user_id: current_user.id), method: :delete %>
+            <%= link_to'お気に入りを外す',users_product_favorites_path(product_id: @product.id,user_id: current_user.id), method: :delete,class: "btn btn-info" %>
           <% else %>
-            <%= link_to'お気に入り', users_product_favorites_path(product_id: @product.id,user_id: current_user.id), method: :post  %>
+            <%= link_to'お気に入り', users_product_favorites_path(product_id: @product.id,user_id: current_user.id), method: :post,class: "btn btn-info"  %>
           <% end %>
+          </td>
+        </tr>
+        <tr>
+          <th>いいね</th>
+          <td>
+            
+            <div class="like-link" id="like-link-<%= @product.id %>">
+              <% if current_user.already_liked?(@product) %>
+                <%= link_to users_product_likes_path(@product),method: :delete,remote:true do %>
+                  <span class="glyphicon glyphicon-heart"></span>
+                <% end %>
+
+              <% else %>
+
+                <%= link_to users_product_likes_path(@product),method: :post,remote:true do %>
+                  <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
+                <% end %>
+              <% end %>
+              <%= @product.likes.count %>
+              </div>
           </td>
         </tr>
 

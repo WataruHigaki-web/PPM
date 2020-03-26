@@ -16,6 +16,13 @@ class Admins::OrdersController < ApplicationController
     redirect_to admins_orders_path
   end
 
+  def search
+    kind = params[:search_kind]
+    search = params[:search]
+    @orders = Order.search(kind,search)
+    render 'index'
+  end
+
   def stock
     @products = Product.all
   end

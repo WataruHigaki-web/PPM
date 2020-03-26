@@ -1,33 +1,40 @@
 <h2>貸出返却履歴一覧</h2>
+<h4>検索、絞り込み</h4>
+  <%= form_tag(search_admins_orders_path, method: :get) do %>
+    <%= select(@search_content, :search_kind,[["受取日","start_day"],["返却日","finish_day"],["注文者名","user_name"]]) %>
+
+    <%= text_field(@search_content, :search) %>
+    <%= submit_tag '検索',:name => nil %>
+  <% end %>
 
 <table class="table-bordered">
   <tr>
-    <th>注文日</th>
-    <th>レンタル期間</th>
+    <th>注文者名</th>
+    <th>受取日</th>
+    <th>返却日</th>
     <th>レンタル日数</th>
-    <th>セット名</th>
-    <th>商品</th>
+    <th>商品名</th>
     <th>支払金額</th>
     <th>貸出返却ステータス</th>
     <th>注文詳細</th>
   </tr>
   <% @orders.each do |order| %>
       <tr>
+        <td><%= order.user.name %></td>
         <td>
-          <%= order.created_at.strftime('%Y/%m/%d　%H:%M') %>
+          <%= order.start_date %>
         </td>
         <td>
-          <%= order.start_date %>~<%= order.finish_date %>
+          <%= order.finish_date %>
         </td>
         <td><%= order.day %></td>
         <td>
           <% order.order_records.each do |order_record| %>
-            <%= order_record.combo.name %>
-          <% end %>
-        </td>
-        <td>
-          <% order.order_records.each do |order_record| %>
-            <%= order_record.product.name %>
+            <% if order_record.combo.id == 0 %>
+              <%= order_record.product.name %>
+            <% else %>
+              <%= order_record.combo.name %>
+            <% end %>
           <% end %>
         </td>
           <td><%= order.order_records.sum(:end_price) %></td>
