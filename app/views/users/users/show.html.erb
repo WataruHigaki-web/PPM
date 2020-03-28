@@ -2,10 +2,14 @@
 <h4>
   登録情報
   <%= link_to '編集する',edit_users_user_path(current_user) %>
-  <%= link_to 'クレジット情報',users_creditcards_path(current_user) %>
+  <%= link_to 'クレジット情報',new_users_creditcard_path(current_user) %>
 </h4>
 
 <table class="table table-bordered">
+  <tr>
+    <th>profile画像</th>
+    <td><%= attachment_image_tag @user ,:profile_image,:fill,200,200, fallback:"no_image.jpg" %></td>
+  </tr>
   <tr>
     <th>名前</th>
     <td><%= @user.name %></td>
@@ -13,6 +17,10 @@
   <tr>
     <th>カナ</th>
     <td><%= @user.name_kana %></td>
+  </tr>
+  <tr>
+    <th>画像</th>
+    <td><%#= attachment_image_tag @user, :profile_iamge %></td>
   </tr>
   <tr>
     <th>郵便番号</th>

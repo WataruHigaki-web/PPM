@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class Admins::OrdersController < ApplicationController
-  def top
-  end
-  
+  before_action :authenticate_admin!
+  def top; end
+
   def index
     @orders = Order.all
   end
@@ -19,7 +21,7 @@ class Admins::OrdersController < ApplicationController
   def search
     kind = params[:search_kind]
     search = params[:search]
-    @orders = Order.search(kind,search)
+    @orders = Order.search(kind, search)
     render 'index'
   end
 
@@ -30,7 +32,6 @@ class Admins::OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:get_status,:return_status,:address,:zipcode,:status,:day,:start_date,:finish_date,:user_id)
+    params.require(:order).permit(:get_status, :return_status, :address, :zipcode, :status, :day, :start_date, :finish_date, :user_id)
   end
-
 end

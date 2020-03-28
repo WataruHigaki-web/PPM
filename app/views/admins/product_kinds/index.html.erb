@@ -4,10 +4,10 @@
 <%= form_for((@product_kind),url:admins_product_kinds_path) do |f| %>
   <%= f.text_field :name %>
   <%= f.radio_button :status,true, checked: "checked" %>
-  <%= f.label :有効　%>
+  <%= f.label :有効 %>
 
   <%= f.radio_button :status,false, checked: "checked" %>
-  <%= f.label :無効　%>
+  <%= f.label :無効 %>
 
   <%= f.submit '追加',class:'btn btn-info' %>
 <% end %>

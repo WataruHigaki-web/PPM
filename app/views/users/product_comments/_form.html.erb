@@ -1,0 +1,5 @@
+<%= form_with model: [product, comment],url:users_product_product_comments_path(product.id,comment) do |f| %>
+  <%= f.text_area :content %>
+  <%= f.submit "コメントする" %>
+<% end %>
+

@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 class Admins::CombosController < ApplicationController
+  before_action :authenticate_admin!
   def index
     @combos = Combo.all
     @combo = Combo.new
@@ -11,7 +14,7 @@ class Admins::CombosController < ApplicationController
   def create
     combo = Combo.new(combo_params)
     if combo.save
-      flash[:notice] ="「#{combo.name}」を作成しました"
+      flash[:notice] = "「#{combo.name}」を作成しました"
       redirect_to admins_combos_path
     else
       render 'index'
@@ -28,10 +31,9 @@ class Admins::CombosController < ApplicationController
     end
   end
 
-
   private
 
   def combo_params
-    params.require(:combo).permit(:name,:price)
+    params.require(:combo).permit(:name, :price)
   end
 end

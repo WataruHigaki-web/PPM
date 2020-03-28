@@ -1,7 +1,7 @@
 <h2>貸出返却履歴一覧</h2>
 <h4>検索、絞り込み</h4>
   <%= form_tag(search_admins_orders_path, method: :get) do %>
-    <%= select(@search_content, :search_kind,[["受取日","start_day"],["返却日","finish_day"],["注文者名","user_name"]]) %>
+    <%= select(@search_content, :search_kind,[["受取日","start_date"],["返却日","finish_date"],["注文者名","user_name"]]) %>
 
     <%= text_field(@search_content, :search) %>
     <%= submit_tag '検索',:name => nil %>
@@ -30,7 +30,7 @@
         <td><%= order.day %></td>
         <td>
           <% order.order_records.each do |order_record| %>
-            <% if order_record.combo.id == 0 %>
+            <% if order_record.combo_id == 1 %>
               <%= order_record.product.name %>
             <% else %>
               <%= order_record.combo.name %>

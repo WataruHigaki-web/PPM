@@ -2,7 +2,7 @@
 <div class="row">
   <%= form_for @product,url: admins_product_path do |f|%>
   <div class="col-xs-6">
-    <%= "画像"%>
+    <%= f.attachment_field :product_image %>
   </div>
     <div class="col-xs-6">
       <table class="products-table">

@@ -1,9 +1,11 @@
 <h2>カート内一覧</h2>
 
+
 <%=link_to "カートを空にする",users_cart_items_destroy_all_path,class: "btn btn-danger",method: :delete, "data-confirm" => "本当に削除しますか？" %>
 
 <table class="table table-bordered">
   <tr>
+    <th>画像</th>
     <th>セットまたは商品名</th>
     <th>個数</th>
     <th>金額</th>
@@ -12,6 +14,7 @@
   <% @sum = 0 %>
   <% @cart_items.each do |cart_item| %>
   <tr>
+    <td><%= attachment_image_tag cart_item.product,:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
     <% if cart_item.combo.id == 1 %>
       <td>
         <%= link_to users_product_path(cart_item) do %>
@@ -44,10 +47,11 @@
 
 <h4>料金見積もり表（レンタル日数を記入）</h4>
 
+
 <table class="table table-bordered">
   <tr>
-    <th>合計金額/1日</th>
-    <td><%= @sum  %>  円</td>
+    <th>合計金額</th>
+    <td id="cart_item_sum"><%= @sum %>  円</td>
   </tr>
 　
   <tr>
@@ -58,16 +62,20 @@
      <% end %>
 
      <script type="text/javascript">
-       document.getElementById("day").onchange;
-       console.log("day");
+      var sum = Number("<%= @sum %>");
+       $('#cart_item_day').change(function(){
+         var val = Number($(this).val());
+         $('#cart_item_sum').text(String(sum * val) + ' 円');
+       })
+       
      </script>
     </td>
   </tr>
 <!--   <tr>
     <th>ボーナス金額計</th>
-    <% if current_user.cart_items.count > 2 %>
+    <% if @cart_items.count > 2 %>
       <td class="discount">1000</td>
-    <% elsif current_user.cart_items.count > 4 %>
+    <% elsif @cart_items.count > 4 %>
       <td class="discount">2000</td>
     <% end %>
   </tr> -->
@@ -83,7 +91,7 @@
 <% if user_signed_in? %>
  <%= link_to '購入手続きへ進む',new_users_order_path(current_user),class: "btn btn-primary" %>
 <% else %>
- <%= link_to 'ユーザー登録して注文する',new_user_registration_path,class: "btn btn-primary" %>
+ <%= link_to 'ユーザー登録して注文する',new_user_registration_path(@cart_items),class: "btn btn-primary" %>
 <% end %>
 
 <%= link_to '商品一覧に戻る',users_combo_items_path,class: "btn btn-primary" %>

@@ -10,7 +10,6 @@
     <th>支払金額</th>
     <th>貸出返却ステータス</th>
     <th>注文詳細</th>
-    <th></th>
   </tr>
   <% @orders.each do |order| %>
       <tr>
@@ -23,12 +22,11 @@
         <td><%= order.day %></td>
         <td>
           <% order.order_records.each do |order_record| %>
-            <%= order_record.combo.name %>
-          <% end %>
-        </td>
-        <td>
-          <% order.order_records.each do |order_record| %>
-            <%= order_record.product.name %>
+            <% if order_record.combo.id == 0 %>
+              <%= order_record.product.name %>
+            <% else %>
+              <%= order_record.combo.name %>
+            <% end %>
           <% end %>
         </td>
           <td><%= order.order_records.sum(:end_price) %></td>
@@ -36,7 +34,6 @@
           <td><%= order.status %></td>
 
           <td><%= link_to '注文詳細',users_order_path(order),class: "btn btn-info" %></td>
-          <td>ブックマーク</td>
       </tr>
   <% end %>
 </table>
