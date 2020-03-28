@@ -3,7 +3,7 @@
 <div class="row">
   <%= form_with model:@product,url:admins_products_path,local: true do |f| %>
     <div class="col-xs-5">
-        <%= "画像" %>
+        <%= f.attachment_field :product_image %>
       </div>
     <div class="col-xs-7">
       <%= f.label :商品名 %>

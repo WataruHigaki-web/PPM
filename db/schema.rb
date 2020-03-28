@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_25_053103) do
+ActiveRecord::Schema.define(version: 2020_03_27_095623) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -56,9 +56,8 @@ ActiveRecord::Schema.define(version: 2020_03_25_053103) do
 
   create_table "creditcards", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "credit_number"
-    t.string "credit_name"
-    t.integer "security_code"
+    t.integer "customer_id"
+    t.integer "card_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -107,8 +106,8 @@ ActiveRecord::Schema.define(version: 2020_03_25_053103) do
     t.datetime "updated_at", null: false
     t.string "zip_code"
     t.string "address"
-    t.integer "start_date"
-    t.integer "finish_date"
+    t.date "start_date"
+    t.date "finish_date"
     t.integer "day"
     t.integer "status"
   end

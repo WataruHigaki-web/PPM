@@ -1,5 +1,7 @@
-class Admins::ProductsController < ApplicationController
+# frozen_string_literal: true
 
+class Admins::ProductsController < ApplicationController
+  before_action :authenticate_admin!
   def index
     @product_kinds = ProductKind.all
     if params[:product_kind_id].present?
@@ -14,7 +16,7 @@ class Admins::ProductsController < ApplicationController
     @product = Product.find(params[:id])
     @combo_item = ComboItem.new
   end
-  
+
   def create
     product = Product.new(product_params)
     if product.save
@@ -24,7 +26,7 @@ class Admins::ProductsController < ApplicationController
       render 'new'
     end
   end
-  
+
   def edit
     @product = Product.find(params[:id])
   end
@@ -52,6 +54,6 @@ class Admins::ProductsController < ApplicationController
   private
 
   def product_params
-    params.require(:product).permit(:name,:introduction,:product_kind_id,:product_image,:price,:status,:combo_id)
+    params.require(:product).permit(:name, :introduction, :product_kind_id, :product_image, :price, :status, :combo_id)
   end
 end
