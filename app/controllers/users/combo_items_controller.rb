@@ -1,5 +1,6 @@
-class Users::ComboItemsController < ApplicationController
+# frozen_string_literal: true
 
+class Users::ComboItemsController < ApplicationController
   def index
     @combos = Combo.all
     @cart_item = CartItem.new
@@ -14,6 +15,6 @@ class Users::ComboItemsController < ApplicationController
   private
 
   def combo_item_params
-    params.require(:combo_item).permit(:product_id,:combo_id,:quantity)
+    params.require(:combo_item).permit(:product_id, :combo_id, :quantity)
   end
 end

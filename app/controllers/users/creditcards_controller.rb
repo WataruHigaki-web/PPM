@@ -32,6 +32,6 @@ class Users::CreditcardsController < ApplicationController
 
   private
   def creditcard_params
-    params.require(:creditcard).permit(:credit_number,:credit_name,:security_code)
+    params.require(:creditcard).permit(:user_id,:customer_id,:card_id)
   end
 end

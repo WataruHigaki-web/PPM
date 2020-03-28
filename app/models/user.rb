@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -11,22 +13,23 @@ class User < ApplicationRecord
   has_many :creditcards
   has_many :out_points
   has_many :in_points
+  attachment :profile_image
 
-  def self.search(method,search)
-    if method == "partial_match"
-      User.where("name LIKE?","%#{search}%")
-    elsif method == "forward_match"
-      User.where("name LIKE?","#{search}%")
-    elsif method == "backward_match"
-      User.where("name LIKE?","%#{search}")
-    elsif method == "perfect_match"
-      User.where(name: "#{search}")
+  def self.search(method, search)
+    if method == 'partial_match'
+      User.where('name LIKE?', "%#{search}%")
+    elsif method == 'forward_match'
+      User.where('name LIKE?', "#{search}%")
+    elsif method == 'backward_match'
+      User.where('name LIKE?', "%#{search}")
+    elsif method == 'perfect_match'
+      User.where(name: search.to_s)
     else
       User.all
     end
   end
 
   def already_liked?(product)
-    self.likes.exists?(product_id: product.id)
+    likes.exists?(product_id: product.id)
   end
 end

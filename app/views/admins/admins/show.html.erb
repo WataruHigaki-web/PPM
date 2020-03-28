@@ -5,11 +5,11 @@
 
 </h4>
 
-<table>
+<table class="table table-bordered">
   <tr>
     <th>profile画像</th>
     <td>
-      
+      <%= attachment_image_tag @admin,:profile_image,:fill,100,100, fallback:"no_image.jpg" %>
     </td>
   </tr>
 

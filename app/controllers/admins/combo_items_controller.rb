@@ -1,5 +1,7 @@
-class Admins::ComboItemsController < ApplicationController
+# frozen_string_literal: true
 
+class Admins::ComboItemsController < ApplicationController
+  before_action :authenticate_admin!
   def index
     @combos = Combo.all
     if params[:combo_id].present?
@@ -36,6 +38,6 @@ class Admins::ComboItemsController < ApplicationController
   private
 
   def combo_item_params
-    params.require(:combo_item).permit(:product_id,:combo_id,:quantity)
+    params.require(:combo_item).permit(:product_id, :combo_id, :quantity)
   end
 end

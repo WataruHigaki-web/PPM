@@ -1,15 +1,20 @@
 <h2>商品詳細</h2>
 
 <div class="row">
-   <%= form_with model:@cart_item,url:users_cart_items_path(@cart_item),method: :post do |f| %>
+  <%= form_with model:@cart_item,url:users_cart_items_path(@cart_item),method: :post do |f| %>
     <%= f.hidden_field :combo_id, :value => 1 %>
     <%= f.hidden_field :product_id, :value => @product.id %>
-    <%= f.hidden_field :user_id, :value => current_user.id %>
-    <div class="col-xs-5">
-        <%= "画像" %>
+    <% if user_signed_in? %>
+      <%= f.hidden_field :user_id, :value => current_user.id %>
+    <% else %>
+      <%= f.hidden_field :user_id, :value => 1 %>
+    <% end %>
+
+    <div class="col-xs-6">
+        <%= attachment_image_tag @product ,:product_image,:fill,500,500, fallback:"no_image.jpg" %>
     </div>
-    <div class="col-xs-7">
-     <table class="products-table">
+    <div class="col-xs-6">
+     <table class="table table-bordered">
           <tr>
             <th>商品id</th>
             <td><%= @product.id %></td>
@@ -45,39 +50,32 @@
              <%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %>
            </td>
          </tr>
-
-        <tr>
-          <th></th>
-          <td>
-          <% if @product.favorited_by?(current_user) %>
-            <%= link_to'お気に入りを外す',users_product_favorites_path(product_id: @product.id,user_id: current_user.id), method: :delete,class: "btn btn-info" %>
-          <% else %>
-            <%= link_to'お気に入り', users_product_favorites_path(product_id: @product.id,user_id: current_user.id), method: :post,class: "btn btn-info"  %>
-          <% end %>
-          </td>
-        </tr>
-        <tr>
-          <th>いいね</th>
-          <td>
-            
-            <div class="like-link" id="like-link-<%= @product.id %>">
-              <% if current_user.already_liked?(@product) %>
-                <%= link_to users_product_likes_path(@product),method: :delete,remote:true do %>
-                  <span class="glyphicon glyphicon-heart"></span>
-                <% end %>
-
-              <% else %>
-
-                <%= link_to users_product_likes_path(@product),method: :post,remote:true do %>
-                  <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
-                <% end %>
-              <% end %>
-              <%= @product.likes.count %>
-              </div>
-          </td>
-        </tr>
-
-
+        <% if user_signed_in? %>
+          <tr>
+            <th></th>
+            <td>
+              <%= render 'users/favorites/favorite',product: @product %>
+            </td>
+          </tr>
+          <tr>
+            <th>いいね</th>
+            <td>
+              <%= render 'users/likes/like',product: @product %>
+            </td>
+          </tr>
+        <% else %>
+        <% end %>
     </table>
       <%= f.submit 'カートに入れる',class: "btn-btn-primary" %>
-    <% end %>
+  <% end %>
+
+  <h4>コメント</h4>
+  <% if user_signed_in? %>
+    <div id ="comments_form">
+      <%= render 'users/product_comments/form', product: @product,comment: @comment %>
+    </div>
+  <% else %>
+  <% end %>
+    <div id="comments_area">
+      <%= render 'users/product_comments/index',comments: @comments %>
+    </div>

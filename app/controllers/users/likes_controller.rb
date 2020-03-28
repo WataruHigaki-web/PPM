@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 class Users::LikesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_variable
   def create
     @product = Product.find(params[:product_id])
