@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::Base
   # before_action :authenticate_user!
+  protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
 
 Refile.secret_key = '833b7dcf4d3e65223a6f92d638750bbb2e5a0af5db327be07c0615af34ddb5126236ad586fa9d8a38d968c8b925d27bb449c82c9fa5824dc1531fac9250abb63'
@@ -20,7 +21,9 @@ Refile.secret_key = '833b7dcf4d3e65223a6f92d638750bbb2e5a0af5db327be07c0615af34d
     case resource
     when Admin
       admins_root_path(current_admin)
-    when User
+    when User || session[:cart_item].exist?
+      users_cart_items_save_path
+    else
       users_root_path(current_user)
     end
   end

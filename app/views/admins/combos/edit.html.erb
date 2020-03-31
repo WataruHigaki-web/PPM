@@ -3,6 +3,7 @@
 <%= form_for((@combo),url:admins_combo_path) do |f| %>
   <%= f.label :コンボ名 %>
   <%= f.text_field :name %><br/>
+  <%= f.attachment_field :combo_image %>
   <%= f.label :コンボ金額 %>
   <%= f.text_field :price %>円/1日<br/>
   <%= f.submit '変更を保存する',class:'btn btn-info' %>

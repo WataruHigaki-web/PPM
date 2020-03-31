@@ -1,58 +1,77 @@
 <nav>
-<%= link_to "PPM",root_path %>
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#"><i class="fa fa-codepen"></i></a>
+        <nav class="nav navbar-nav navbar-left">
+          <p><%= link_to "PPM",root_path %></p>
+        </nav>
+        <ul class="nav navbar-nav navbar-right">
+          <% if user_signed_in? %>
+            <li>
+              <%= link_to users_root_path(current_user) do %>
+                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to users_combo_items_path, data: {"turbolinks" => false} do %>
+                <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
+              <% end %>
+            </li>
+              <li>
+              <%= link_to users_cart_items_path(current_user) do %>
+                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to users_products_path(current_user) do %>
+                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to users_user_path(current_user) do %>
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to 'logout',destroy_user_session_path,method: :delete %>
+            </li>
 
-<% if user_signed_in? %>
-  <li>
-    <%= link_to 'TOP',users_root_path(current_user) %>
-  </li>
-  <li>
-    <%= link_to '商品一覧',users_combo_items_path %>
-  </li>
-    <li>
-    <%= link_to 'カート',users_cart_items_path(current_user) %>
-  </li>
-  <li>
-    <%= link_to 'お気に入り',users_products_path(current_user) %>
-  </li>
-  <li>
-    <%= link_to 'マイページ',users_user_path(current_user) %>
-  </li>
-  <li>
-    <%= link_to 'logout',destroy_user_session_path,method: :delete %>
-  </li>
 
 
+          <% elsif admin_signed_in? %>
+            <li>
+              <%= link_to 'TOP',admins_root_path(current_admin) %>
+            </li>
+            <li>
+              <%= link_to '商品一覧',admins_products_path %>
+            </li>
+            <li>
+              <%= link_to '会員一覧',admins_users_path %>
+            </li>
+            <li>
+              <%= link_to 'マイページ',admins_admin_path(current_admin) %>
+            </li>
+            <li>
+              <%= link_to 'logout',destroy_admin_session_path,method: :delete %>
+            </li>
 
-<% elsif admin_signed_in? %>
-  <li>
-    <%= link_to 'TOP',admins_root_path(current_admin) %>
-  </li>
-  <li>
-    <%= link_to '商品一覧',admins_products_path %>
-  </li>
-  <li>
-    <%= link_to '会員一覧',admins_users_path %>
-  </li>
-  <li>
-    <%= link_to 'マイページ',admins_admin_path(current_admin) %>
-  </li>
-  <li>
-    <%= link_to 'logout',destroy_admin_session_path,method: :delete %>
-  </li>
-
-<% else %>
-  <li>
-    <%= link_to 'TOP',root_path %>
-  </li>
-  <li>
-    <%= link_to '商品一覧',users_combo_items_path %>
-  </li>
-  <li>
-    <%= link_to 'login',new_user_session_path %>
-  </li>
-  <li>
-    <%= link_to 'signup',new_user_registration_path %>
-  </li>
-
-<% end %>
-</nav>
+          <% else %>
+            <li>
+              <%= link_to 'TOP',root_path %>
+            </li>
+            <li>
+              <%= link_to '商品一覧',users_combo_items_path, data: {"turbolinks" => false} %>
+            </li>
+            <li>
+              <%= link_to 'login',new_user_session_path %>
+            </li>
+            <li>
+              <%= link_to 'signup',new_user_registration_path %>
+            </li>
+          </div>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </nav>
