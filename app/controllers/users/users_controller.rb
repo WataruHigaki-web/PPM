@@ -19,6 +19,15 @@ class Users::UsersController < ApplicationController
 
   def top
     @orders = current_user.orders
+    @in_points = current_user.in_points
+    @out_points = current_user.out_points
+    @point = @in_points.sum(:point) - @out_points.sum(:point)
+  end
+
+  def point
+    @in_points = current_user.in_points
+    @out_points = current_user.out_points
+    @point = @in_points.sum(:point) - @out_points.sum(:point)
   end
 
   private

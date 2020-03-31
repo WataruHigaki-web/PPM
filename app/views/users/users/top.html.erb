@@ -1,5 +1,8 @@
+
 <%= current_user.name %>さんのページ
-<p>現在のポイント数</p>
+<%= link_to users_users_point_path(current_user) do %>
+ <p>現在の保有ポイント数:<%= @point %>pt</p>
+<% end %>
 
 <h2>注文予約一覧</h2>
 <% @orders.each do |order|%>
@@ -34,6 +37,11 @@
           <%= order.get_status %>
           <%= link_to '詳細',users_order_path(order) %>
         </td>
+      </tr>
+
+      <tr>
+        <th class="info">予約をキャンセル</th>
+        <td><%= link_to 'この注文をキャンセルする',users_order_path(order),method: :delete,data:{confirm: "本当に削除しますか？"},class: "btn btn-info" %></td>
       </tr>
     </table>
   <% else %>
