@@ -4,18 +4,14 @@
   <table class="table table-bordered">
     <tr>
       <th>クレジット番号</th>
-      <td><%= f.text_field :credit_number %></td>
+      <td><%= f.text_field :customer_id, id: "www", name: "www" %></td>
     </tr>
 
     <tr>
       <th>クレジット名義</th>
-      <td><%= f.text_field :credit_name %></td>
+      <td><%= f.text_field :card_id, id: "www", name: "www" %></td>
     </tr>
 
-    <tr>
-      <th>セキュリティーコード</th>
-      <td><%= f.text_field :security_code %></td>
-    </tr>
   </table>
   <%= f.submit '新規登録',class: "btn btn-primary" %>
 <% end %>
@@ -24,16 +20,14 @@
   <tr>
     <th>クレジット番号</th>
     <th>クレジット名義</th>
-    <th>セキュリティーコード</th>
   </tr>
   <% @creditcards.each do |creditcard| %>
     <tr>
-      <td><%= creditcard.credit_number %></td>
-      <td><%= creditcard.credit_name %></td>
-      <td><%= creditcard.security_code %></td>
+      <td><%= creditcard.customer_id %></td>
+      <td><%= creditcard.card_id %></td>
       <td>
-        <%= link_to '編集する',edit_users_creditcard_path %>
-        <%= link_to '削除する',users_creditcard_path,method: :delete,data:{confirm:"本当に削除しますか？"} %>
+        <%= link_to '編集する',edit_users_creditcard_path(creditcard) %>
+        <%= link_to '削除する',users_creditcard_path(creditcard) ,method: :delete,data:{confirm:"本当に削除しますか？"} %>
       </td>
     </tr>
     <% end %>

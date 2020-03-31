@@ -49,6 +49,14 @@
       <%= @order.status %>
     </td>
   </tr>
+  <tr>
+    <th>支払いステータス</th>
+      <% if @order.pay_status %>
+        <td width="300">支払済</td>
+      <% else %>
+        <td width="300">未支払</td>
+      <% end %>
+  </tr>
 
   </table>
   </div>
@@ -68,12 +76,16 @@
     <td width="100"><%= @sum %></td>
   </tr>
   <tr>
-    <th width="100">配送料</th>
-    <td width="100">800</td>
+    <th width="100">利用ポイント</th>
+    <td width="100"><%= @order.out_point.point %>pt</td>
   </tr>
   <tr>
     <th width="100">ご請求金額</th>
     <td width="100"><%= @sum += 800 %></td>
+  </tr>
+  <tr>
+    <th width="100">発行ポイント</th>
+    <td width="100"><%= @order.create_point %>pt</td>
   </tr>
   </table>
   </div>

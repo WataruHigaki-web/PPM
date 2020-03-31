@@ -41,7 +41,7 @@
 
           <td><%= order.status %></td>
 
-          <td><%= link_to '注文詳細',admins_order_path(order),class: "btn btn-info" %></td>
+          <td><%= link_to '注文詳細',admins_order_path(order),class: "btn btn-info",data: {"turbolinks" => false} %></td>
       </tr>
   <% end %>
 </table>

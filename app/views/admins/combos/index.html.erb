@@ -4,6 +4,7 @@
 <%= form_for((@combo),url:admins_combos_path) do |f| %>
   <%= f.label :セット名 %>
   <%= f.text_field :name %><br/>
+  <%= f.attachment_field :combo_image %>
   <%= f.label :セット金額 %>
   <%= f.number_field :price %>円/1日<br/>
   <%= f.submit '追加',class:'btn btn-info' %>
@@ -14,6 +15,7 @@
   <tr>
     <th>セットid</th>
     <th>セット名</th>
+    <th>セット画像</th>
     <th>価格/1日</th>
     <th></th>
     <th></th>
@@ -22,6 +24,7 @@
       <tr>
         <td><%= combo.id %></td>
         <td><%= combo.name %></td>
+        <td><%= attachment_image_tag combo,:product_image,:fill,300,300, fallback:"no_image.jpg" %></td>
         <td><%= combo.price %></td>
         <td>
           <%= link_to '編集',edit_admins_combo_path(combo) %>

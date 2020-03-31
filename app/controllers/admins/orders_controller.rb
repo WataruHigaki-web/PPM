@@ -15,6 +15,16 @@ class Admins::OrdersController < ApplicationController
   def update
     order = Order.find(params[:id])
     order.update(order_params)
+    if order.status == "返却済" && order.pay_status == true && order.give_point == false
+      in_point = InPoint.new(
+      point: order.create_point,
+      order_id:   order.id,
+      user_id:  order.user.id
+      )
+      in_point.save
+      order.give_point = true
+      order.update(order_params)
+    end
     redirect_to admins_orders_path
   end
 
@@ -32,6 +42,6 @@ class Admins::OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:get_status, :return_status, :address, :zipcode, :status, :day, :start_date, :finish_date, :user_id)
+    params.require(:order).permit(:get_status, :return_status, :address, :zipcode, :status, :day, :start_date, :finish_date, :user_id,:pay_status,:giv_point)
   end
 end

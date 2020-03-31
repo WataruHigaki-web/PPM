@@ -9,7 +9,9 @@
     <th>受取場所</th>
     <th>返却場所</th>
     <th>貸出返却ステータス</th>
+    <th>支払いステータス</th>
     <th>担当者名</th>
+    <th>付与ポイントステータス</th>
   </tr>
 
   <tr>
@@ -30,11 +32,18 @@
     <%= form_with model:@order,url:admins_order_path(@order) do |f| %>
     <td>
     　<%= f.select :status, Order.statuses.keys.to_a, {} %>
+      <%= f.submit '更新',class: "btn btn-info" %>
     </td>
     <td>
-    　<%#= f.text_feild :admin_name %>
+    　<%= f.select :pay_status,[['未支払', false], ['支払済', true]] %>
+    　<%= f.submit '更新',class: "btn btn-info" %>
     </td>
-    <%= f.submit '更新',class: "btn btn-info" %>
+    <% if @order.give_point == true %>
+      <td>付与済</td>
+    <% else %>
+      <td>付与してません</td>
+    <% end %>
+
     <% end %>
   </tr>
 </table>

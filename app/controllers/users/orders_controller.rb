@@ -2,10 +2,17 @@
 
 class Users::OrdersController < ApplicationController
   before_action :authenticate_user!
-  def new; end
+  def new
+   @order = Order.new
+  end
 
   def confirm
     @cart_items = current_user.cart_items
+    @in_points = current_user.in_points
+    @out_points = current_user.out_points
+    @point = @in_points.sum(:point) - @out_points.sum(:point)
+    @part_point = OutPoint.new
+    @combo_items = ComboItem.all
   end
 
   def save
@@ -23,7 +30,12 @@ class Users::OrdersController < ApplicationController
     session[:order]['start_date'] = params['start_date']
     session[:order]['finish_date'] = params['finish_date']
     session[:order]['day'] = params['day']
-    redirect_to users_orders_confirm_path
+    # if params['start_date'].blank?
+    #   flash[:notice] = "不備があります"
+    #   render 'new'
+    # end
+      redirect_to users_orders_confirm_path
+
   end
 
   def create
@@ -36,10 +48,17 @@ class Users::OrdersController < ApplicationController
       day:           session[:order]['day'],
       zip_code:      session[:order]['zip_code'],
       address:       session[:order]['address'],
+      create_point:  params['create_point'],
       status:  0
     )
     order.user_id = current_user.id
-    order.save!
+    order.save
+    out_point = OutPoint.new(
+      point: params['out_point'],
+      order_id:   order.id,
+      user_id:  current_user.id
+      )
+    out_point.save
     cart_items = current_user.cart_items
     cart_items.each do |item|
       order_record = OrderRecord.new(
@@ -55,6 +74,14 @@ class Users::OrdersController < ApplicationController
     current_user.cart_items.destroy_all
     redirect_to users_orders_thanks_path
   end
+
+  def destroy
+    order = Order.find(params[:id])
+    order.destroy
+    flash[:notice] = "予約をキャンセルしました"
+    redirect_to users_root_path(current_user)
+  end
+
 
   def update
     order = Order.find(params[:id])
@@ -77,6 +104,6 @@ class Users::OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:get_status, :zip_code, :address, :return_status, :start_date, :finish_date, :user_id, :day,:status)
+    params.require(:order).permit(:get_status, :zip_code, :address, :return_status, :start_date, :finish_date, :user_id, :day,:status,:create_point)
   end
 end

@@ -1,18 +1,47 @@
-<h2>ポイント</h2>
-<h4>現在のお持ちのポイント</h4>
-<p>計　１００ポイント</p>
+<div class="row">
+  <div class="col-xs-4">
+    <h4>ポイント付与履歴</h4>
+      <table class="table table-bordered">
+        <tr>
+          <th>付与日付</th>
+          <th>ポイント</th>
+        </tr>
+        <% @in_points.each do |point| %>
+          <tr>
+            <td>
+              <%= link_to users_order_path(point.order) do %>
+                <%= point.created_at.strftime("%Y-%m-%d %H:%M") %>
+              <% end %>
+            </td>
+            <td><%= point.point %>pt</td>
+          </tr>
+        <% end %>
+      </table>
+  </div>
 
-<h4>ポイント付与履歴</h4>
-<table>
-  <tr>
-    <th>日付</th>
-    <th>付与ポイント</th>
-    <th>利用ポイント</th>
-  </tr>
+  <div class="col-xs-4">
+    <h4>ポイント利用履歴</h4>
+      <table class="table table-bordered">
+        <tr>
+          <th>利用日付</th>
+          <th>ポイント</th>
+        </tr>
+        <% @out_points.each do |point| %>
+          <tr>
+            <td>
+              <%= link_to users_order_path(point.order) do %>
+                <%= point.created_at.strftime("%Y-%m-%d %H:%M") %>
+              <% end %>
+            </td>
+            <td><%= point.point %>pt</td>
+          </tr>
+        <% end %>
+      </table>
+  </div>
 
-  <tr>
-    <td>2020/12/11</td>
-    <td>35 point</td>
-    <td>50point</td>
-  </tr>
-</table>
+  <div class="col-xs-4">
+    <h4>保有ポイント数</h4>
+    <%= @point %>pt
+  </div>
+
+</div>
