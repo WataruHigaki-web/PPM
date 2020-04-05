@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   namespace :admins do
     root 'orders#top'
+    get 'orders/stock'
     resources :users, only: %i[index show edit update] do
       collection do
         get :search
@@ -32,6 +33,7 @@ Rails.application.routes.draw do
     resources :combos,       only: %i[index edit create update destroy]
     resources :combo_items,  only: %i[show index create update destroy]
     resources :admins,       only: %i[index show edit update]
+    resources :questions,    only: %i[index edit update create destroy update]
   end
 
   namespace :users do
@@ -51,8 +53,13 @@ Rails.application.routes.draw do
     end
     resources :orders
     resources :cart_items,   only: %i[index update destroy create]
-    resources :creditcards,  only: %i[index new destroy create edit update]
+    resources :pays,  only: %i[index new destroy create edit update]
     resources :combo_items,  only: [:index]
+    resources :questions,    only:[:index]
+  end
+
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: '/letter_opener'
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

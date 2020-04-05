@@ -37,10 +37,15 @@
 
           <tr>
             <th>ステータス</th>
-              <% if @product.status %>
-                <td>販売中</td>
+            <% @product_records = OrderRecord.where(product_id: @product.id) %>
+            <% @product_records.each do |record| %>
+              <% @quantity = record.quantity %>
+            <% end %>
+            
+             <% if @product.stock - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count * @quantity) <= 0 %>
+                <td id="status">売切</td>
               <% else %>
-                <td>売切</td>
+                <td id="status">販売中</td>
               <% end %>
          </tr>
 
@@ -66,8 +71,19 @@
         <% else %>
         <% end %>
     </table>
-      <%= f.submit 'カートに入れる',class: "btn-btn-primary" %>
+      <%= f.submit 'カートに入れる',class: "btn btn-primary", id: 
+      'button' %>
   <% end %>
+
+  <script>
+    const status = $('#status').text();
+    if(status == "売切"){
+      document.getElementById("button").disabled = true;
+      alert('この商品は売切のためカートに入れることはできません')
+    }else{
+      document.getElementById("button").disabled = false;
+    }
+  </script>
 
   <h4>コメント</h4>
   <% if user_signed_in? %>

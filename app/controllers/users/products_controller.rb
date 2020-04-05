@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Users::ProductsController < ApplicationController
-  def top 
+  before_action :authenticate_user!, only:[:index]
+  def top
   end
 
   def index
@@ -21,4 +22,5 @@ class Users::ProductsController < ApplicationController
   def product_params
     params.require(:product).permit(:name, :introduction, :product_kind_id, :product_image, :price, :status)
   end
+
 end

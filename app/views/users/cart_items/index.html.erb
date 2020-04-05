@@ -16,7 +16,7 @@
           <% if cart_item.combo.id == 1 %>
             <td><%= attachment_image_tag cart_item.product,:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
               <td>
-                <%= link_to users_product_path(cart_item) do %>
+                <%= link_to users_product_path(cart_item.product) do %>
                   <%= cart_item.product.name %>
                 <% end %>
               </td>
@@ -96,37 +96,37 @@
       </tr>
       <% @sum = 0 %>
         <% session[:cart_item].each do |cart_item| %>
-        <% @combos.each do |combo| %>
         <tr>
           <% if cart_item["combo_id"] == 1 %>
-            <td><%= attachment_image_tag cart_item["product_id"],:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
+            <td><%= attachment_image_tag Product.find(cart_item["product_id"]),:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
               <td>
                 <%= link_to users_product_path(cart_item["product_id"]) do %>
-                  <%= cart_item["product_id"].name %>
+                  <%= Product.find(cart_item["product_id"]).name %>
                 <% end %>
               </td>
           <% else %>
-            <td><%= attachment_image_tag combo, :combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
+            <td><%= attachment_image_tag Combo.find(cart_item["combo_id"]), :combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
             <td>
               <%= link_to users_combo_items_path do %>
-                <%= @combo.name%>
+                <%= Combo.find(cart_item["combo_id"]).name%>
               <% end %>
             </td>
           <% end %>
 
           <%#= form_with model: cart_item,url:users_cart_item_path(cart_item) do |f| %>
             <td>
+              <%= cart_item["quantity"] %>
               <%#= f.number_field :quantity %>
               <%#= f.submit "更新",class: "btn btn-info" %>
             </td>
-            <td><%= (@combo.price).to_i * (cart_item["quantity"]).to_i %></td>
+            <td><%= (Combo.find(cart_item["combo_id"]).price).to_i * (cart_item["quantity"]).to_i %></td>
             <td>
               <%#= link_to '削除',users_cart_item_path(cart_item),method: :delete,class: "btn btn-danger" %>
             </td>
           <%# end %>
         </tr>
 
-      <% @sum += (@combo.price).to_i * (cart_item["quantity"]).to_i %>
+      <% @sum += (Combo.find(cart_item["combo_id"]).price).to_i * (cart_item["quantity"]).to_i %>
       <% end %>
     </table>
 
@@ -154,12 +154,11 @@
       </tr>
 
     </table>
-    <% end %>
 <% end %>
 <% if user_signed_in? %>
   <%= link_to '購入手続きへ進む',new_users_order_path(current_user),class: "btn btn-primary" %>
 <% else %>
-   <%= link_to 'ユーザー登録して注文する',new_user_registration_path(@cart_items),class: "btn btn-primary" %>
+   <%= link_to 'ユーザー登録して注文する',new_user_registration_path,class: "btn btn-primary" %>
 <% end %>
 
-  <%= link_to '商品一覧に戻る',users_combo_items_path,class: "btn btn-primary", data: {"turbolinks" => false} %>
+  <%= link_to '買い物を続ける',users_combo_items_path,class: "btn btn-primary", data: {"turbolinks" => false} %>

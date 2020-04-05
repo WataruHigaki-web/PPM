@@ -82,3 +82,7 @@ end
 gem 'payjp'
 gem "refile", require: "refile/rails", github: 'manfe/refile'
 gem "refile-mini_magick"
+group :development do
+  gem "letter_opener"
+  gem 'letter_opener_web'
+end
