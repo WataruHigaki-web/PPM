@@ -9,18 +9,30 @@
         <th>商品名</th>
         <th>画像</th>
         <th>商品紹介</th>
+        <th>販売ステータス</th>
         <th></th>
       </tr>
     <% @favorites.each do |favorite| %>
-      <tr>
+      <tr class="favorite">
         <td>
-          <%= f.radio_button(:product_id,favorite.product.id) %>
+          <%= f.radio_button :product_id,favorite.product.id %>
           <%= link_to users_product_path(favorite.product) do %>
             <%= favorite.product.name %>
           <% end %>
         </td>
         <td><%= attachment_image_tag favorite.product,:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
         <td><%= favorite.product.introduction %></td>
+
+         <% @product_records = OrderRecord.where(product_id: favorite.product.id) %>
+          <% @product_records.each do |record| %>
+            <% @quantity = record.quantity %>
+          <% end %>
+           <% if favorite.product.stock - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count * @quantity) <= 0  %>
+              <td class="product_status" data-status="売切">売切</td>
+            <% else %>
+              <td class="product_status" data-status="販売中">販売中</td>
+            <% end %>
+          </td>
         <td>
           <% if favorite.product.favorited_by?(current_user) %>
             <%= link_to'お気に入りを外す',users_product_favorites_path(product_id: favorite.product.id,user_id: current_user.id), method: :delete %>
@@ -32,6 +44,20 @@
     </table>
 
   <p>個数選択:<%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %></p>
-  <%= f.submit '選択商品をカートアイテムに追加',class: "btn btn-info" %>
+  <%= f.submit '選択商品をカートアイテムに追加',class: "btn btn-info",id: "button" %>
   <% end %>
+
+  <script>
+    $('input[name="cart_item[product_id]"]').on("change", function(){
+      var status = $(this).parent().parent().find(".product_status").data("status");
+
+      // var t2 = document.getElementById('false').textContent;
+      if(status == "売切"){
+        document.getElementById("button").disabled = true;
+        alert('この商品は売り切れのためカートに入れることはできません')
+      }else{
+        document.getElementById("button").disabled = false;
+      }
+    });
+  </script>
 </div>

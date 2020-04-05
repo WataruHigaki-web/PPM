@@ -2,7 +2,7 @@
 <h4>
   登録情報
   <%= link_to '編集する',edit_users_user_path(current_user) %>
-  <%= link_to 'クレジット情報',users_creditcards_path(current_user) %>
+  <%= link_to 'クレジット情報',users_pays_path(current_user) %>
 </h4>
 
 <table class="table table-bordered">
@@ -52,7 +52,7 @@
   <tr>
     <th>お問い合わせ</th>
     <td>
-      <%= link_to 'お問い合わせ',users_orders_path(current_user) %>
+      <%= link_to 'お問い合わせ',users_questions_path %>
     </td>
   </tr>
 </table>

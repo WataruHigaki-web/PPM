@@ -1,0 +1,66 @@
+<%= @user.name %> 様
+
+この度はご予約ありがとうございます。
+
+<ご予約内容>
+
+注文日
+<%= @order.created_at.strftime('%Y/%m/%d　%H:%M') %>
+
+受取場所
+<%= @order.get_status %>
+
+受取日
+<%= @order.start_date %>
+
+返却場所
+<% if @order.return_status == 0 %>
+  <%= @order.get_status %>
+<% else %>
+  <%= @order.zip_code %></br>
+  <%= @order.address %></br>
+<% end %>
+
+予定返却時間
+<%= @order.finish_date %>
+
+レンタル期間
+<%= @order.day %>日間
+
+クレジット情報
+<%#= @order.credit_number %>
+
+貸し出し返却ステータス
+<%= @order.status %>
+
+支払いステータス
+<% if @order.pay_status %>
+  支払済
+<% else %>
+  未支払
+<% end %>
+
+商品内容
+
+<% @order.order_records.each do |order_record| %>
+  <% if order_record.combo_id == 1 %>
+<%= order_record.product.name %>
+  <% else %>
+<%= order_record.combo.name %>
+  <% end %>
+<% end %>
+
+
+
+ご請求内容
+<% @sum = 0 %>
+<% @order.order_records.each do |order_record| %>
+  <% @sum += (order_record.end_price.to_i) * order_record.quantity.to_i %>
+<% end %>
+<%= @sum %>円
+
+税込価格
+<%= (@sum * 1.1).floor %>円
+
+
+それでは当日、お待ちしております。素敵な旅を。

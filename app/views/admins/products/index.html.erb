@@ -1,3 +1,15 @@
+<div class="wrap">
+<button class="button"><%= link_to 'ジャンル',admins_product_kinds_path %></button>
+
+<button class="button"><%= link_to 'セット',admins_combos_path %></button>
+
+<button class="button"><%= link_to '商品一覧',admins_combo_items_path %></button>
+
+<button class="button">
+<%= link_to 'アイテム',new_admins_product_path %>
+</button>
+</div>
+
 <table class="table table-bordered">
   <tr>
     <th>ジャンル検索</th>
@@ -11,23 +23,13 @@
   <% end %>
 </table>
 
-
-<%= link_to 'ジャンル新規作成',admins_product_kinds_path %>
-
-<%= link_to 'セット新規作成',admins_combos_path %>
-
-<%= link_to 'セット、単品商品一覧',admins_combo_items_path %>
-
-<%= link_to new_admins_product_path do %>
-<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-<% end %>
-
 <h4>全商品一覧</h4>
 <table class="table table-bordered">
   <tr>
     <th>商品id</th>
     <th>商品名</th>
     <th>ジャンル</th>
+    <th>在庫数</th>
     <th>販売ステータス</th>
   </tr>
 
@@ -44,11 +46,17 @@
         <%= product.product_kind.name %>
       </td>
 
-      <% if product.status %>
-        <td>販売中</td>
-      <% else %>
-        <td>売切</td>
+      <td><%= product.stock %></td>
+      <% @product_records = OrderRecord.where(product_id: product.id) %>
+      <% @product_records.each do |record| %>
+          <% @quantity = record.quantity %>
       <% end %>
+      
+      <% if product.stock - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count * @quantity) <= 0 %>
+        <td>売切</td>
+       <% else %>
+        <td>販売中</td>
+       <% end %>
 
     </tr>
   <% end %>

@@ -12,8 +12,8 @@
       <%= f.text_area :introduction %></br>
       <%= f.label :ジャンル %>
       <%= f.collection_select :product_kind_id,ProductKind.all,:id,:name %></br>
-      <%= f.label :販売ステータス %>
-      <%= f.select :status, [['売切', false], ['販売中', true]] %><br/>
+      <%= f.label :在庫数 %>
+      <%= f.number_field :stock %><br/>
 
     </div>
       <div class="text-right">

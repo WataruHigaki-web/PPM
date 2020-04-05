@@ -1,0 +1,12 @@
+<h2>よくある質問</h2>
+
+<% @questions.each do |q| %>
+  Q:<%= q.question %><br/>
+  A:<%= q.answer %>
+<% end %>
+
+<h4>お問い合わせフォーム</h4>
+<%#= form_with model: @question,url: users_question_path(@question) do |f| %>
+  <%#= f.text_field :question %>
+  <%#= f.submit '送信',class: "btn btn-info" %>
+<%# end %>

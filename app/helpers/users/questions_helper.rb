@@ -1,0 +1,2 @@
+module Users::QuestionsHelper
+end

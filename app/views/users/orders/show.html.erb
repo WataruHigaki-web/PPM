@@ -21,20 +21,24 @@
   </tr>
 
   <tr>
-    <th>予定受取時間</th>
-    <td></td>
+    <th>予定受取日</th>
+    <td><%= @order.start_date %></td>
   </tr>
 
   <tr>
     <th>返却場所</th>
     <td>
-      <%= @order.zip_code %></br>
-      <%= @order.address %></br>
-    </td>å
+      <% if @order.return_status == 0 %>
+        <%= @order.get_status %>
+      <% else %>
+        <%= @order.zip_code %></br>
+        <%= @order.address %></br>
+      <% end %>
+    </td>
   </tr>
   <tr>
     <th>予定返却時間</th>
-    <td></td>
+    <td><%= @order.finish_date %></td>
   </tr>
   <tr>
     <th>クレジット情報</th>
@@ -46,7 +50,7 @@
   <tr>
     <th>貸し出し返却ステータス</th>
     <td width="300">
-      <%= @order.status %>
+        <%= @order.status %>
     </td>
   </tr>
   <tr>
@@ -77,11 +81,17 @@
   </tr>
   <tr>
     <th width="100">利用ポイント</th>
-    <td width="100"><%= @order.out_point.point %>pt</td>
+    <td width="100">
+      <% if @order.out_point.point == nil %>
+        <%= "0pt" %>
+      <% else %>
+        <%= @order.out_point.point %>pt
+      <% end %>
+    </td>
   </tr>
   <tr>
     <th width="100">ご請求金額</th>
-    <td width="100"><%= @sum += 800 %></td>
+    <td width="100"><%= @sum %></td>
   </tr>
   <tr>
     <th width="100">発行ポイント</th>
@@ -100,7 +110,6 @@
     <th>価格</th>
     <th>レンタル日数</th>
     <th>個数</th>
-    <th>小計</th>
   </tr>
 
   <% @order.order_records.each do |order_record| %>

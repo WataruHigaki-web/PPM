@@ -1,5 +1,6 @@
 <h2>貸出返却履歴一覧</h2>
-<h4>検索、絞り込み</h4>
+<%= link_to '全注文一覧',admins_orders_path %>
+<h4>検索</h4>
   <%= form_tag(search_admins_orders_path, method: :get) do %>
     <%= select(@search_content, :search_kind,[["受取日","start_date"],["返却日","finish_date"],["注文者名","user_name"]]) %>
 
@@ -28,19 +29,17 @@
           <%= order.finish_date %>
         </td>
         <td><%= order.day %></td>
-        <td>
-          <% order.order_records.each do |order_record| %>
-            <% if order_record.combo_id == 1 %>
-              <%= order_record.product.name %>
-            <% else %>
-              <%= order_record.combo.name %>
+          <td>
+            <% order.order_records.each do |order_record| %>
+              <% if order_record.combo_id == 1 %>
+                <%= order_record.product.name %>
+              <% else %>
+                <%= order_record.combo.name %>
+              <% end %>
             <% end %>
-          <% end %>
-        </td>
+          </td>
           <td><%= order.order_records.sum(:end_price) %></td>
-
           <td><%= order.status %></td>
-
           <td><%= link_to '注文詳細',admins_order_path(order),class: "btn btn-info",data: {"turbolinks" => false} %></td>
       </tr>
   <% end %>

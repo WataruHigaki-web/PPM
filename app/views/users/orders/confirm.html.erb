@@ -1,11 +1,18 @@
 <h2>注文情報確認</h2>
 <%= form_with model: @order,url:users_orders_path,mothod: :post do |f| %>
   <p>注文者名:<%= current_user.name %></p>
-  <p>クレジットカード情報:<%= session[:order]["get_status"]  %></p>
+  <p>クレジットカード情報:
+    番号:
+    名義:
+    </p>
   <p>受取場所:<%= session[:order]["get_status"] %></p>
   <p>返却場所:
-    <%= session[:order]["zip_code"] %>
-    <%= session[:order]["address"] %>
+    <% if session[:order]["return_status"] == 0 %>
+      <%= session[:order]["get_status"] %>
+    <% else %>
+      <%= session[:order]["zip_code"] %>
+      <%= session[:order]["address"] %>
+    <% end %>
   </p>
   <p>利用期間:
     <%= session[:order]["start_date"]%>~
@@ -96,18 +103,18 @@
     <%= f.submit '注文を確定',class: "btn btn-danger",id: "button" %>
 <% end %>
 
-<h3><%= current_user.name %>さんへのおすすめ</h3>
+<h3><%= current_user.name %>さんへの単品商品おすすめ</h3>
 
 <div class="recommend product">
-  <% @cart_items.each do |item| %>
-    <% if item.combo_id == 1 %>
-      <p id="have"><%= item.product.id %></p>
+  <% @combo_items.each do |combo_item| %>
+    <% if combo_item.combo_id == 1 %>
+      <div id="all"><%= combo_item.product.id %></div>
     <% end %>
   <% end %>
-
-  <% @combo_items.each do |item| %>
+ <p></p>
+  <% @cart_items.each do |item| %>
     <% if item.combo_id == 1 %>
-      <div class="all"><%= item.product.id %></div>
+      <div id="have"><%= item.product.id %></div>
     <% end %>
   <% end %>
 
@@ -124,6 +131,6 @@
   <%#='価格' %>
   <%#= 'この商品を追加' %>
 </div>
-<%= link_to '商品選択に戻る',users_combo_items_path %>
+<%= link_to '商品一覧に戻る',users_combo_items_path %>
 
 

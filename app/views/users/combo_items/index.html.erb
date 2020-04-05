@@ -18,7 +18,7 @@
 
         <tr>
           <td>
-            <%= link_to("#{combo.name}",users_combo_items_path(combo_id: combo.id)) %>
+            <%= link_to "#{combo.name}",users_combo_items_path(combo_id: combo.id), data: {"turbolinks" => false}%>
           </td>
           <td><%= combo.price %></td>
           <% if combo.id != 1 %>
@@ -54,10 +54,15 @@
             <% end %>
           </td>
           <td><%= attachment_image_tag combo_item.product,:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
-          <% if combo_item.product.status %>
-            <td>販売中</td>
-           <% else %>
+          <% @product_records = OrderRecord.where(product_id: combo_item.product.id) %>
+          <% @product_records.each do |record| %>
+            <% @quantity = record.quantity %>
+          <% end %>
+          
+          <% if combo_item.product.stock - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count * @quantity) <= 0 %>
             <td>売切</td>
+          <% else %>
+            <td>販売中</td>
           <% end %>
 
           <td><%= combo_item.combo.name %></td>
