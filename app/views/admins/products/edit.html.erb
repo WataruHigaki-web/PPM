@@ -18,10 +18,9 @@
         <th>ジャンル</th>
         <td><%= f.collection_select :product_kind_id,ProductKind.all, :id, :name %></td>
       </tr>
-
       <tr>
-        <th>販売ステータス</th>
-        <td><%= f.select :status,[['売切', false], ['販売中', true]] %>
+        <th>在庫数</th>
+        <td><%= f.number_field :stock %></td>
       </tr>
 
       </table>

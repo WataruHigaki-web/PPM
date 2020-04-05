@@ -1,9 +1,10 @@
 <%= current_admin.name %>さんようこそ
 <h2>管理者トップ</h2>
+<div class="wrap">
+<button class="button"><%= link_to '貸出返却',admins_orders_path %></button>
 
-<%= link_to '本日の貸し出し一覧',admins_orders_path %>
+<button class="button"><%= link_to '在庫',admins_orders_stock_path %></button>
 
-<%= link_to '本日の返却一覧',admins_orders_path %>
-検索窓を操作した画面に行きたい
 
-<%= link_to 'お問い合わせ一覧', '#' %>
+<button class="button"><%= link_to 'お問い合わせ',admins_questions_path %></button>
+</div>

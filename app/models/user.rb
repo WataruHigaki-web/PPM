@@ -11,7 +11,7 @@ class User < ApplicationRecord
   has_many :cart_items
   has_many :orders
   has_many :favorites
-  has_many :creditcards
+  has_many :pays
   has_many :out_points
   has_many :in_points
   attachment :profile_image

@@ -4,15 +4,6 @@ class Users::CartItemsController < ApplicationController
   def index
     if user_signed_in?
       @cart_items = current_user.cart_items
-    else
-      session[:cart_item].each do |cart_item|
-        binding.pry
-        @product = Product.find(cart_item["product_id"])
-        @combo = Combo.find(cart_item["combo_id"])
-        @quantity = cart_item["quantity"]
-      end
-      @products = @product.all
-      @combos = @combo.all
     end
   end
 
@@ -79,4 +70,5 @@ class Users::CartItemsController < ApplicationController
   def cart_item_params
     params.require(:cart_item).permit(:product_id, :combo_id, :quantity, :day, :user_id)
   end
+
 end

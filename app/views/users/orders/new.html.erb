@@ -1,6 +1,12 @@
 <h2>購入情報入力</h2>
 <%= form_with url:users_orders_save_path,method: :post do |f| %>
-<h4>クレジットカード選択</h4>
+<h4>クレジットカード</h4>
+
+<% current_user.pays.each do |pay|%>
+  クレジットナンバー:<%= pay.number %><br/>
+  クレジット名義:<%= pay.name %>
+<% end %>
+
 
 <h4>受取場所選択</h4>
   <%= f.select :get_status, Order.get_statuses.keys.to_a, {} %>

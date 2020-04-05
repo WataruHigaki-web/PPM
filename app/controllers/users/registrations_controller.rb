@@ -10,9 +10,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super
+      NotificationMailer.send_confirm_to_user(current_user).deliver
+  end
 
   # GET /resource/edit
   # def edit
@@ -38,8 +39,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
 
+  def user_params
+    params.require(:user).permit(:name,:name_kana,:zip_code,:address,:phone_number)
+  end
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params
   #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])

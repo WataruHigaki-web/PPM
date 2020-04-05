@@ -18,13 +18,12 @@ Refile.secret_key = '833b7dcf4d3e65223a6f92d638750bbb2e5a0af5db327be07c0615af34d
   end
 
   def after_sign_in_path_for(resource)
-    case resource
-    when Admin
+    if current_admin
       admins_root_path(current_admin)
-    when User || session[:cart_item].exist?
-      users_cart_items_save_path
-    else
+    elsif current_user && session[:cart_item] == nil
       users_root_path(current_user)
+    else
+      users_cart_items_save_path
     end
   end
 end
