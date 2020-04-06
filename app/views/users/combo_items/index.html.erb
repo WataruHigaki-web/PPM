@@ -59,7 +59,7 @@
             <% @quantity = record.quantity %>
           <% end %>
           
-          <% if combo_item.product.stock - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count * @quantity) <= 0 %>
+          <% if combo_item.product.stock.to_i - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count.to_i * @quantity.to_i) <= 0 %>
             <td>売切</td>
           <% else %>
             <td>販売中</td>
