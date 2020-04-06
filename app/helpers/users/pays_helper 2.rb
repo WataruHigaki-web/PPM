@@ -1,0 +1,2 @@
+module Users::PaysHelper
+end

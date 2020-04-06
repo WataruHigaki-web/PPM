@@ -55,6 +55,14 @@ ActiveRecord::Schema.define(version: 2020_04_05_085532) do
     t.string "combo_image_id"
   end
 
+  create_table "creditcards", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "customer_id"
+    t.integer "card_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "favorites", force: :cascade do |t|
     t.integer "user_id"
     t.integer "product_id"
@@ -92,6 +100,7 @@ ActiveRecord::Schema.define(version: 2020_04_05_085532) do
     t.datetime "updated_at", null: false
     t.integer "combo_id"
     t.integer "user_id"
+    t.integer "status"
     t.index ["combo_id"], name: "index_order_records_on_combo_id"
     t.index ["user_id"], name: "index_order_records_on_user_id"
   end
