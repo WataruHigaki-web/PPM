@@ -1,0 +1,14 @@
+<div class="like-link" id="like-link-<%= product.id %>">
+  <% if current_user.already_liked?(product) %>
+    <%= link_to users_product_likes_path(product),method: :delete,remote:true do %>
+      <span class="glyphicon glyphicon-heart"></span>
+    <% end %>
+
+  <% else %>
+
+    <%= link_to users_product_likes_path(product),method: :post,remote:true do %>
+      <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
+    <% end %>
+  <% end %>
+  <%= product.likes.count %>
+</div>
