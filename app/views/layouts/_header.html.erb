@@ -81,7 +81,9 @@
               <%= link_to 'TOP',root_path %>
             </li>
             <li>
-              <%= link_to '商品一覧',users_combo_items_path, data: {"turbolinks" => false} %>
+              <%= link_to users_combo_items_path, data: {"turbolinks" => false} do %>
+              <img src="bug.jpeg">
+              <% end %>
             </li>
             <li>
               <%= link_to users_cart_items_path do %>
