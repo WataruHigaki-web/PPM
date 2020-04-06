@@ -81,7 +81,6 @@ h1, h2, p {
   position:relative;
   height:100%;
   width:100%;
-  background:url('https://dl.dropbox.com/s/9u786zwyehzuvam/cliffSide_mini.jpg?dl=1') no-repeat 50% 50% fixed;
   background-size:200%;
   overflow:hidden;
 
@@ -92,7 +91,7 @@ h1, h2, p {
     font-size:80px;
     font-weight:200;
   }
-  
+
   &.fadeout{
     .optional-rainbow{
       display:block;
@@ -101,7 +100,7 @@ h1, h2, p {
     display:none;
     }
   }
-  
+
   &:before{
     display:block;
     position:absolute;
@@ -109,12 +108,12 @@ h1, h2, p {
     width:100%;
     z-index:5;
     content:"";
-    background:-webkit-linear-gradient(#30f89c, #352ce6, #fc5e9d); 
-    background: -moz-linear-gradient(left, #30f89c, #352ce6, #fc5e9d); 
-    background:linear-gradient(#30f89c, #352ce6, #fc5e9d); 
+    background:-webkit-linear-gradient(#30f89c, #352ce6, #fc5e9d);
+    background: -moz-linear-gradient(left, #30f89c, #352ce6, #fc5e9d);
+    background:linear-gradient(#30f89c, #352ce6, #fc5e9d);
     opacity:0.4;
   }
-  
+
   &:after{
     display:block;
     position:absolute;
@@ -122,13 +121,12 @@ h1, h2, p {
     left:0;
     content:"";
     width:100%;
-    height:6px; 
-    background: -webkit-linear-gradient(left, #30f89c, #352ce6, #fc5e9d); 
-    background: -moz-linear-gradient(left, #30f89c, #352ce6, #fc5e9d); 
+    height:6px;
+    background: -webkit-linear-gradient(left, #30f89c, #352ce6, #fc5e9d);
+    background: -moz-linear-gradient(left, #30f89c, #352ce6, #fc5e9d);
     background: linear-gradient(left, #30f89c, #352ce6, #fc5e9d);
-    
+
   }
-  
   .optional-rainbow{
     display:none;
     position:absolute;
@@ -136,13 +134,13 @@ h1, h2, p {
     left:0;
     width:100%;
     height:100%;
-    background: -webkit-linear-gradient(#30f89c, #352ce6, #fc5e9d); 
-    background: -moz-linear-gradient(#30f89c, #352ce6, #fc5e9d); 
+    background: -webkit-linear-gradient(#30f89c, #352ce6, #fc5e9d);
+    background: -moz-linear-gradient(#30f89c, #352ce6, #fc5e9d);
     background: linear-gradient(#30f89c, #352ce6, #fc5e9d);
     opacity:0.4;
     z-index:4;
   }
-  
+
 }
 
 
@@ -154,11 +152,11 @@ nav {
   z-index:20;
   width:100%;
   color:white;
-  
+
   >.container{
     position:relative;
   }
-  
+
   .navbar-brand{
     color:white;
     font-size:26px;
@@ -168,7 +166,7 @@ nav {
     position:absolute;
     right:0;
   }
-  
+
   > div{
     border-bottom:1px solid rgba(255,255,255,0.4);
   }
@@ -178,12 +176,12 @@ article{
   padding:3em 0;
   color:#545454;
   font-size:18px;
-  
+
   .article-right{
     max-width:400px;
     margin:0 auto;
   }
-  
+
   @media(max-width:767px){
     .navbar-right{
       margin-right:1em;
@@ -196,18 +194,18 @@ article{
       margin-bottom:2em;
     }
   }
-   
+
   p{
     margin:2em 0;
   }
-  
+
   h2{
     font-size:54px;
     font-weight:200;
     margin-top:0;
     text-transform:uppercase;
   }
-  
+
   img{
     border:3px solid #e6e6e6;
   }
@@ -230,7 +228,7 @@ article{
   border-radius:10px;
   box-shadow:inset 0 1px 2px rgba(0,0,0,0.2);
   transition:all .2s linear;
-  
+
   &:before{
     display:block;
     position:absolute;
@@ -244,10 +242,10 @@ article{
     left:0;
     transition:all .2s linear;
   }
-  
+
   &.on {
     background:rgba(44,255,44,0.5);
-    
+
     &:before{
       left:calc(100% - 20px);
     }

@@ -1,0 +1,56 @@
+<h2>貸出返却詳細</h2>
+
+<table>
+  <tr>
+    <th>注文id</th>
+    <th>注文者名</th>
+    <th>注文者名（カナ）</th>
+    <th>商品名</th>
+    <th>受取場所</th>
+    <th>返却場所</th>
+    <th>貸出返却ステータス</th>
+    <th>支払いステータス</th>
+    <th>担当者名</th>
+    <th>付与ポイントステータス</th>
+  </tr>
+
+  <tr>
+    <td><%= @order.id %></td>
+    <td>
+      <%= link_to admins_user_path(@order.user) do %>
+        <%= @order.user.name %>
+      <% end %>
+    </td>
+    <td><%= @order.user.name_kana %></td>
+      <td>
+        <% @order.order_records.each do |order_record| %>
+          <% if order_record.combo_id == 1 %>
+            <%= order_record.product.name %>
+          <% else %>
+            <%= order_record.combo.name %>
+          <% end %>
+        <% end %>
+      </td>
+      <td><%= @order.get_status %></td>
+      <td><%= @order.return_status %></td>
+
+      <%= form_with model:@order,url:admins_order_path(@order) do |f| %>
+        <td>
+        　<%= f.select :status, Order.statuses.keys.to_a, {} %>
+          <%= f.submit '更新',class: "btn btn-info" %>
+        </td>
+        <td>
+        　<%= f.select :pay_status,[['未支払', false], ['支払済', true]] %>
+        　<%= f.submit '更新',class: "btn btn-info" %>
+        </td>
+      <% end %>
+
+    <% if @order.give_point == true %>
+      <td>付与済</td>
+    <% else %>
+      <td>付与してません</td>
+    <% end %>
+  </tr>
+</table>
+
+<%= link_to '注文一覧へ戻る',admins_orders_path %>
