@@ -1,0 +1,15 @@
+<h2>よくある質問一覧</h2>
+
+<% @questions.each do |question| %>
+  Q:<%= question.question %><br/>
+  A:<%= question.answer %>
+  <%= link_to '編集する',edit_admins_question_path(question),method: :get, class: "btn btn-info" %>
+  <%= link_to '削除',admins_question_path(question),method: :delete,class: "btn btn-info" %>
+<% end %>
+
+<h4>よくある質問作成フォーム</h4>
+<%= form_with model: @question,url: admins_questions_path,method: :post do |f| %>
+  Q:<%= f.text_field :question %><br/>
+  A:<%= f.text_field :answer %>
+  <%= f.submit '送信',class: "btn btn-info" %>
+<% end %>
