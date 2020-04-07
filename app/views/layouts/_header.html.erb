@@ -34,7 +34,7 @@
               <% end %>
             </li>
             <li class="header-content">
-              <%= link_to 'logout',destroy_user_session_path(current_user),method: :delete %>
+              <%= link_to 'logout',destroy_user_session_path,method: :delete %>
             </li>
 
           <% elsif admin_signed_in? %>
@@ -51,7 +51,7 @@
               <%= link_to 'マイページ',admins_admin_path(current_admin) %>
             </li>
             <li>
-              <%= link_to 'logout',destroy_admin_session_path(current_user),method: :delete %>
+              <%= link_to 'logout',destroy_admin_session_path,method: :delete %>
             </li>
 
           <% elsif user_signed_in? && current_user.status == false || user_signed_in? && current_user.is_deleted == true %>
@@ -73,7 +73,7 @@
               <%= link_to 'signup',new_user_registration_path %>
             </li>
             <li>
-              <%= link_to 'logout',destroy_user_session_path(current_user),method: :delete %>
+              <%= link_to 'logout',destroy_user_session_path,method: :delete %>
             </li>
 
           <% else %>

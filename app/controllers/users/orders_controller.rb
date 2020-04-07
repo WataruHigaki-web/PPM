@@ -104,6 +104,10 @@ class Users::OrdersController < ApplicationController
       zip_code = params["zip_code"]
       address = params["address"]
     end
+    binding.pry
+    if params["status"].blank?
+      params["status"] = "貸出中"
+    end
     order.update(
       day:  params["day"],
       finish_date: params["finish_date"],
