@@ -1,7 +1,11 @@
-
-<%= current_user.name %>さんのページ
-<% if current_user.status == false %>
-　<p>あなたは無効会員です。画面をロックしました</p>
+<h2><%= current_user.name %>さんのページ</h2>
+<% if current_user.status == false || current_user.is_deleted == true %>
+　<p>あなたは無効会員または退会手続済会員です。画面をロックしています</p>
+  <h4>ご利用再開ご希望の方</h4>
+  <h6>申請後、登録メールアドレスにてご対応させていただきます</h6>
+  <%= form_with model: @user,url: users_path(current_user),method: :patch do |f| %>
+   <%= f.submit '利用再開申請を送信',class: "btn btn-info","data-confirm" => "本当に利用再開申請を送信しますか？" %>
+  <% end %>
 <% else %>
   <%= link_to users_users_point_path(current_user) do %>
    <p>現在の保有ポイント数:<%= @point %>pt</p>

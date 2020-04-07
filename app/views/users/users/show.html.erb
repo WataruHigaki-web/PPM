@@ -39,20 +39,20 @@
   <tr>
     <th>退会</th>
     <td>
-      <%= link_to '退会する',users_users_confirm_path %>
+      <%= link_to '退会する',users_users_confirm_path,class: "btn btn-danger" %>
     </td>
   </tr>
 
   <tr>
     <th>注文履歴</th>
     <td>
-      <%= link_to '一覧を見る',users_orders_path(current_user) %>
+      <%= link_to '一覧を見る',users_orders_path(current_user),class: "btn btn-info" %>
     </td>
   </tr>
   <tr>
     <th>お問い合わせ</th>
     <td>
-      <%= link_to 'お問い合わせ',users_questions_path %>
+      <%= link_to 'お問い合わせ',users_questions_path(current_user),class: "btn btn-info" %>
     </td>
   </tr>
 </table>

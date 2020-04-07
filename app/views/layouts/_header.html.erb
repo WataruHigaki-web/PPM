@@ -6,35 +6,35 @@
           <%= link_to "PPM",root_path %>
         </nav>
         <ul class="nav navbar-nav navbar-right">
-          <% if user_signed_in? && current_user.status == true %>
-            <li>
+          <% if user_signed_in? && current_user.status == true && current_user.is_deleted == false %>
+            <li class="header-content">
               <%= link_to users_root_path(current_user), data: {"turbolinks" => false} do %>
                 <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
               <% end %>
             </li>
-            <li>
+            <li class="header-content">
               <%= link_to users_combo_items_path, data: {"turbolinks" => false} do %>
                 <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
                 <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
               <% end %>
             </li>
-            <li>
+            <li class="header-content">
               <%= link_to users_cart_items_path(current_user) do %>
                 <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
               <% end %>
             </li>
-            <li>
+            <li class="header-content">
               <%= link_to users_products_path(current_user) do %>
                 <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
               <% end %>
             </li>
-            <li>
+            <li class="header-content">
               <%= link_to users_user_path(current_user) do %>
                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
               <% end %>
             </li>
-            <li>
-              <%= link_to 'logout',destroy_user_session_path,method: :delete %>
+            <li class="header-content">
+              <%= link_to 'logout',destroy_user_session_path(current_user),method: :delete %>
             </li>
 
           <% elsif admin_signed_in? %>
@@ -51,10 +51,10 @@
               <%= link_to 'マイページ',admins_admin_path(current_admin) %>
             </li>
             <li>
-              <%= link_to 'logout',destroy_admin_session_path,method: :delete %>
+              <%= link_to 'logout',destroy_admin_session_path(current_user),method: :delete %>
             </li>
 
-          <% elsif user_signed_in? && current_user.status == false %>
+          <% elsif user_signed_in? && current_user.status == false || user_signed_in? && current_user.is_deleted == true %>
             <li>
               <%= link_to 'TOP',root_path %>
             </li>
@@ -73,27 +73,25 @@
               <%= link_to 'signup',new_user_registration_path %>
             </li>
             <li>
-              <%= link_to 'logout',destroy_user_session_path,method: :delete %>
+              <%= link_to 'logout',destroy_user_session_path(current_user),method: :delete %>
             </li>
 
           <% else %>
-            <li>
+            <li class="header-content">
               <%= link_to 'TOP',root_path %>
             </li>
             <li>
-              <%= link_to users_combo_items_path, data: {"turbolinks" => false} do %>
-              <img src="bug.jpeg">
-              <% end %>
-            </li>
-            <li>
+              <%= link_to '商品一覧',users_combo_items_path, data: {"turbolinks" => false}  %>
+            </li class="header-content">
+            <li class="header-content">
               <%= link_to users_cart_items_path do %>
                 <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
               <% end %>
             </li>
-            <li>
+            <li class="header-content">
               <%= link_to 'login',new_user_session_path %>
             </li>
-            <li>
+            <li class="header-content">
               <%= link_to 'signup',new_user_registration_path %>
             </li>
           </div>

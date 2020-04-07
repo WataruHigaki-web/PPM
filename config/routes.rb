@@ -45,6 +45,8 @@ Rails.application.routes.draw do
     get 'orders/thanks'
     delete 'cart_items/destroy_all'
     get 'cart_items/save'
+    patch 'users/:id', to: 'users#withdrawal'
+    put 'users/:id', to: 'users#withdrawal'
     resources :users,        only: %i[show edit update]
     resources :products,     only: %i[index show] do
       resource :favorites, only: %i[create destroy]
@@ -55,7 +57,7 @@ Rails.application.routes.draw do
     resources :cart_items,   only: %i[index update destroy create]
     resources :pays,  only: %i[index new destroy create edit update]
     resources :combo_items,  only: [:index]
-    resources :questions,    only:[:index]
+    resources :questions,    only:[:index,:create,:destroy]
   end
 
   if Rails.env.development?

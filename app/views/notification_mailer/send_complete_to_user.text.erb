@@ -50,12 +50,27 @@
   <% end %>
 <% end %>
 
+小計/１日レンタルあたり
+
+<% @order.order_records.each do |order_record| %>
+  <% if order_record.combo_id == 1 %>
+    <%= order_record.product.name %>
+    <%= order_record.end_price %>円
+  <% else %>
+    <%= order_record.combo.name %>
+    <%= order_record.end_price %>円
+  <% end %>
+<% end %>
+
+ボーナス
 
 
-ご請求内容
+
+
+最終請求内容
 <% @sum = 0 %>
 <% @order.order_records.each do |order_record| %>
-  <% @sum += (order_record.end_price.to_i) * order_record.quantity.to_i %>
+  <% @sum += (order_record.end_price.to_i) * order_record.quantity.to_i * @order.day %>
 <% end %>
 <%= @sum %>円
 

@@ -14,7 +14,9 @@ class User < ApplicationRecord
   has_many :pays
   has_many :out_points
   has_many :in_points
+  has_many :inquiries
   attachment :profile_image
+
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

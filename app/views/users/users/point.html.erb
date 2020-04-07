@@ -27,14 +27,17 @@
           <th>ポイント</th>
         </tr>
         <% @out_points.each do |point| %>
-          <tr>
-            <td>
-              <%= link_to users_order_path(point.order) do %>
-                <%= point.created_at.strftime("%Y-%m-%d %H:%M") %>
-              <% end %>
-            </td>
-            <td><%= point.point %>pt</td>
-          </tr>
+          <% unless point.point.nil? %>
+            <tr>
+              <td>
+
+                <%= link_to users_order_path(point.order) do %>
+                  <%= point.created_at.strftime("%Y-%m-%d %H:%M") %>
+                <% end %>
+              </td>
+              <td><%= point.point %>pt</td>
+            </tr>
+          <% end %>
         <% end %>
       </table>
   </div>

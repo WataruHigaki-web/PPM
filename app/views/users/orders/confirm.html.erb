@@ -100,7 +100,7 @@
 
     </script>
 
-    <%= f.submit '注文を確定',class: "btn btn-danger",id: "button" %>
+    <%= f.submit '注文を確定',class: "btn btn-danger",id: "button","data-confirm" => "注文を確定しますか？（利用日時や商品内容は正しいですか？) "%>
 <% end %>
 
 <h3><%= current_user.name %>さんへの単品商品おすすめ</h3>
@@ -111,7 +111,6 @@
       <div id="all"><%= combo_item.product.id %></div>
     <% end %>
   <% end %>
- <p></p>
   <% @cart_items.each do |item| %>
     <% if item.combo_id == 1 %>
       <div id="have"><%= item.product.id %></div>

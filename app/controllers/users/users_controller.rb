@@ -31,10 +31,20 @@ class Users::UsersController < ApplicationController
     @point = @in_points.sum(:point) - @out_points.sum(:point)
   end
 
+  def withdrawal
+    binding.pry
+    user = User.find(params[:id])
+    user.update(
+     is_deleted: true
+    )
+    flash[:notice] = "退会手続が完了しました。復活の際は再開手続をお願いいたします。今までのご利用ありがとうございました。"
+    redirect_to users_root_path
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:user_id,:name, :name_kana, :zip_code, :address, :phone_nunber, :email,:profile_image)
+    params.require(:user).permit(:user_id,:name, :name_kana, :zip_code, :address, :phone_nunber, :email,:profile_image,:is_deleted)
   end
 
   def ensure_correct_user
