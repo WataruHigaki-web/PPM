@@ -14,7 +14,7 @@ class User < ApplicationRecord
   has_many :pays
   has_many :out_points
   has_many :in_points
-  has_many :inquiries
+  has_many :inquiries, dependent: :destroy
   attachment :profile_image
 
 
