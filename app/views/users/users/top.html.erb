@@ -61,7 +61,7 @@
     延滞の方は1,2を記入後、延滞情報送信を押してください。<br/>
     郵送返却のお客様は、郵送完了後、３,4を記入後郵送完了ボタンを押してください。<br/>
       <table class="table table-bordered">
-        <tr>
+        <tr class="d3">
           <th class="danger">予定返却日</th>
           <td><%= order.finish_date %></td>
         </tr>
@@ -115,7 +115,7 @@
             <th class="danger">2.延滞をご希望の方はこちら(ご返却日時の選択)</th>
             <td id="setting">
               <div id="start_date"><%= order.start_date %></div>~
-              <%= date_field_tag :finish_date,"",class: "finish_date",'data-start-date': order.start_date %>
+              <%= date_field_tag :finish_date,"",class: "finish_date",'data-start-date': order.start_date, 'data-finish-date': order.finish_date %>
               <%= f.submit '延滞情報送信',data:{confirm: "終了日時を本当に変更しますか？変更した日付より前の日付には変更はできません"},class: "btn btn-info", id: "button" %>
             </td>
           </tr>
@@ -149,47 +149,52 @@
   <% end %>
 <% end %>
 <script type="text/javascript">
-      // var form = document.getElementById('form');
-      // form.style.visibility = 'hidden';
-      $('input[name="order[return_status]"]').parent().find(".form_class").hide();
-      $('input[name="order[return_status]"]').change(function(){
-        if($(this).val() == "2"){
-          $(this).parent().find(".form_class").show();
-        }else{
-          $(this).parent().find(".form_class").hide();
-        }
-      });
+
+  // var form = document.getElementById('form');
+  // form.style.visibility = 'hidden';
+  $('input[name="order[return_status]"]').parent().find(".form_class").hide();
+  $('input[name="order[return_status]"]').change(function(){
+    if($(this).val() == "2"){
+      $(this).parent().find(".form_class").show();
+    }else{
+      $(this).parent().find(".form_class").hide();
+    }
+  });
 
 
+  $('.finish_date').change(function() {
+    console.log($(this).data("start-date"));
+    console.log(document.getElementById("finish_date").value);
+    var d1 = new Date($(this).data("start-date"));
+    console.log(d1);
+    var d2 = new Date(document.getElementById("finish_date").value);
+    var d3 = new Date($(this).data("finish-date"));
+    var d4 = d2 - d3
+    if (d4 <= 0){
+      document.getElementById("button").disabled = true;
+    }else{
+      get_date(d1, d2)
+    }
+  });
 
-      $('.finish_date').change(function() {
-        console.log($(this).data("start-date"));
-        console.log(document.getElementById("finish_date").value);
-        var d1 = new Date($(this).data("start-date"));
-        console.log(d1);
-        var d2 = new Date(document.getElementById("finish_date").value);
-        console.log(d2);
-        get_date(d1, d2)
-      });
-
-      function get_date(start_date, finish_date){
-        if (start_date && finish_date){
-          var date = (finish_date - start_date)/(24*60*60*1000);
-          $('#date').text(date + '日間');
-          if (Math.sign(date) == -1){
-            document.getElementById("button").disabled = true;
-          }else{
-            document.getElementById("button").disabled = false;
-            var q = document.createElement('input');
-            q.type = 'hidden';
-            q.name = "day";
-            q.value = date;
-            document.forms[0].appendChild(q);
-            console.log(document.forms[0]);
-          }
-        }else{
-          alert ('利用期間の入力に誤りがあります');
-          return
-        }
+  function get_date(start_date, finish_date){
+    if (start_date && finish_date){
+      var date = (finish_date - start_date)/(24*60*60*1000);
+      $('#date').text(date + '日間');
+      if (Math.sign(date) == -1){
+        document.getElementById("button").disabled = true;
+      }else{
+        document.getElementById("button").disabled = false;
+        var q = document.createElement('input');
+        q.type = 'hidden';
+        q.name = "day";
+        q.value = date;
+        document.forms[0].appendChild(q);
+        console.log(document.forms[0]);
       }
+    }else{
+      alert ('利用期間の入力に誤りがあります');
+      return
+    }
+  }
 </script>

@@ -29,3 +29,53 @@
   <% end %>
 </table>
 </div>
+<h4>利用再開申請ユーザー</h4>
+<table class="table table-bordered">
+  <tr>
+    <th>会員ID</th>
+    <th>氏名</th>
+    <th>メールアドレス</th>
+    <th>ステータス</th>
+  </tr>
+  <% @users.each do |user| %>
+    <% if user.is_deleted == false && user.status == false %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= link_to user.name,admins_user_path(user) %>
+        </td>
+        <td><%= user.email %></td>
+
+          <% if user.status %>
+            <td>有効</td>
+          <% else %>
+            <td>無効</td>
+          <% end %>
+      </tr>
+    <% end %>
+  <% end %>
+ </table>
+<h4>退会済ユーザー</h4>
+<table class="table table-bordered">
+  <tr>
+    <th>会員ID</th>
+    <th>氏名</th>
+    <th>メールアドレス</th>
+    <th>ステータス</th>
+  </tr>
+  <% @users.each do |user| %>
+    <% if user.is_deleted == true %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= link_to user.name,admins_user_path(user) %>
+        </td>
+        <td><%= user.email %></td>
+
+          <% if user.status %>
+            <td>有効</td>
+          <% else %>
+            <td>無効</td>
+          <% end %>
+      </tr>
+    <% end %>
+  <% end %>
+</table>

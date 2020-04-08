@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   namespace :admins do
     root 'orders#top'
     get 'orders/stock'
+    patch 'admins/:id', to: 'questions#update2'
+    put 'admins/:id', to: 'questions#update2'
     resources :users, only: %i[index show edit update] do
       collection do
         get :search
@@ -33,7 +35,7 @@ Rails.application.routes.draw do
     resources :combos,       only: %i[index edit create update destroy]
     resources :combo_items,  only: %i[show index create update destroy]
     resources :admins,       only: %i[index show edit update]
-    resources :questions,    only: %i[index edit update create destroy update]
+    resources :questions,    only: %i[index show edit update create destroy update]
   end
 
   namespace :users do

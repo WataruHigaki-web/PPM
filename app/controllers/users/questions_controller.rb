@@ -9,7 +9,6 @@ class Users::QuestionsController < ApplicationController
   end
 
   def create
-    binding.pry
     inquiry = Inquiry.new(inquiry_params)
     inquiry.user_id == current_user.id
     if inquiry.save
@@ -28,7 +27,7 @@ class Users::QuestionsController < ApplicationController
   private
 
   def inquiry_params
-    params.require(:inquiry).permit(:content,:user_id)
+    params.require(:inquiry).permit(:content,:user_id,:status,:staff)
   end
 
   def ensure_correct_user

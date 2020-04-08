@@ -32,13 +32,20 @@ class Users::UsersController < ApplicationController
   end
 
   def withdrawal
-    binding.pry
     user = User.find(params[:id])
-    user.update(
-     is_deleted: true
-    )
-    flash[:notice] = "退会手続が完了しました。復活の際は再開手続をお願いいたします。今までのご利用ありがとうございました。"
-    redirect_to users_root_path
+    if user.is_deleted == true
+      user.update(
+       is_deleted: false
+      )
+      flash[:notice] = "利用再開申請を送信しました。PPM管理者からメールにてご対応させていただきます。"
+    else
+      user.update(
+       is_deleted: true,
+       status: false
+      )
+      flash[:notice] = "退会手続が完了しました。復活の際は再開手続をお願いいたします。今までのご利用ありがとうございました。"
+    end
+      redirect_to users_root_path(current_user)
   end
 
   private
