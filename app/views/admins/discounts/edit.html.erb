@@ -1,0 +1,29 @@
+<h2>クーポン編集画面</h2>
+
+<h3>ジャンル</h3>
+<%= form_with model: @discount,url:admins_discount_path do |f| %>
+  <%= f.label :クーポン名 %>
+  <%= f.text_field :name %><br/>
+
+  <%= f.label :クーポン番号 %>
+  <%= f.text_field :number %><br/>
+
+  <%= f.label :説明 %>
+  <%= f.text_area :introduction %><br/>
+
+  <%= f.label :割引金額　%>
+  <%= f.text_field :price %><br/>
+
+  <%= f.label :期間 %>
+  <%= date_field_tag :start_date %>〜
+  <%= date_field_tag :finish_date %>０時まで<br/>
+
+  <%= f.radio_button :status,true %>
+  <%= f.label :有効 %>
+
+  <%= f.radio_button :status,false %>
+  <%= f.label :無効 %><br/>
+
+
+  <%= f.submit '変更を保存する',class:'btn btn-info' %>
+  <% end %>

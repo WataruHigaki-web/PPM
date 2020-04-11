@@ -135,48 +135,77 @@
     </table>
 
 
-  <h4>料金見積もり表（レンタル日数を記入）</h4>
+  <h4>料金早見表（レンタル日数を記入）</h4>
     <table class="table table-bordered">
       <tr>
-        <th>合計金額</th>
+        <th>お見積もり金額</th>
         <td id="cart_item_sum"><%= @sum %>  円</td>
       </tr>
       <tr>
         <th>レンタル日数</th>
         <td>
-        <%#= form_with model:cart_item,url:users_cart_item_path(cart_item) do |f| %>
-        <select id="day">
-          <option value="0">--</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-        </select>日間
-          <%#= f.select :day,[1,2,3,4,5,6,7,8,9,10] %>
-         <%# end %>
-
-         <script type="text/javascript">
-          var sum = Number("<%= @sum %>");
-           $('#day').change(function(){
-             var val = Number($(this).val());
-             $('#cart_item_sum').text(String(sum * val) + ' 円');
-           });
-         </script>
+          <select id="day">
+            <option value="0">--</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>日間
         </td>
       </tr>
-
+      <tr>
+        <th>クーポン番号を入力
+          <%= form_tag(users_cart_items_path, method: :get) do %>
+            <%= text_field(@search_content, :search) %>
+            <%= submit_tag '適用',class: "btn btn-info" %>
+          <% end %>
+        </th>
+        <td id="discount"value="@discount.price">
+          <% unless @discount.nil? %>
+            <%= @discount.name %>:
+            <%= @discount.price %>円割引
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <th>ポイントイベント(<%= @point_event.name %>)</th>
+        <td>今ならポイント<%= @point_event.bonus %>倍</td>
+      </tr>
+      <tr>
+        <th>ポイント獲得数</th>
+        <td id="point_sum"><%= (@sum / 100).floor * @point_event.bonus %>pt</td>
+      </tr>
     </table>
 <% end %>
+<script type="text/javascript">
+      var sum = Number("<%= @sum %>");
+      var sum2 = Number("<%= (@sum / 100).floor * @point_event.bonus %>");
+       $('#day').change(function(){
+         var val = Number($(this).val());
+         if (Number("<%= @discount.price %>") != 0){
+           var val2 = Number("<%= @discount.price %>");
+         }else{
+           var val2 = 0
+         }
+         $('#cart_item_sum').text(String(sum * val) - val2 + '円');
+         $('#point_sum').text(String(sum2 * val) - (val2 / 100) + 'pt');
+       });
+</script>
+
 <% if user_signed_in? %>
-  <%= link_to '購入手続きへ進む',new_users_order_path(current_user),class: "btn btn-primary" %>
+  <% unless current_user.status == false || current_user.is_deleted == true %>
+    <%= link_to '購入手続きへ進む',new_users_order_path(current_user),class: "btn btn-info" %>
+  <% else %>
+    <h4>購入手続きへは進むには、利用再開申請または管理者へお問い合わせください</h4><br/>
+  <% end %>
 <% else %>
-   <%= link_to 'ユーザー登録して注文する',new_user_registration_path,class: "btn btn-primary" %>
+   <%= link_to 'ユーザー登録して注文する',new_user_registration_path,class: "btn btn-info" %>
 <% end %>
 
-  <%= link_to '買い物を続ける',users_combo_items_path,class: "btn btn-primary", data: {"turbolinks" => false} %>
+  <%= link_to '買い物を続ける',users_combo_items_path,class: "btn btn-info", data: {"turbolinks" => false} %>

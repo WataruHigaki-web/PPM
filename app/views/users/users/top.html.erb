@@ -1,17 +1,18 @@
 <h2><%= current_user.name %>さんのページ</h2>
+
 <% if current_user.status == false || current_user.is_deleted == true %>
 　<p>あなたは無効会員または退会手続済会員です。画面をロックしています</p>
-  <h4>ご利用再開ご希望の方</h4>
-  <h6>申請後、登録メールアドレスにてご対応させていただきます</h6>
-  <%= form_with model: @user,url: users_path(current_user),method: :patch do |f| %>
-   <%= f.submit '利用再開申請を送信',class: "btn btn-info","data-confirm" => "本当に利用再開申請を送信しますか？" %>
-  <% end %>
+    <h4>ご利用再開ご希望の方</h4>
+      <h6>申請後、登録メールアドレスにてご対応させていただきます</h6>
+        <%= form_with model: @user,url: users_path(current_user),method: :patch do |f| %>
+          <%= f.submit '利用再開申請を送信',class: "btn btn-info","data-confirm" => "本当に利用再開申請を送信しますか？" %>
+        <% end %>
 <% else %>
   <%= link_to users_users_point_path(current_user) do %>
-   <p>現在の保有ポイント数:<%= @point %>pt</p>
+    <p>現在の保有ポイント数:<%= @point %>pt</p>
   <% end %>
 
-  <h2>注文予約一覧</h2>
+<h2>注文予約一覧</h2>
   <% @orders.each do |order|%>
     <% if order.status == "予約受付中" %>
       <table class="table table-bordered">
@@ -50,12 +51,13 @@
           <th class="info">予約をキャンセル</th>
           <td><%= link_to 'この注文をキャンセルする',users_order_path(order),method: :delete,data:{confirm: "本当に削除しますか？"},class: "btn btn-info" %></td>
         </tr>
-      </table>
-    <% end %>
+    </table>
+  <% elsif @order_reserve.empty? %>
+    <h4>現在予約がありません</h4>
   <% end %>
+<% end %>
 
-  <h2>未返却物一覧</h2>
-
+<h2>未返却物一覧</h2>
   <% @orders.each do |order|%>
     <% if order.status == "貸出中" %>
     延滞の方は1,2を記入後、延滞情報送信を押してください。<br/>
@@ -100,6 +102,8 @@
           <tr>
             <th class="danger">1.郵送返却方法の変更(延ご希望の方)</th>
               <td id="radio_all">
+               <!--  <%= f.radio_button :return_status,4 %>
+                上記と同様<br/> -->
                 <%= f.radio_button :return_status,0 %>受取場所と同様<br/>
                 <%= f.radio_button :return_status,1 %>現住所から郵送返却<br/>
                 <%= current_user.zip_code %>
@@ -111,6 +115,7 @@
                 </div>
               </td>
           </tr>
+
           <tr>
             <th class="danger">2.延滞をご希望の方はこちら(ご返却日時の選択)</th>
             <td id="setting">
@@ -120,10 +125,13 @@
             </td>
           </tr>
         <% end %>
+
         <%= form_with model:order,url:users_order_path(order),method: :patch do |f| %>
           <tr>
             <th class="danger">３.郵送返却方法の変更(郵送返却完了の方)</th>
               <td id="radio_all">
+               <!--  <%= f.radio_button :return_status,4,checked: "checked" %>
+                上記と同様<br/> -->
                 <%= f.radio_button :return_status,0 %>受取場所と同様<br/>
                 <%= f.radio_button :return_status,1 %>現住所から郵送返却<br/>
                 <%= current_user.zip_code %>
@@ -135,23 +143,25 @@
                 </div>
               </td>
           </tr>
+
           <tr>
             <th class="danger">3:郵送返却完了の方はチェックと完了ボタンをPUSH!</th>
             <td>
-              <%= f.radio_button :status,"郵送中" %>ここをチェック
-              <%= f.submit '郵送完了',data:{confirm: "本当に郵送を完了しましたか？"},class: "btn btn-info",id: "button" %>
+              <%= f.radio_button :status,"郵送中",class: "order_status" %>ここをチェック
+              <%= f.submit '郵送完了',data:{confirm: "本当に郵送を完了しましたか？"},class: "btn btn-info",id: "button2" %>
               <%= link_to '詳細',users_order_path(order) %>
             </td>
           </tr>
         <% end %>
       </table>
+    <% elsif @order_lending.blank? %>
+      <h4>現在返却物がありません</h4>
     <% end %>
   <% end %>
 <% end %>
+
 <script type="text/javascript">
 
-  // var form = document.getElementById('form');
-  // form.style.visibility = 'hidden';
   $('input[name="order[return_status]"]').parent().find(".form_class").hide();
   $('input[name="order[return_status]"]').change(function(){
     if($(this).val() == "2"){
@@ -161,17 +171,21 @@
     }
   });
 
+  document.getElementById("button").disabled = true;
+  document.getElementById("button2").disabled = true;
+
+  $('input[name="order[status]"]').change(function() {
+    document.getElementById("button2").disabled = false;
+  });
+
 
   $('.finish_date').change(function() {
-    console.log($(this).data("start-date"));
-    console.log(document.getElementById("finish_date").value);
     var d1 = new Date($(this).data("start-date"));
-    console.log(d1);
     var d2 = new Date(document.getElementById("finish_date").value);
     var d3 = new Date($(this).data("finish-date"));
     var d4 = d2 - d3
-    if (d4 <= 0){
-      document.getElementById("button").disabled = true;
+    if (d4 >= 0){
+      document.getElementById("button").disabled = false;
     }else{
       get_date(d1, d2)
     }
@@ -181,9 +195,7 @@
     if (start_date && finish_date){
       var date = (finish_date - start_date)/(24*60*60*1000);
       $('#date').text(date + '日間');
-      if (Math.sign(date) == -1){
-        document.getElementById("button").disabled = true;
-      }else{
+      if (Math.sign(date) != -1){
         document.getElementById("button").disabled = false;
         var q = document.createElement('input');
         q.type = 'hidden';

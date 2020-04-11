@@ -31,6 +31,7 @@ class Users::OrdersController < ApplicationController
     session[:order]['start_date'] = params['start_date']
     session[:order]['finish_date'] = params['finish_date']
     session[:order]['day'] = params['day']
+    session['pay'] = params['pay']
     redirect_to users_orders_confirm_path
   end
 
@@ -54,7 +55,8 @@ class Users::OrdersController < ApplicationController
       finish_date:   session[:order]['finish_date'],
       day:           session[:order]['day'],
       create_point:  params['create_point'],
-      status: 0
+      status: 0,
+      pay_id: session['pay']
     )
     order.user_id = current_user.id
     order.save
@@ -100,22 +102,28 @@ class Users::OrdersController < ApplicationController
       zip_code = current_user.zip_code
       address = current_user.address
     else
-      return_status = nil
-      zip_code = params["zip_code"]
-      address = params["address"]
+      return_status = params[:order]["return_status"]
+      zip_code = params[:order]["zip_code"]
+      address = params[:order]["address"]
     end
-    binding.pry
-    if params["status"].blank?
-      params["status"] = "貸出中"
+    if params[:order]["status"].blank?
+      params[:order]["status"] = "貸出中"
+      order.update(
+        day:  params["day"],
+        finish_date: params["finish_date"],
+        return_status: return_status,
+        zip_code: zip_code,
+        address:  address,
+        status: params[:order]["status"]
+        )
+    else
+      order.update(
+        return_status: return_status,
+        zip_code: zip_code,
+        address:  address,
+        status: params[:order]["status"]
+        )
     end
-    order.update(
-      day:  params["day"],
-      finish_date: params["finish_date"],
-      return_status: return_status,
-      zip_code: zip_code,
-      address:  address,
-      status: params["status"]
-      )
     flash[:notice] = '返却情報を送信しました。'
     redirect_to users_root_path(current_user)
   end
@@ -133,7 +141,7 @@ class Users::OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:get_status, :zip_code, :address, :return_status, :start_date, :finish_date, :user_id, :day,:status,:create_point)
+    params.require(:order).permit(:get_status, :zip_code, :address, :return_status, :start_date, :finish_date, :user_id, :day,:status,:create_point,:pay_id)
   end
 
   def ensure_correct_user

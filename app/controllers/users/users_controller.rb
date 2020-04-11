@@ -23,6 +23,8 @@ class Users::UsersController < ApplicationController
     @in_points = current_user.in_points
     @out_points = current_user.out_points
     @point = @in_points.sum(:point) - @out_points.sum(:point)
+    @order_reserve = Order.where(user_id: current_user.id).where(status: "予約受付中")
+    @order_lending =  Order.where(user_id: current_user.id).where(status: "貸出中")
   end
 
   def point

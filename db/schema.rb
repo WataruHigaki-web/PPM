@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_08_052856) do
+ActiveRecord::Schema.define(version: 2020_04_10_090345) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -59,6 +59,18 @@ ActiveRecord::Schema.define(version: 2020_04_08_052856) do
     t.integer "user_id"
     t.integer "customer_id"
     t.integer "card_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "discounts", force: :cascade do |t|
+    t.integer "number"
+    t.string "name"
+    t.text "introduction"
+    t.integer "price"
+    t.date "start_date"
+    t.date "finish_date"
+    t.boolean "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -129,6 +141,9 @@ ActiveRecord::Schema.define(version: 2020_04_08_052856) do
     t.boolean "pay_status", default: false, null: false
     t.boolean "give_point", default: false, null: false
     t.integer "status"
+    t.integer "pay_id"
+    t.integer "point_event_id"
+    t.integer "discount_id"
   end
 
   create_table "out_points", force: :cascade do |t|
@@ -145,6 +160,16 @@ ActiveRecord::Schema.define(version: 2020_04_08_052856) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "point_events", force: :cascade do |t|
+    t.string "name"
+    t.integer "bonus"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.date "start_date"
+    t.date "finish_date"
+    t.boolean "status", default: false, null: false
   end
 
   create_table "product_comments", force: :cascade do |t|

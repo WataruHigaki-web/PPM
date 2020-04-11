@@ -1,9 +1,9 @@
 <h2>注文情報確認</h2>
 <%= form_with model: @order,url:users_orders_path,mothod: :post do |f| %>
   <p>注文者名:<%= current_user.name %></p>
-  <p>クレジットカード情報:
-    番号:
-    名義:
+  <p>クレジットカード情報<br/>
+    番号:<%= Pay.find(session["pay"]).number %><br/>
+    名義:<%= Pay.find(session["pay"]).name %>
     </p>
   <p>受取場所:<%= session[:order]["get_status"] %></p>
   <p>返却場所:

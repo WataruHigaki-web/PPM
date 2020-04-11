@@ -2,6 +2,8 @@
 
 class Order < ApplicationRecord
   belongs_to :user
+  belongs_to :discount
+  belongs_to :point_event
   has_many :order_records, dependent: :destroy
   has_one :in_point, dependent: :destroy
   has_one :out_point, dependent: :destroy

@@ -52,9 +52,7 @@
 
          <tr>
            <th>個数</th>
-           <td>
-             <%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %>
-           </td>
+           <td><%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %></td>
          </tr>
 
          <tr>
@@ -64,9 +62,9 @@
            </td>
          </tr>
     </table>
-      <%= link_to '編集する',edit_admins_product_path(@product) %>
+      <%= link_to '編集する',edit_admins_product_path(@product), class: "btn btn-info" %>
 
-      <%= f.submit '上記セットアイテムに追加',class: "btn btn-primary" %>
+      <%= f.submit '上記セットアイテムに追加', class: "btn btn-info" %>
     </div>
   <% end %>
 </div>
