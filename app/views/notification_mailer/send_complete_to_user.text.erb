@@ -28,7 +28,8 @@
 <%= @order.day %>日間
 
 クレジット情報
-<%#= @order.credit_number %>
+番号:<%= Pay.find(@order.pay_id).number %></br/>
+名義:<%= Pay.find(@order.pay_id).name %>
 
 貸し出し返却ステータス
 <%= @order.status %>

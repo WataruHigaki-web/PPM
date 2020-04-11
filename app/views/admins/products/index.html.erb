@@ -35,16 +35,10 @@
 
   <% @products.each do |product| %>
     <tr>
-      <td>
-        <%= link_to product.id,admins_product_path(product.id) %>
-      </td>
-      <td>
-        <%= product.name %>
-      </td>
+      <td><%= link_to product.id,admins_product_path(product.id) %></td>
+      <td><%= product.name %></td>
 
-      <td>
-        <%= product.product_kind.name %>
-      </td>
+      <td><%= product.product_kind.name %></td>
 
       <td><%= product.stock %></td>
       <% @product_records = OrderRecord.where(product_id: product.id) %>

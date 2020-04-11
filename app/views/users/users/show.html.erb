@@ -1,8 +1,8 @@
 <h2>マイページ</h2>
 <h4>
   登録情報
-  <%= link_to '編集する',edit_users_user_path(current_user) %>
-  <%= link_to 'クレジット情報',users_pays_path(current_user) %>
+  <%= link_to '編集する',edit_users_user_path(current_user),class: "btn btn-info" %>
+  <%= link_to 'クレジット情報',users_pays_path(current_user),class: "btn btn-info" %>
 </h4>
 
 <table class="table table-bordered">
@@ -35,13 +35,7 @@
     <td><%= @user.email %></td>
   </tr>
 </table>
-<table>
-  <tr>
-    <th>退会</th>
-    <td>
-      <%= link_to '退会する',users_users_confirm_path,class: "btn btn-danger" %>
-    </td>
-  </tr>
+<table class="table">
 
   <tr>
     <th>注文履歴</th>
@@ -49,10 +43,18 @@
       <%= link_to '一覧を見る',users_orders_path(current_user),class: "btn btn-info" %>
     </td>
   </tr>
+  
   <tr>
     <th>お問い合わせ</th>
     <td>
       <%= link_to 'お問い合わせ',users_questions_path(current_user),class: "btn btn-info" %>
+    </td>
+  </tr>
+
+  <tr>
+    <th>退会</th>
+    <td>
+      <%= link_to '退会する',users_users_confirm_path,class: "btn btn-danger" %>
     </td>
   </tr>
 </table>

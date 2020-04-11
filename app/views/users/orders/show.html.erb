@@ -43,7 +43,8 @@
   <tr>
     <th>クレジット情報</th>
     <td width="300">
-      <%#= @order.credit_number %>
+      番号:<%= Pay.find(@order.pay_id).number %></br/>
+      名義:<%= Pay.find(@order.pay_id).name %>
     </td>
   </tr>
 

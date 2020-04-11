@@ -3,6 +3,7 @@
 <h4>クレジットカード</h4>
 
 <% current_user.pays.each do |pay|%>
+  <%= f.radio_button(:pay,pay.id,checked: "checked") %>
   クレジットナンバー:<%= pay.number %><br/>
   クレジット名義:<%= pay.name %>
 <% end %>

@@ -32,6 +32,8 @@ Rails.application.routes.draw do
       end
     end
     resources :product_kinds, only: %i[index create edit update destroy]
+    resources :point_events, only: %i[index create edit update destroy]
+    resources :discounts, only: %i[index create edit update destroy]
     resources :combos,       only: %i[index edit create update destroy]
     resources :combo_items,  only: %i[show index create update destroy]
     resources :admins,       only: %i[index show edit update]
@@ -56,10 +58,15 @@ Rails.application.routes.draw do
       resources :product_comments, only: %i[create destroy]
     end
     resources :orders
-    resources :cart_items,   only: %i[index update destroy create]
+    resources :cart_items,   only: %i[index update destroy create] do
+      collection do
+        get :search
+      end
+    end
     resources :pays,  only: %i[index new destroy create edit update]
     resources :combo_items,  only: [:index]
     resources :questions,    only:[:index,:create,:destroy]
+    resources :discounts, only: %i[index]
   end
 
   if Rails.env.development?
