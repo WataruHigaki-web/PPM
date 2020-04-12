@@ -12,6 +12,16 @@
   <%= f.label :割引金額 %>
   <%= f.text_field :price %><br/>
 
+<h4>適応条件設定</h4>
+  <%= f.label :最低日数 %>
+  <%= f.text_field :require_day %><br/>
+
+  <%= f.label :最低コンボ数 %>
+  <%= f.text_area :require_combo %><br/>
+
+  <%= f.label :最低アイテム数 %>
+  <%= f.text_field :require_item %><br/>
+
   <%= f.label :期間 %>
   <%= date_field_tag :start_date %>から<br/>
   <%= date_field_tag :finish_date %>０時まで<br/>
@@ -31,6 +41,7 @@
       <th>クーポン番号</th>
       <th>説明</th>
       <th>割引金額</th>
+      <th>適応条件</th>
       <th>期間</th>
       <th></th>
       <th></th>
@@ -41,7 +52,12 @@
         <td><%= discount.name %></td>
         <td><%= discount.number %></td>
         <td><%= discount.introduction %></td>
-        <td><%= discount.price %>倍</td>
+        <td><%= discount.price %>円</td>
+        <td>
+          日数:<%= discount.require_day %>日~<br/>
+          コンボ数:<%= discount.require_combo %>セット~<br/>
+          アイテム数:<%= discount.require_item %>アイテム~
+        </td>
         <td>
           <%= discount.start_date %>から<br/>
           <%= discount.finish_date %>０時まで

@@ -13,7 +13,10 @@ class Admins::DiscountsController < ApplicationController
       price: params[:discount]['price'],
       status: params[:discount]['status'],
       start_date: params['start_date'],
-      finish_date: params['finish_date']
+      finish_date: params['finish_date'],
+      require_day: params[:discount]['require_day'],
+      require_combo: params[:discount]['require_combo'],
+      require_item: params[:discount]['require_item']
       )
     if discount.save
       flash[:notice] = "「#{discount.name}」ジャンル作成しました"
@@ -36,7 +39,10 @@ class Admins::DiscountsController < ApplicationController
       price: params[:discount]['price'],
       status: params[:discount]['status'],
       start_date: params['start_date'],
-      finish_date: params['finish_date']
+      finish_date: params['finish_date'],
+      require_day: params[:discount]['require_day'],
+      require_combo: params[:discount]['require_combo'],
+      require_item: params[:discount]['require_item']
       )
       flash[:notice] = 'ポイントイベント編集完了しました'
       redirect_to admins_discounts_path
@@ -55,6 +61,6 @@ class Admins::DiscountsController < ApplicationController
   private
 
   def discount_params
-    params.require(:discount).permit(:name,:introduction,:number,:price,:status,:start_date,:finish_date)
+    params.require(:discount).permit(:name,:introduction,:number,:price,:status,:start_date,:finish_date,:require_day,:require_combo,:require_item)
   end
 end

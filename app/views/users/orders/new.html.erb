@@ -2,10 +2,16 @@
 <%= form_with url:users_orders_save_path,method: :post do |f| %>
 <h4>クレジットカード</h4>
 
-<% current_user.pays.each do |pay|%>
-  <%= f.radio_button(:pay,pay.id,checked: "checked") %>
-  クレジットナンバー:<%= pay.number %><br/>
-  クレジット名義:<%= pay.name %>
+<% if current_user.pays.blank? %>
+  <%= link_to users_pays_path(current_user) do %>
+    <div class="alert">クレジットカードを登録してください</div>
+  <% end %>
+<% else %>
+  <% current_user.pays.each do |pay|%>
+    <%= f.radio_button(:pay,pay.id,checked: "checked") %>
+    クレジットナンバー:<%= pay.number %><br/>
+    クレジット名義:<%= pay.name %>
+  <% end %>
 <% end %>
 
 
@@ -62,5 +68,5 @@
     }
   </script>
 
-  <%= f.submit '注文確認画面へ進む',class: "btn btn-primary",id: "button" %>
+  <%= f.submit '注文確認画面へ進む', data: {"turbolinks" => false},class: "btn btn-info",id: "button" %>
 <% end %>

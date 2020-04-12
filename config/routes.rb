@@ -57,7 +57,11 @@ Rails.application.routes.draw do
       resource  :likes, only: %i[create destroy]
       resources :product_comments, only: %i[create destroy]
     end
-    resources :orders
+    resources :orders do
+      collection do
+        get :search
+      end
+    end
     resources :cart_items,   only: %i[index update destroy create] do
       collection do
         get :search
