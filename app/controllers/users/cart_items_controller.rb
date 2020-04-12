@@ -6,11 +6,11 @@ class Users::CartItemsController < ApplicationController
       @cart_items = current_user.cart_items
     end
     @point_event = PointEvent.find_by(status: true)
-    unless params[:search].nil?
+    unless params[:search].blank?
       search = params[:search]
       @discount = Discount.search(search)
-      render 'index'
     end
+      render 'index'
   end
 
   def save
@@ -51,9 +51,15 @@ class Users::CartItemsController < ApplicationController
   end
 
   def destroy
-    cart_item = CartItem.find(params[:id])
-    cart_item.destroy
-    redirect_to users_cart_items_path(current_user)
+    if user_signed_in?
+      cart_item = CartItem.find(params[:id])
+      cart_item.destroy
+      redirect_to users_cart_items_path(current_user)
+    else
+      cart_item = session[:cart_item][params["id"]]
+      cart_item.destroy
+      redirect_to users_cart_items_path
+    end
   end
 
   def destroy_all

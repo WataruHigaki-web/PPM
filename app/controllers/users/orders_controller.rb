@@ -7,6 +7,9 @@ class Users::OrdersController < ApplicationController
    @order = Order.new
   end
 
+  def search
+  end
+
   def confirm
     @cart_items = current_user.cart_items
     @in_points = current_user.in_points
@@ -14,6 +17,12 @@ class Users::OrdersController < ApplicationController
     @point = @in_points.sum(:point) - @out_points.sum(:point)
     @part_point = OutPoint.new
     @combo_items = ComboItem.all
+    @point_event = PointEvent.find_by(status: true)
+    unless params[:search].blank?
+      search = params[:search]
+      @discount = Discount.search(search)
+    end
+    render 'confirm'
   end
 
   def save
@@ -56,7 +65,9 @@ class Users::OrdersController < ApplicationController
       day:           session[:order]['day'],
       create_point:  params['create_point'],
       status: 0,
-      pay_id: session['pay']
+      pay_id: session['pay'],
+      discount_id: params['discount'],
+      point_event_id: params['point_event']
     )
     order.user_id = current_user.id
     order.save
@@ -76,6 +87,7 @@ class Users::OrdersController < ApplicationController
         end_price:  item.combo.price,
         quantity:   item.quantity
       )
+      binding.pry
       order_record.save!
     end
     current_user.cart_items.destroy_all

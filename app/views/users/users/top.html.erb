@@ -52,8 +52,8 @@
           <td><%= link_to 'この注文をキャンセルする',users_order_path(order),method: :delete,data:{confirm: "本当に削除しますか？"},class: "btn btn-info" %></td>
         </tr>
     </table>
-  <% elsif @order_reserve.empty? %>
-    <h4>現在予約がありません</h4>
+  <%# elsif @order_reserve.empty? %>
+    <!-- <h4>現在予約がありません</h4> -->
   <% end %>
 <% end %>
 
@@ -154,8 +154,9 @@
           </tr>
         <% end %>
       </table>
-    <% elsif @order_lending.blank? %>
-      <h4>現在返却物がありません</h4>
+
+    <%# elsif @order_lending.blank? %>
+      <!-- <h4>現在返却物がありません</h4> -->
     <% end %>
   <% end %>
 <% end %>

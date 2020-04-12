@@ -14,6 +14,16 @@
   <%= f.label :割引金額　%>
   <%= f.text_field :price %><br/>
 
+<h4>条件設定</h4>
+  <%= f.label :最低日数 %>
+  <%= f.text_field :require_day %><br/>
+
+  <%= f.label :最低コンボ数 %>
+  <%= f.text_area :require_combo %><br/>
+
+  <%= f.label :最低アイテム数 %>
+  <%= f.text_field :require_item %><br/>
+
   <%= f.label :期間 %>
   <%= date_field_tag :start_date %>〜
   <%= date_field_tag :finish_date %>０時まで<br/>
