@@ -87,7 +87,6 @@ class Users::OrdersController < ApplicationController
         end_price:  item.combo.price,
         quantity:   item.quantity
       )
-      binding.pry
       order_record.save!
     end
     current_user.cart_items.destroy_all
