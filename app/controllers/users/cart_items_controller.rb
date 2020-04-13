@@ -34,6 +34,7 @@ class Users::CartItemsController < ApplicationController
     cart_item = CartItem.new(cart_item_params)
     if user_signed_in?
       cart_item.user_id = current_user.id
+      binding.pry
       cart_item.save
       redirect_to users_cart_items_path(current_user)
     else
@@ -51,15 +52,9 @@ class Users::CartItemsController < ApplicationController
   end
 
   def destroy
-    if user_signed_in?
-      cart_item = CartItem.find(params[:id])
-      cart_item.destroy
-      redirect_to users_cart_items_path(current_user)
-    else
-      cart_item = session[:cart_item][params["id"]]
-      cart_item.destroy
-      redirect_to users_cart_items_path
-    end
+    cart_item = CartItem.find(params[:id])
+    cart_item.destroy
+    redirect_to users_cart_items_path(current_user)
   end
 
   def destroy_all

@@ -82,11 +82,12 @@ class Users::OrdersController < ApplicationController
       order_record = OrderRecord.new(
         user_id:  current_user.id,
         order_id:   order.id,
-        combo_id:   item.combo.id,
-        product_id: item.product.id,
+        combo_id:   item.combo_id,
+        product_id: item.product_id,
         end_price:  item.combo.price,
         quantity:   item.quantity
       )
+      binding.pry
       order_record.save!
     end
     current_user.cart_items.destroy_all
