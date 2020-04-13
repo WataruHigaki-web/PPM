@@ -219,7 +219,7 @@
     <h4>購入手続きへは進むには、利用再開申請または管理者へお問い合わせください</h4><br/>
   <% end %>
 <% else %>
-   <%= link_to 'ユーザー登録して注文する',new_user_registration_path,class: "btn btn-info" %>
+   <%= link_to 'ユーザー登録してこの商品を注文',new_user_registration_path,class: "btn btn-info" %>
 <% end %>
 
   <%= link_to '買い物を続ける',users_combo_items_path,class: "btn btn-info", data: {"turbolinks" => false} %>

@@ -1,0 +1,39 @@
+<h4>クーポン詳細</h4>
+<table class="table table-bordered">
+          <tr>
+            <th>クーポン番号</th>
+            <td><%= @discount.number %></td>
+          </tr>
+
+          <tr>
+            <th>クーポン名</th>
+            <td><%= @discount.name %></td>
+          </tr>
+
+          <tr>
+            <th>クーポン説明</th>
+            <td><%= @discount.introduction %></td>
+          </tr>
+
+          <tr>
+            <th>割引価格</th>
+            <td><%= @discount.price %></td>
+          </tr>
+
+          <tr>
+            <th>期間</th>
+            <td>
+              <%= @discount.start_date %>から<br/>
+              <%= @discount.finish_date %>日0時まで
+            </td>
+          </tr>
+
+          <tr>
+            <th>販売ステータス</th>
+              <% if @discount.status %>
+                <td>利用可能</td>
+              <% else %>
+                <td>ご利用期間終了</td>
+              <% end %>
+         </tr>
+    </table>
