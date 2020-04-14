@@ -104,7 +104,7 @@
         <%= f.hidden_field :create_point, :value => ((@sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i)/ 100.to_i).floor.to_i %>
         <%= f.hidden_field :point_event, :value => @point_event.id %>
         <% if @discount.blank? %>
-          <%= f.hidden_field :discount, :value => 2 %>
+          <%= f.hidden_field :discount, :value => 1 %>
         <% else %>
           <%= f.hidden_field :discount, :value => @discount.id %>
         <% end %>

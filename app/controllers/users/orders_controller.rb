@@ -85,7 +85,8 @@ class Users::OrdersController < ApplicationController
         combo_id:   item.combo_id,
         product_id: item.product_id,
         end_price:  item.combo.price,
-        quantity:   item.quantity
+        quantity:   item.quantity,
+        status: 0
       )
       order_record.save!
     end

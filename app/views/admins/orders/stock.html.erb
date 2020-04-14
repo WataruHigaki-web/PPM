@@ -15,13 +15,14 @@
   </tr>
 </table>
 
-  <% reserve_sum1 = 0 %>
-  <% reserve_sum2 = 0 %>
-  <% reserve_sum3 = 0 %>
-  <% reserve_sum4 = 0 %>
+<% reserve_sum1 = 0 %>
+<% reserve_sum2 = 0 %>
+<% reserve_sum3 = 0 %>
+<% reserve_sum4 = 0 %>
 <% @reserves.each do |order| %>
   <% order.order_records.each do |record| %>
     <% if record.combo.id == 1 %>
+      <% name1 = record.product.name %>
       <% q1 = record.quantity %>
     <% elsif record.combo.id == 2 %>
       <% q2 = record.quantity %>
@@ -37,10 +38,10 @@
   <% end %>
 <% end %>
 
-  <% lendings_sum1 = 0 %>
-  <% lendings_sum2 = 0 %>
-  <% lendings_sum3 = 0 %>
-  <% lendings_sum4 = 0 %>
+<% lendings_sum1 = 0 %>
+<% lendings_sum2 = 0 %>
+<% lendings_sum3 = 0 %>
+<% lendings_sum4 = 0 %>
 <% @lendings.each do |order| %>
   <% order.created_at.strftime("%Y-%m-%d")%>
   <% order.order_records.each do |record| %>
@@ -60,10 +61,10 @@
   <% end %>
 <% end %>
 
-  <% returns_sum1 = 0 %>
-  <% returns_sum2 = 0 %>
-  <% returns_sum3 = 0 %>
-  <% returns_sum4 = 0 %>
+<% returns_sum1 = 0 %>
+<% returns_sum2 = 0 %>
+<% returns_sum3 = 0 %>
+<% returns_sum4 = 0 %>
 <% @returns.each do |order| %>
   <% order.created_at.strftime("%Y-%m-%d")%>
   <% order.order_records.each do |record| %>
@@ -146,7 +147,6 @@
 <h4>商品在庫一覧</h4>
 <table class="table table-bordered">
   <tr>
-    <th>セット名</th>
     <th>商品名</th>
     <th>在庫数</th>
     <th>予約受付中</th>
@@ -157,20 +157,22 @@
   <% @combos.each do |combo| %>
     <% if combo.id == 1 %>
       <% combo.combo_items.each do |combo_item| %>
-      <%# @product = OrderRecord
-      <%# if combo_item.product.id == @product.id %>
+        <% #ここから追加処理を各 %>
+        <% @reserve_sum = OrderRecord.where(combo_id: 1, product_id: combo_item.product.id, status: "予約受付中").sum(:quantity) %>
+        <% @lending_sum = OrderRecord.where(combo_id: 1, product_id: combo_item.product.id, status: "貸出中").sum(:quantity) %>
+        <% @return_sum = OrderRecord.where(combo_id: 1, product_id: combo_item.product.id, status: "郵送中").sum(:quantity) %>
+        <% #ここまでが定義と準備 %>
         <tr>
-          <td><%= combo.name %></td>
           <td>
             <%= link_to admins_product_path(combo_item.product) do %>
             　<%= combo_item.product.name %>
           　<% end %>
           </td>
-          <td><%= combo_item.product.stock - reserve_sum1.to_i - lendings_sum1.to_i - returns_sum1.to_i %></td>
-          <td><%= reserve_sum1 %></td>
-          <td><%= lendings_sum1 %></td>
-          <td><%= returns_sum1 %></td>
-          <% if combo_item.product.stock - reserve_sum1.to_i - lendings_sum1.to_i - returns_sum1.to_i <= 0 %>
+          <td><%= combo_item.product.stock - @reserve_sum.to_i - @lending_sum.to_i - @return_sum.to_i %></td>
+          <td><%= @reserve_sum %></td>
+          <td><%= @lending_sum %></td>
+          <td><%= @return_sum %></td>
+          <% if combo_item.product.stock - @reserve_sum.to_i - @lending_sum.to_i - @return_sum.to_i %>
             <td>売切</td>
           <% else %>
             <td>販売中</td>
@@ -181,7 +183,6 @@
     <% elsif combo.id == 2 %>
       <% combo.combo_items.each do |combo_item| %>
         <tr>
-          <td><%= combo.name %></td>
           <td>
             <%= link_to admins_product_path(combo_item.product) do %>
             　<%= combo_item.product.name %>
@@ -202,7 +203,6 @@
     <% elsif combo.id == 3 %>
       <% combo.combo_items.each do |combo_item| %>
         <tr>
-          <td><%= combo.name %></td>
           <td>
             <%= link_to admins_product_path(combo_item.product) do %>
             　<%= combo_item.product.name %>
@@ -224,7 +224,6 @@
     <% else %>
       <% combo.combo_items.each do |combo_item| %>
         <tr>
-          <td><%= combo.name %></td>
           <td>
             <%= link_to admins_product_path(combo_item.product) do %>
             　<%= combo_item.product.name %>

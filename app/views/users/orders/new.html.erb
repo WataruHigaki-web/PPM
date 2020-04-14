@@ -4,7 +4,7 @@
 
 <% if current_user.pays.blank? %>
   <%= link_to users_pays_path(current_user) do %>
-    <div class="alert">クレジットカードを登録してください</div>
+    <div id="alert">クレジットカードを登録はこちら</div>
   <% end %>
 <% else %>
   <% current_user.pays.each do |pay|%>
@@ -32,7 +32,6 @@
 
 
   <script type="text/javascript">
-
     $('#start_date').change(function() {
       d1 = new Date(document.getElementById("start_date").value);
       d2 = new Date(document.getElementById("finish_date").value);
@@ -65,6 +64,9 @@
         alert ('利用期間の入力に誤りがあります');
         return
       }
+    }
+    if($('#alert').length){
+      alert ('クレジットカード登録してください。')
     }
   </script>
 
