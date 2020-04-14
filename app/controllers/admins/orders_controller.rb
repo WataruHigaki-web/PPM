@@ -39,6 +39,7 @@ class Admins::OrdersController < ApplicationController
     @products = Product.all
     @orders = Order.all
     @combos = Combo.all
+    @combo_items = ComboItem.all
     @reserves = Order.where(status: "予約受付中")
     @lendings = Order.where(status: "貸出中")
     @returns = Order.where(status: "郵送中")

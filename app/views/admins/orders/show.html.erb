@@ -1,56 +1,181 @@
-<h2>貸出返却詳細</h2>
+<div class="row">
+ <h2>注文履歴詳細</h2>
 
-<table>
+  <h4>注文情報</h4>
+  <table class="table-bordered">
   <tr>
     <th>注文id</th>
-    <th>注文者名</th>
-    <th>注文者名（カナ）</th>
-    <th>商品名</th>
-    <th>受取場所</th>
-    <th>返却場所</th>
-    <th>貸出返却ステータス</th>
-    <th>支払いステータス</th>
-    <th>担当者名</th>
-    <th>付与ポイントステータス</th>
+    <td width="300">
+      <%= @order.id %>
+    </td>
   </tr>
 
   <tr>
-    <td><%= @order.id %></td>
-    <td>
+    <th>注文者名</th>
+    <td width="300">
       <%= link_to admins_user_path(@order.user) do %>
         <%= @order.user.name %>
       <% end %>
     </td>
-    <td><%= @order.user.name_kana %></td>
-      <td>
-        <% @order.order_records.each do |order_record| %>
-          <% if order_record.combo_id == 1 %>
-            <%= order_record.product.name %>
-          <% else %>
-            <%= order_record.combo.name %>
-          <% end %>
-        <% end %>
-      </td>
-      <td><%= @order.get_status %></td>
-      <td><%= @order.return_status %></td>
+  </tr>
 
-      <%= form_with model:@order,url:admins_order_path(@order) do |f| %>
-        <td>
+  <tr>
+    <th>注文者名（カナ)</th>
+    <td><%= @order.user.name_kana %></td>
+  </tr>
+
+  <tr>
+    <th>商品名</th>
+    <td>
+      <% @order.order_records.each do |order_record| %>
+        <% if order_record.combo_id == 1 %>
+          <%= order_record.product.name %>
+        <% else %>
+          <%= order_record.combo.name %>
+        <% end %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th>受取場所</th>
+    <td><%= @order.get_status %></td>
+  </tr>
+  <tr>
+    <th>返却場所</th>
+    <td><%= @order.return_status %></td>
+  </tr>
+  <tr>
+    <th>貸し出し返却ステータス</th>
+    <td width="300">
+        <%= @order.status %>
+    </td>
+  </tr>
+  <tr>
+    <th>クレジット情報</th>
+    <td width="300">
+      番号:<%= Pay.find(@order.pay_id).number %></br/>
+      名義:<%= Pay.find(@order.pay_id).name %>
+    </td>
+  </tr>
+  <%= form_with model:@order,url:admins_order_path(@order) do |f| %>
+    <tr>
+      <th>貸し出し返却ステータス</th>
+        <td width="300">
         　<%= f.select :status, Order.statuses.keys.to_a, {} %>
           <%= f.submit '更新',class: "btn btn-info" %>
         </td>
-        <td>
-        　<%= f.select :pay_status,[['未支払', false], ['支払済', true]] %>
-        　<%= f.submit '更新',class: "btn btn-info" %>
-        </td>
-      <% end %>
+    </tr>
+    <tr>
+      <th>支払いステータス</th>
+      <td width="300">
+      　<%= f.select :pay_status,[['未支払', false], ['支払済', true]] %>
+      　<%= f.submit '更新',class: "btn btn-info" %>
+      </td>
+    </tr>
+  <% end %>
 
+  <tr>
+    <th>付与ポイントステータス</th>
     <% if @order.give_point == true %>
-      <td>付与済</td>
-    <% else %>
-      <td>付与してません</td>
-    <% end %>
+        <td width="300">付与済</td>
+      <% else %>
+        <td width="300">付与してません</td>
+      <% end %>
   </tr>
-</table>
+  </table>
 
+
+<% @sum = 0 %>
+<% @order.order_records.each do |order_record| %>
+  <% @sum += (order_record.end_price.to_i) * order_record.quantity.to_i * @order.day.to_i  %>
+<% end %>
+
+  <h4>請求情報</h4>
+ 
+  <table class="table-bordered">
+  <tr>
+    <th width="100">商品合計</th>
+    <td width="100"><%= @sum %></td>
+  </tr>
+  <tr>
+    <th width="100">利用ポイント</th>
+    <td width="100">
+      <% if @order.out_point.point == nil %>
+        <%= "0pt" %>
+      <% else %>
+        <%= @order.out_point.point %>pt
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th width="100">クーポン</th>
+    <td width="100">
+      <% if @order.out_point.point == nil %>
+        <%= "0円" %>
+      <% else %>
+        <%= @order.discount.price %>円
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th width="100">ご請求金額</th>
+    <td width="100">
+      <% if @order.discount.id == nil %>
+        <% if @order.out_point.point == nil %>
+          <%= @sum %>
+        <% else %>
+          <%= @sum - @order.out_point.point %>
+        <% end %>
+      <% else %>
+        <% if @order.out_point.point == nil %>
+          <%= @sum - @order.discount.price.to_i %>
+        <% else %>
+          <%= @sum - @order.out_point.point - @order.discount.price.to_i %>
+        <% end %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th width="100">発行ポイント</th>
+    <td width="100">
+      <%= @order.create_point * @order.point_event.bonus %>pt
+    </td>
+  </tr>
+  </table>
+
+<h4>注文内容</h4>
+<table class="table-bordered">
+  <tr>
+    <th>商品</th>
+    <th>価格</th>
+    <th>個数</th>
+    <th>レンタル日数</th>
+    <th>小計</th>
+  </tr>
+
+  <% @order.order_records.each do |order_record| %>
+  <tr>
+      <td width="300">
+        <% if order_record.combo.id == 1 %>
+          <%= order_record.product.name %>
+        <% else %>
+          <%= order_record.combo.name %>
+        <% end %>
+      </td>
+      <td width="100">
+          <%= (order_record.end_price.to_i) * 1.1.floor %>
+      </td>
+      <td width="100">
+        <%= order_record.quantity %>
+      </td>
+      <td width="100">
+        <%= @order.day %>日
+      </td>
+      <td width="100">
+        <%= ((order_record.end_price.to_i) * 1.1.floor) * order_record.quantity.to_i * @order.day.to_i %>
+      </td>
+  </tr>
+  <% @sum += ((order_record.end_price.to_i) * 1.1.floor) * order_record.quantity.to_i * @order.day.to_i  %>
+  <% end %>
+</table>
 <%= link_to '注文一覧へ戻る',admins_orders_path, class: "btn btn-info" %>

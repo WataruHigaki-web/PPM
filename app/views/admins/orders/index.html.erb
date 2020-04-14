@@ -15,7 +15,6 @@
     <th>返却日</th>
     <th>レンタル日数</th>
     <th>商品名</th>
-    <th>支払金額</th>
     <th>貸出返却ステータス</th>
     <th>注文詳細</th>
   </tr>
@@ -38,7 +37,6 @@
               <% end %>
             <% end %>
           </td>
-          <td><%= order.order_records.sum(:end_price) %></td>
           <td><%= order.status %></td>
           <td><%= link_to '注文詳細',admins_order_path(order),class: "btn btn-info",data: {"turbolinks" => false} %></td>
       </tr>

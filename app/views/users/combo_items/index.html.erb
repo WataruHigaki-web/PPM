@@ -12,8 +12,6 @@
 
    <%= form_with model: @cart_item,url:users_cart_items_path(combo_id:combo.id),method: :post,local: true do |f| %>
      <%= f.hidden_field :combo_id, :value => combo.id %>
-     <!-- cart_itemにはproduct_idは必須なのでとりあえず１を入れている -->
-     <%= f.hidden_field :product_id, :value => 1 %>
      <% if user_signed_in? %>
       <%= f.hidden_field :user_id, :value => current_user.id %>
     <% end %>
@@ -27,8 +25,8 @@
             <td>
               <%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %>個
             </td>
-            <td class="solid">
-              <%= f.submit 'カートに入れる',class: "btn btn-primary" %>
+            <td>
+              <%= f.submit 'カートに入れる',class: "btn btn-info" %>
             </td>
           <% end %>
         </tr>

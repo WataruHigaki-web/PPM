@@ -25,7 +25,7 @@
                     <span class="item_count"data-item-count="<%= cart_item.quantity %>"><%= f.number_field :quantity,id: "item_quantity" %></span>
                   <%= f.submit "更新",class: "btn btn-info" %>
                 </td>
-                <td><%= (cart_item.combo.price).to_i * (cart_item.quantity).to_i %></td>
+                <td><%= cart_item.combo.price %></td>
                 <td>
                   <%= link_to '削除',users_cart_item_path(cart_item),method: :delete,class: "btn btn-danger" %>
                 </td>
@@ -42,7 +42,7 @@
                     <span class="combo_count"data-combo-count="<%= cart_item.quantity %>"><%= f.number_field :quantity %></span>
                   <%= f.submit "更新",class: "btn btn-info" %>
                 </td>
-                <td><%= (cart_item.combo.price).to_i * (cart_item.quantity).to_i %></td>
+                <td><%= cart_item.combo.price %></td>
                 <td>
                   <%= link_to '削除',users_cart_item_path(cart_item),method: :delete,class: "btn btn-danger" %>
                 </td>
@@ -58,7 +58,7 @@
       <table class="table table-bordered">
         <tr>
           <th>お見積もり金額</th>
-          <td id="cart_item_sum"><%= @sum %>  円</td>
+          <td id="cart_item_sum"><%= @sum %></td>
         </tr>
         <tr>
           <th>レンタル日数</th>
@@ -96,8 +96,6 @@
       </table>
 
 <% else %>
-  <%= link_to "カートを空にする",users_cart_items_destroy_all_path,class: "btn btn-danger",method: :delete, "data-confirm" => "本当に削除しますか？" %>
-
     <table class="table table-bordered">
       <tr>
         <th>画像</th>
@@ -110,48 +108,58 @@
       <% if session[:cart_item].nil? %>
         <h2>カートに商品がありません</h2>
       <% else %>
-      <% binding.pry %>
         <% session[:cart_item].each do |cart_item| %>
-        <tr>
-          <% if cart_item["combo_id"] == 1 %>
-            <td><%= attachment_image_tag Product.find(cart_item["product_id"]),:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
+          <tr class="cart_item"data-cart-item="cart_item">
+            <% if cart_item["combo_id"] == 1 %>
+              <td><%= attachment_image_tag Product.find(cart_item["product_id"]),:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
+                <td>
+                  <%= link_to users_product_path(cart_item["product_id"]) do %>
+                    <%= Product.find(cart_item["product_id"]).name %>
+                  <% end %>
+                </td>
+                <td>
+                  <input type="number" class="item_count" name="quantity" id="" data-item-count="<%= cart_item["quantity"] %>" value="<%= cart_item["quantity"]%>">
+                </td>
+            <% else %>
+              <td><%= attachment_image_tag Combo.find(cart_item["combo_id"]), :combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
               <td>
-                <%= link_to users_product_path(cart_item["product_id"]) do %>
-                  <%= Product.find(cart_item["product_id"]).name %>
+                <%= link_to users_combo_items_path do %>
+                  <%= Combo.find(cart_item["combo_id"]).name%>
                 <% end %>
               </td>
-              <td class="item_count" data-item-count="<%= cart_item["quantity"] %>"><%= cart_item["quantity"] %></td>
-          <% else %>
-            <td><%= attachment_image_tag Combo.find(cart_item["combo_id"]), :combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
-            <td>
-              <%= link_to users_combo_items_path do %>
-                <%= Combo.find(cart_item["combo_id"]).name%>
-              <% end %>
-            </td>
-            <td class="combo_count" data-combo-count="<%= cart_item["quantity"] %>"><%= cart_item["quantity"] %></td>
-          <% end %>
-            <td><%= (Combo.find(cart_item["combo_id"]).price).to_i * (cart_item["quantity"]).to_i %></td>
-            <td>
-              <%#= link_to '削除',users_cart_item_path(cart_item),method: :delete, class: "btn btn-danger" %>
-            </td>
-        </tr>
+              <td class="quantity">
+                <input type="number"class="combo_count" name="quantity" id="" data-combo-count="<%= cart_item["quantity"] %>" value="<%= cart_item["quantity"]%>">
+              </td>
+            <% end %>
+              <td class="price"data-price="<%= Combo.find(cart_item["combo_id"]).price %>"><%= Combo.find(cart_item["combo_id"]).price %></td>
+              <td>
+                <button class="btn btn-danger"name="delete_button">削除</button>
 
-      <% @sum += (Combo.find(cart_item["combo_id"]).price).to_i * (cart_item["quantity"]).to_i %>
-      <% end %>
+              </td>
+          </tr>
+            <% @sum += (Combo.find(cart_item["combo_id"]).price).to_i * (cart_item["quantity"]).to_i %>
+        <% end %>
       <% end %>
     </table>
 
+    <script type="text/javascript">
+      $('button[name="delete_button"]').click(function() {
+        console.log($(this).parent().parent().find('cart_item'));
+        $(this).parent().parent().find('.cart_item').hide();
+      });
+    </script>
 
-  <h4>料金見積もり表（レンタル日数を記入）</h4>
+
+  <h4>料金見積もり表（レンタル日数を変更）</h4>
     <table class="table table-bordered">
       <tr>
-        <th>お見積もり金額</th>
-        <td id="cart_item_sum"><%= @sum %>  円</td>
+        <th>お見積もり金額(円）</th>
+        <td id="cart_item_sum"><%= @sum %></td>
       </tr>
       <tr>
         <th>レンタル日数</th>
         <td>
-          <input id="day"type="number">日間
+          <input id="day"type="number"value="1">日間
         </td>
       </tr>
       <tr>
@@ -183,9 +191,20 @@
       </tr>
     </table>
 <% end %>
+
 <script type="text/javascript">
-  sum = Number("<%= @sum %>");
+  sum = document.getElementById('cart_item_sum').textContent;
+  console.log(sum);
+  final_sum = sum;
   point_sum = Number("<%= (@sum / 100).floor * @point_event.bonus %>");
+
+  $('input[name="quantity"]').change(function() {
+    var quantity = Number($(this).val());
+    var price = Number($('.price').data('price'));
+    var day = Number($('#day').val());
+    $('#cart_item_sum').text(String(quantity * price * day));
+    sum = document.getElementById('cart_item_sum').textContent;
+  });
   $('#day').change(function(){
     var day = Number($(this).val());
     var discount = 0;
@@ -195,22 +214,27 @@
       require_combo = Number($("#discount-price").data("require-combo"));
       require_item = Number($("#discount-price").data("require-item"));
       combo_count = Number($(".combo_count").data("combo-count"));
-      item_count = Number($(".item_count").data("item-count"));
+      if ($(".item_count").data("item-count")){
+        item_count = Number($(".item_count").data("item-count"));
+      }else{
+         item_count = 0
+      }
 
       if (day >= require_day && combo_count >= require_combo && item_count >= require_item){
         $('#cart_item_sum').text(String(sum * day) - discount + '円');
         $('#point_sum').text(String(point_sum * day) - (discount / 100) + 'pt');
       }else{
-        alert ('クーポン条件にマッチしておりません。')
-        $('#cart_item_sum').text(String(sum * day) + '円');
+        alert ('クーポンの条件に一致しておりません')
+        $('#cart_item_sum').text(String(sum * day));
         $('#point_sum').text(String(point_sum * day) + 'pt');
       }
     }else{
-      $('#cart_item_sum').text(String(sum * day) + '円');
+      $('#cart_item_sum').text(String(sum * day));
       $('#point_sum').text(String(point_sum * day) + 'pt');
     }
   });
 </script>
+
 
 <% if user_signed_in? %>
   <% unless current_user.status == false || current_user.is_deleted == true %>

@@ -34,7 +34,6 @@ class Users::CartItemsController < ApplicationController
     cart_item = CartItem.new(cart_item_params)
     if user_signed_in?
       cart_item.user_id = current_user.id
-      binding.pry
       cart_item.save
       redirect_to users_cart_items_path(current_user)
     else
