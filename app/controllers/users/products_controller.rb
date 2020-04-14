@@ -15,6 +15,10 @@ class Users::ProductsController < ApplicationController
     @cart_item = CartItem.new
     @comments = @product.product_comments
     @comment = ProductComment.new
+<<<<<<< HEAD
+=======
+    @combo_item = ComboItem.find_by(product_id: @product.id, combo_id: 1)
+>>>>>>> master
   end
 
   private

@@ -5,8 +5,40 @@
   A:<%= q.answer %>
 <% end %>
 
+<<<<<<< HEAD
 <h4>お問い合わせフォーム</h4>
 <%#= form_with model: @question,url: users_question_path(@question) do |f| %>
   <%#= f.text_field :question %>
   <%#= f.submit '送信',class: "btn btn-info" %>
 <%# end %>
+=======
+
+<h4>お問い合わせ</h4>
+<h6>下記に質問内容を記入し、送信ボタンを押してください</h6>
+<%= form_with model: @inquiry,url: users_questions_path(@inquiry) do |f| %>
+  <%= f.text_field :content %>
+  <%= f.hidden_field :user_id, :value => current_user.id %>
+  <%= f.hidden_field :status, :value => 0 %>
+  <%= f.submit '送信',class: "btn btn-info" %>
+<% end %>
+
+<h4>お問い合わせ送信履歴</h4>
+<% if @inquiries.nil? %>
+  <p>質問はありません</p>
+<% else %>
+  <table class="table talbe-bordered">
+    <tr>
+      <th>日時</th>
+      <th>内容</th>
+      <th></th>
+    </tr>
+    <% @inquiries.each do |inquiry| %>
+      <tr>
+        <td><%= inquiry.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+        <td><%= inquiry.content %></td>
+        <td><%= link_to 'このお問い合わせを削除',users_question_path(inquiry),method: :delete,"data-confirm" => "本当に削除しますか？", class: "btn btn-danger" %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+>>>>>>> master

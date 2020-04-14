@@ -1,0 +1,23 @@
+<h4>お問い合わせ詳細</h4>
+<table class="table table-bordered">
+  <tr>
+    <th>名前</th>
+    <th>日時</th>
+    <th>内容</th>
+    <th>担当者</th>
+    <th></th>
+  </tr>
+    <tr>
+      <td><%= @inquiry.user.name %></td>
+      <td><%= @inquiry.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+      <td><%= @inquiry.content %></td>
+      <%= form_with model: @inquiry,url:admins_path(@inquiry),method: :patch do |f| %>
+      <td><%= @inquiry.staff %></td>
+        <td>
+          <%= f.select :status, Inquiry.statuses.keys.to_a, {} %>
+          <%= f.hidden_field :staff, :value => current_admin.name %>
+        </td>
+        <%= f.submit '更新',class: "btn btn-info" %>
+      <% end %>
+    </tr>
+</table>

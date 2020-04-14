@@ -11,7 +11,11 @@
     <% end %>
 
     <div class="col-xs-6">
+<<<<<<< HEAD
         <%= attachment_image_tag @product ,:product_image,:fill,500,500, fallback:"no_image.jpg" %>
+=======
+        <%= attachment_image_tag @product ,:product_image,:fill,300,300, fallback:"no_image.jpg" %>
+>>>>>>> master
     </div>
     <div class="col-xs-6">
      <table class="table table-bordered">
@@ -30,12 +34,39 @@
             <td><%= @product.introduction %></td>
           </tr>
 
+          <% unless @combo_item.nil? %>
+            <tr>
+              <th>価格/1日</th>
+              <td>100円</td>
+            </tr>
+            <tr>
+              <th>ステータス</th>
+              <% @product_records = OrderRecord.where(product_id: @product.id) %>
+              <% @product_records.each do |record| %>
+                <% @quantity = record.quantity %>
+              <% end %>
+               <%# if @product.stock.to_i - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count.to_i * @quantity.to_i) <= 0 %>
+                  <!-- <td id="status">売切</td> -->
+                <%# else %>
+                  <!-- <td id="status">販売中</td> -->
+                <%# end %>
+            </tr>
+            <tr>
+             <th>個数</th>
+             <td>
+               <%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %>
+             </td>
+            </tr>
+          <% end %>
+        <% if user_signed_in? %>
           <tr>
-            <th>価格/1日分</th>
-            <td><%= @product.price %>円</td>
+            <th></th>
+            <td>
+              <%= render 'users/favorites/favorite',product: @product %>
+            </td>
           </tr>
-
           <tr>
+<<<<<<< HEAD
             <th>ステータス</th>
             <% @product_records = OrderRecord.where(product_id: @product.id) %>
             <% @product_records.each do |record| %>
@@ -63,6 +94,8 @@
             </td>
           </tr>
           <tr>
+=======
+>>>>>>> master
             <th>いいね</th>
             <td>
               <%= render 'users/likes/like',product: @product %>
@@ -71,8 +104,15 @@
         <% else %>
         <% end %>
     </table>
+<<<<<<< HEAD
       <%= f.submit 'カートに入れる',class: "btn btn-primary", id: 
       'button' %>
+=======
+    <% unless @combo_item.nil? %>
+      <%= f.submit 'カートに入れる',class: "btn btn-info", id: 
+      'button', data: {"turbolinks" => false} %>
+    <% end %>
+>>>>>>> master
   <% end %>
 
   <script>

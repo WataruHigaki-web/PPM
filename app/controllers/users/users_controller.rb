@@ -23,18 +23,47 @@ class Users::UsersController < ApplicationController
     @in_points = current_user.in_points
     @out_points = current_user.out_points
     @point = @in_points.sum(:point) - @out_points.sum(:point)
+<<<<<<< HEAD
+=======
+    @order_reserve = Order.where(user_id: current_user.id).where(status: "予約受付中")
+    @order_lending =  Order.where(user_id: current_user.id).where(status: "貸出中")
+>>>>>>> master
   end
 
   def point
     @in_points = current_user.in_points
     @out_points = current_user.out_points
     @point = @in_points.sum(:point) - @out_points.sum(:point)
+<<<<<<< HEAD
+=======
+  end
+
+  def withdrawal
+    user = User.find(params[:id])
+    if user.is_deleted == true
+      user.update(
+       is_deleted: false
+      )
+      flash[:notice] = "利用再開申請を送信しました。PPM管理者からメールにてご対応させていただきます。"
+    else
+      user.update(
+       is_deleted: true,
+       status: false
+      )
+      flash[:notice] = "退会手続が完了しました。復活の際は再開手続をお願いいたします。今までのご利用ありがとうございました。"
+    end
+      redirect_to users_root_path(current_user)
+>>>>>>> master
   end
 
   private
 
   def user_params
+<<<<<<< HEAD
     params.require(:user).permit(:user_id,:name, :name_kana, :zip_code, :address, :phone_nunber, :email,:profile_image)
+=======
+    params.require(:user).permit(:user_id,:name, :name_kana, :zip_code, :address, :phone_nunber, :email,:profile_image,:is_deleted)
+>>>>>>> master
   end
 
   def ensure_correct_user

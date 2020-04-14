@@ -3,6 +3,10 @@ class Admins::QuestionsController < ApplicationController
   def index
     @questions = Question.all
     @question = Question.new
+<<<<<<< HEAD
+=======
+    @inquiries = Inquiry.all
+>>>>>>> master
   end
 
   def create
@@ -30,9 +34,33 @@ class Admins::QuestionsController < ApplicationController
     redirect_to admins_questions_path
   end
 
+<<<<<<< HEAD
+=======
+  def update2
+    inquiry = Inquiry.find(params[:id])
+    inquiry.update(
+      status: params[:inquiry]["status"],
+      staff: params[:inquiry]["staff"]
+      )
+    flash[:notice] = "質問ステータスを変更しました"
+    redirect_to admins_questions_path
+  end
+
+  def show 
+    @inquiry = Inquiry.find(params[:id])
+  end
+
+>>>>>>> master
   private
 
   def question_params
     params.require(:question).permit(:question,:answer)
   end
+<<<<<<< HEAD
+=======
+
+  def inquiry_params
+    params.require(:inquiry).permit(:content,:user_id,:status,:staff)
+  end
+>>>>>>> master
 end

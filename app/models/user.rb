@@ -15,6 +15,8 @@ class User < ApplicationRecord
   has_many :out_points
   has_many :in_points
   attachment :profile_image
+  has_many :inquiries, dependent: :destroy
+  attachment :profile_image
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

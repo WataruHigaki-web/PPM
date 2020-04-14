@@ -1,0 +1,34 @@
+<h4>クーポン一覧</h4>
+
+<table class="table table-bordered">
+  <tr>
+    <th>クーポン名</th>
+    <th>クーポン番号</th>
+    <th>説明</th>
+    <th>割引金額</th>
+    <th>期間</th>
+    <th></th>
+  </tr>
+
+  <% @discounts.each do |discount| %>
+    <tr>
+      <td>
+        <%= link_to users_discount_path(discount) do %>
+          <%= discount.name %>
+        <% end %>
+      </td>
+      <td><%= discount.number %></td>
+      <td><%= discount.introduction %></td>
+      <td><%= discount.price %>円</td>
+      <td>
+        <%= discount.start_date %>から<br/>
+        <%= discount.finish_date %>日0時まで有効
+      </td>
+        <% if discount.status %>
+          <td>利用可</td>
+        <% else %>
+          <td>ご利用終了</td>
+        <% end %>
+    </tr>
+  <% end %>
+</table>

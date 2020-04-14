@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2020_04_05_085532) do
+=======
+ActiveRecord::Schema.define(version: 2020_04_11_052530) do
+>>>>>>> master
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -59,8 +63,26 @@ ActiveRecord::Schema.define(version: 2020_04_05_085532) do
     t.integer "user_id"
     t.integer "customer_id"
     t.integer "card_id"
+<<<<<<< HEAD
+=======
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "discounts", force: :cascade do |t|
+    t.integer "number"
+    t.string "name"
+    t.text "introduction"
+    t.integer "price"
+    t.date "start_date"
+    t.date "finish_date"
+    t.boolean "status"
+>>>>>>> master
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "require_day"
+    t.integer "require_combo"
+    t.integer "require_item"
   end
 
   create_table "favorites", force: :cascade do |t|
@@ -76,6 +98,15 @@ ActiveRecord::Schema.define(version: 2020_04_05_085532) do
     t.integer "point"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "inquiries", force: :cascade do |t|
+    t.text "content"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "status"
+    t.string "staff"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -120,6 +151,9 @@ ActiveRecord::Schema.define(version: 2020_04_05_085532) do
     t.boolean "pay_status", default: false, null: false
     t.boolean "give_point", default: false, null: false
     t.integer "status"
+    t.integer "pay_id"
+    t.integer "point_event_id"
+    t.integer "discount_id"
   end
 
   create_table "out_points", force: :cascade do |t|
@@ -138,6 +172,19 @@ ActiveRecord::Schema.define(version: 2020_04_05_085532) do
     t.datetime "updated_at", null: false
   end
 
+<<<<<<< HEAD
+=======
+  create_table "point_events", force: :cascade do |t|
+    t.string "name"
+    t.integer "bonus"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.date "start_date"
+    t.date "finish_date"
+    t.boolean "status", default: false, null: false
+  end
+
+>>>>>>> master
   create_table "product_comments", force: :cascade do |t|
     t.integer "user_id"
     t.integer "product_id"
@@ -191,6 +238,10 @@ ActiveRecord::Schema.define(version: 2020_04_05_085532) do
     t.datetime "updated_at", null: false
     t.string "provider"
     t.string "uid"
+<<<<<<< HEAD
+=======
+    t.boolean "is_deleted", default: false, null: false
+>>>>>>> master
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

@@ -1,10 +1,18 @@
 <%= current_admin.name %>さんようこそ
 <h2>管理者トップ</h2>
-<div class="wrap">
+
+<h4>イベント情報</h4>
+新年ポイント祭り開催中！！
+
 <button class="button"><%= link_to '貸出返却',admins_orders_path %></button>
 
 <button class="button"><%= link_to '在庫',admins_orders_stock_path %></button>
 
 
-<button class="button"><%= link_to 'お問い合わせ',admins_questions_path %></button>
-</div>
+<button class="button"><%= link_to '問い合わせ',admins_questions_path %></button>
+
+<button class="button"><%= link_to 'ポイントイベント',admins_point_events_path %></button>
+
+<button class="button"><%= link_to 'クーポン',admins_discounts_path %></button>
+
+

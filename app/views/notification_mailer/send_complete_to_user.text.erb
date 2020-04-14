@@ -28,7 +28,12 @@
 <%= @order.day %>日間
 
 クレジット情報
+<<<<<<< HEAD
 <%#= @order.credit_number %>
+=======
+番号:<%= Pay.find(@order.pay_id).number %></br/>
+名義:<%= Pay.find(@order.pay_id).name %>
+>>>>>>> master
 
 貸し出し返却ステータス
 <%= @order.status %>
@@ -50,12 +55,36 @@
   <% end %>
 <% end %>
 
+<<<<<<< HEAD
 
 
 ご請求内容
 <% @sum = 0 %>
 <% @order.order_records.each do |order_record| %>
   <% @sum += (order_record.end_price.to_i) * order_record.quantity.to_i %>
+=======
+小計/１日レンタルあたり
+
+<% @order.order_records.each do |order_record| %>
+  <% if order_record.combo_id == 1 %>
+    <%= order_record.product.name %>
+    <%= order_record.end_price %>円
+  <% else %>
+    <%= order_record.combo.name %>
+    <%= order_record.end_price %>円
+  <% end %>
+<% end %>
+
+ボーナス
+
+
+
+
+最終請求内容
+<% @sum = 0 %>
+<% @order.order_records.each do |order_record| %>
+  <% @sum += (order_record.end_price.to_i) * order_record.quantity.to_i * @order.day %>
+>>>>>>> master
 <% end %>
 <%= @sum %>円
 

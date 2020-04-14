@@ -1,13 +1,17 @@
 <h2>ジャンル編集画面</h2>
+<<<<<<< HEAD
 1
+=======
+
+>>>>>>> master
 <h3>ジャンル</h3>
-<%= form_for((@product_kind),url:admins_product_kind_path) do |f| %>
+<%= form_with model: @product_kind,url:admins_product_kind_path do |f| %>
   <%= f.text_field :name %>
-  <%= f.radio_button :status,true, checked: "checked" %>
+  <%= f.radio_button :status,true %>
   <%= f.label :有効　%>
 
-  <%= f.radio_button :status,false, checked: "checked" %>
-  <%= f.label :無効　%>
+  <%= f.radio_button :status,false %>
+  <%= f.label :無効　%><br/>
 
   <%= f.submit '変更を保存する',class:'btn btn-info' %>
   <% end %>

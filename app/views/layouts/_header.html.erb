@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <nav>
     <div class="container">
       <div class="navbar-header">
@@ -98,5 +99,118 @@
           <% end %>
         </ul>
       </div>
+=======
+<nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarEexample10">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+            <a class="navbar-brand" href="#">
+              <%= link_to "PPM",root_path %><br/>
+              (Pay-Per-site for Minimalist)
+            </a>
+      </div>
+        <div class="collapse navbar-collapse" id="navbarEexample10">
+          <ul class="nav navbar-nav">
+            <% if user_signed_in? && current_user.status == true && current_user.is_deleted == false %>
+              <li>
+                <%= link_to users_root_path(current_user), data: {"turbolinks" => false} do %>
+                  <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to '商品', users_combo_items_path, data: {"turbolinks" => false} %>
+              </li>
+              <li>
+                <%= link_to users_cart_items_path(current_user) do %>
+                  <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to users_products_path(current_user) do %>
+                  <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to users_discounts_path do %>
+                  クーポン
+                <% end %>
+              </li>
+              <li>
+                <%= link_to users_user_path(current_user) do %>
+                  <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to 'logout',destroy_user_session_path,method: :delete %>
+              </li>
+
+            <% elsif admin_signed_in? %>
+              <li>
+                <%= link_to admins_root_path(current_admin) do %>
+                  <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to '商品',admins_products_path %>
+              </li>
+              <li>
+                <%= link_to admins_users_path do %>
+                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to admins_admin_path(current_admin) do %>
+                  <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to 'logout',destroy_admin_session_path,method: :delete %>
+              </li>
+
+            <% elsif user_signed_in? && current_user.status == false || user_signed_in? && current_user.is_deleted == true %>
+              <li>
+                <%= link_to users_root_path(current_user), data: {"turbolinks" => false} do %>
+                  <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to '商品',users_combo_items_path, data: {"turbolinks" => false} %>
+              </li>
+              <li>
+                <%= link_to users_cart_items_path do %>
+                  <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to 'logout',destroy_user_session_path,method: :delete %>
+              </li>
+
+            <% else %>
+              <li>
+                <%= link_to 'TOP',root_path %>
+              </li>
+              <li>
+                <%= link_to '商品',users_combo_items_path, data: {"turbolinks" => false}  %>
+              </li>
+              <li>
+                <%= link_to users_cart_items_path do %>
+                  <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to 'login',new_user_session_path %>
+              </li>
+              <li>
+                <%= link_to 'signup',new_user_registration_path %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+>>>>>>> master
     </div>
   </nav>

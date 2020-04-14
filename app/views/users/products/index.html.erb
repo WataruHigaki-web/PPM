@@ -27,11 +27,19 @@
           <% @product_records.each do |record| %>
             <% @quantity = record.quantity %>
           <% end %>
+<<<<<<< HEAD
            <% if favorite.product.stock - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count * @quantity) <= 0  %>
               <td class="product_status" data-status="売切">売切</td>
             <% else %>
               <td class="product_status" data-status="販売中">販売中</td>
             <% end %>
+=======
+           <%# if favorite.product.stock.to_i - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count.to_i * @quantity.to_i) <= 0  %>
+              <!-- <td class="product_status" data-status="売切">売切</td> -->
+            <%# else %>
+              <!-- <td class="product_status" data-status="販売中">販売中</td> -->
+            <%# end %>
+>>>>>>> master
           </td>
         <td>
           <% if favorite.product.favorited_by?(current_user) %>

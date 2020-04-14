@@ -5,6 +5,15 @@ class Users::CartItemsController < ApplicationController
     if user_signed_in?
       @cart_items = current_user.cart_items
     end
+<<<<<<< HEAD
+=======
+    @point_event = PointEvent.find_by(status: true)
+    unless params[:search].blank?
+      search = params[:search]
+      @discount = Discount.search(search)
+    end
+      render 'index'
+>>>>>>> master
   end
 
   def save
@@ -36,10 +45,13 @@ class Users::CartItemsController < ApplicationController
     end
   end
 
+<<<<<<< HEAD
       # if session[:uuid].blank?
       #   session[:uuid] = SecureRandom.uuid
       # else
       # end
+=======
+>>>>>>> master
 
   def update
     cart_item = CartItem.find(params[:id])

@@ -5,6 +5,12 @@ class Users::OrdersController < ApplicationController
   before_action :ensure_correct_user, only:[:destroy,:update]
   def new
    @order = Order.new
+<<<<<<< HEAD
+=======
+  end
+
+  def search
+>>>>>>> master
   end
 
   def confirm
@@ -14,6 +20,15 @@ class Users::OrdersController < ApplicationController
     @point = @in_points.sum(:point) - @out_points.sum(:point)
     @part_point = OutPoint.new
     @combo_items = ComboItem.all
+<<<<<<< HEAD
+=======
+    @point_event = PointEvent.find_by(status: true)
+    unless params[:search].blank?
+      search = params[:search]
+      @discount = Discount.search(search)
+    end
+    render 'confirm'
+>>>>>>> master
   end
 
   def save
@@ -31,6 +46,10 @@ class Users::OrdersController < ApplicationController
     session[:order]['start_date'] = params['start_date']
     session[:order]['finish_date'] = params['finish_date']
     session[:order]['day'] = params['day']
+<<<<<<< HEAD
+=======
+    session['pay'] = params['pay']
+>>>>>>> master
     redirect_to users_orders_confirm_path
   end
 
@@ -54,7 +73,14 @@ class Users::OrdersController < ApplicationController
       finish_date:   session[:order]['finish_date'],
       day:           session[:order]['day'],
       create_point:  params['create_point'],
+<<<<<<< HEAD
       status: 0
+=======
+      status: 0,
+      pay_id: session['pay'],
+      discount_id: params['discount'],
+      point_event_id: params['point_event']
+>>>>>>> master
     )
     order.user_id = current_user.id
     order.save
@@ -69,10 +95,15 @@ class Users::OrdersController < ApplicationController
       order_record = OrderRecord.new(
         user_id:  current_user.id,
         order_id:   order.id,
-        combo_id:   item.combo.id,
-        product_id: item.product.id,
+        combo_id:   item.combo_id,
+        product_id: item.product_id,
         end_price:  item.combo.price,
+<<<<<<< HEAD
         quantity:   item.quantity
+=======
+        quantity:   item.quantity,
+        status: 0
+>>>>>>> master
       )
       order_record.save!
     end
@@ -100,6 +131,7 @@ class Users::OrdersController < ApplicationController
       zip_code = current_user.zip_code
       address = current_user.address
     else
+<<<<<<< HEAD
       return_status = nil
       zip_code = params["zip_code"]
       address = params["address"]
@@ -112,6 +144,30 @@ class Users::OrdersController < ApplicationController
       address:  address,
       status: params["status"]
       )
+=======
+      return_status = params[:order]["return_status"]
+      zip_code = params[:order]["zip_code"]
+      address = params[:order]["address"]
+    end
+    if params[:order]["status"].blank?
+      params[:order]["status"] = "貸出中"
+      order.update(
+        day:  params["day"],
+        finish_date: params["finish_date"],
+        return_status: return_status,
+        zip_code: zip_code,
+        address:  address,
+        status: params[:order]["status"]
+        )
+    else
+      order.update(
+        return_status: return_status,
+        zip_code: zip_code,
+        address:  address,
+        status: params[:order]["status"]
+        )
+    end
+>>>>>>> master
     flash[:notice] = '返却情報を送信しました。'
     redirect_to users_root_path(current_user)
   end
@@ -129,7 +185,11 @@ class Users::OrdersController < ApplicationController
   private
 
   def order_params
+<<<<<<< HEAD
     params.require(:order).permit(:get_status, :zip_code, :address, :return_status, :start_date, :finish_date, :user_id, :day,:status,:create_point)
+=======
+    params.require(:order).permit(:get_status, :zip_code, :address, :return_status, :start_date, :finish_date, :user_id, :day,:status,:create_point,:pay_id)
+>>>>>>> master
   end
 
   def ensure_correct_user

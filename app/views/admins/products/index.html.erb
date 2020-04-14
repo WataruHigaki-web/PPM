@@ -35,6 +35,7 @@
 
   <% @products.each do |product| %>
     <tr>
+<<<<<<< HEAD
       <td>
         <%= link_to product.id,admins_product_path(product.id) %>
       </td>
@@ -45,6 +46,12 @@
       <td>
         <%= product.product_kind.name %>
       </td>
+=======
+      <td><%= link_to product.id,admins_product_path(product.id) %></td>
+      <td><%= product.name %></td>
+
+      <td><%= product.product_kind.name %></td>
+>>>>>>> master
 
       <td><%= product.stock %></td>
       <% @product_records = OrderRecord.where(product_id: product.id) %>
@@ -52,7 +59,11 @@
           <% @quantity = record.quantity %>
       <% end %>
       
+<<<<<<< HEAD
       <% if product.stock - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count * @quantity) <= 0 %>
+=======
+      <% if product.stock.to_i - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count.to_i * @quantity.to_i) <= 0 %>
+>>>>>>> master
         <td>売切</td>
        <% else %>
         <td>販売中</td>

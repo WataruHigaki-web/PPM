@@ -39,6 +39,10 @@ class Admins::OrdersController < ApplicationController
     @products = Product.all
     @orders = Order.all
     @combos = Combo.all
+<<<<<<< HEAD
+=======
+    @combo_items = ComboItem.all
+>>>>>>> master
     @reserves = Order.where(status: "予約受付中")
     @lendings = Order.where(status: "貸出中")
     @returns = Order.where(status: "郵送中")
@@ -47,7 +51,11 @@ class Admins::OrdersController < ApplicationController
   private
 
   def order_params
+<<<<<<< HEAD
     params.require(:order).permit(:status,:get_status, :return_status, :address, :zipcode, :day, :start_date, :finish_date, :user_id,:pay_status,:giv_point)
+=======
+    params.require(:order).permit(:status,:get_status, :return_status, :address, :zipcode, :day, :start_date, :finish_date, :user_id,:pay_status,:giv_point,:pay_id)
+>>>>>>> master
   end
 
   def order_record_params
