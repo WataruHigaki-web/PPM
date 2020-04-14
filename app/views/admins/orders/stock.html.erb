@@ -157,8 +157,8 @@
   <% @combos.each do |combo| %>
     <% if combo.id == 1 %>
       <% combo.combo_items.each do |combo_item| %>
-      <% @product = OrderRecord
-      <% if combo_item.product,id == @product.id %>
+      <%# @product = OrderRecord
+      <%# if combo_item.product.id == @product.id %>
         <tr>
           <td><%= combo.name %></td>
           <td>
