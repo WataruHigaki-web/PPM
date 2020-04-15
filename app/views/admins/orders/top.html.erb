@@ -1,8 +1,18 @@
 <%= current_admin.name %>さんようこそ
 <h2>管理者トップ</h2>
 <h4>イベント情報</h4>
-新年ポイント祭り開催中！！
-
+<% unless @discount.nil? %>
+  <%= @discounts.each do |discount| %>
+    <%= discount.name %>開催中！！</br>
+  <% end %>
+<% else %>
+  <h4>現在クーポンはありません</h4>
+<% end %>
+<% unless @point_event.nil? %>
+  <%= @point_event.name %>開催中！！
+<% else %>
+  <h4>現在ポイントイベントはありません</h4>
+<% end %>
 <button class="button"><%= link_to '貸出返却',admins_orders_path %></button>
 
 <button class="button"><%= link_to '在庫',admins_orders_stock_path %></button>

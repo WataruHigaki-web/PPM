@@ -35,7 +35,7 @@
       <tr>
         <td><%= combo.id %></td>
         <td><%= combo.name %></td>
-        <td><%= attachment_image_tag combo,:combo_image,:fill,300,300, fallback:"no_image.jpg" %></td>
+        <td><%= attachment_image_tag combo,:combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
         <td><%= combo.price %></td>
         <td>
           <%= link_to '編集',edit_admins_combo_path(combo), class: "btn btn-info" %>

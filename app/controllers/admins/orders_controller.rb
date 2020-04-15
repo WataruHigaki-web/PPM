@@ -2,7 +2,10 @@
 
 class Admins::OrdersController < ApplicationController
   before_action :authenticate_admin!
-  def top; end
+  def top
+    @point_event = PointEvent.find_by(status: true)
+    @discounts = Discount.where(status: true)
+  end
 
   def index
     @orders = Order.all
