@@ -1,5 +1,5 @@
 <h2>クレジット情報一覧</h2>
-
+<%= link_to 'カートへ戻る',users_cart_items_path(current_user),class: "btn btn-info" %>
 <%= form_with model: @pay,url:users_pays_path do |f| %>
   <table class="table table-bordered">
     <tr>

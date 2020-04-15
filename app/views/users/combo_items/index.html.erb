@@ -18,6 +18,9 @@
         <tr>
           <td>
             <%= link_to "#{combo.name}",users_combo_items_path(combo_id: combo.id), data: {"turbolinks" => false}%>
+            <% unless combo.id == 1 %>
+              <%= link_to '詳細',users_combo_item_path(combo),class: "btn btn-info" %>
+            <% end %>
           </td>
           <td><%= combo.price %></td>
           <% if combo.id != 1 %>

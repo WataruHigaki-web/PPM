@@ -68,7 +68,7 @@ Rails.application.routes.draw do
       end
     end
     resources :pays,  only: %i[index new destroy create edit update]
-    resources :combo_items,  only: [:index]
+    resources :combo_items,  only: [:index,:show]
     resources :questions,    only:[:index,:create,:destroy]
     resources :discounts, only: %i[index show]
   end

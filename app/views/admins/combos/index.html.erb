@@ -4,9 +4,20 @@
 <%= form_for((@combo),url:admins_combos_path) do |f| %>
   <%= f.label :セット名 %>
   <%= f.text_field :name %><br/>
+
   <%= f.attachment_field :combo_image %>
+
   <%= f.label :セット金額 %>
   <%= f.number_field :price %>円/1日<br/>
+
+  <%= f.label :説明 %>
+  <%= f.text_area :introduction %>円/1日<br/>
+
+  <%= f.radio_button :status,true, checked: "checked" %>
+  <%= f.label :有効 %>
+
+  <%= f.radio_button :status,false, checked: "checked" %>
+  <%= f.label :無効 %><br/>
   <%= f.submit '追加',class:'btn btn-info' %>
 <% end %>
 
@@ -30,7 +41,7 @@
           <%= link_to '編集',edit_admins_combo_path(combo), class: "btn btn-info" %>
         </td>
         <td>
-          <%= link_to admins_combo_items_path, class: "btn btn-info" do %>
+          <%= link_to users_combo_item_path(combo), class: "btn btn-info" do %>
             詳細
           <% end %>
         </td>

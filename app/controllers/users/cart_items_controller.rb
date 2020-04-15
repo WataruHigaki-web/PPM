@@ -15,13 +15,17 @@ class Users::CartItemsController < ApplicationController
 
   def save
     session[:cart_item].each do |cart_item|
-    cart_item = CartItem.new(
-      user_id: current_user.id,
-      combo_id:   cart_item["combo_id"],
-      product_id: cart_item["product_id"],
-      quantity:   cart_item["quantity"]
-      )
-    cart_item.save
+      if cart_item["status"] == true
+        cart_item.destroy
+      else
+        cart_item = CartItem.new(
+          user_id: current_user.id,
+          combo_id:   cart_item["combo_id"],
+          product_id: cart_item["product_id"],
+          quantity:   cart_item["quantity"]
+        )
+        cart_item.save
+      end
     end
     session[:cart_item] = []
     redirect_to users_cart_items_path(current_user)
@@ -66,6 +70,7 @@ class Users::CartItemsController < ApplicationController
       redirect_to users_cart_items_path(user)
     end
   end
+
 
   private
 

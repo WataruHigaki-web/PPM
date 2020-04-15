@@ -33,7 +33,7 @@
           <% else %>
             <td><%= attachment_image_tag cart_item.combo,:combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
             <td>
-              <%= link_to users_combo_items_path(cart_item) do %>
+              <%= link_to users_combo_items_path do %>
                 <%= cart_item.combo.name %>
               <% end %>
             </td>
@@ -132,9 +132,8 @@
               </td>
             <% end %>
               <td class="price"data-price="<%= Combo.find(cart_item["combo_id"]).price %>"><%= Combo.find(cart_item["combo_id"]).price %></td>
-              <td>
-                <button class="btn btn-danger"name="delete_button">削除</button>
-
+              <td data=cart_item>
+                  <button class="btn btn-danger"name="delete_button"data-cart-item="<%=session[:cart_item] %>"data-item="<%= cart_item %>">削除</button>
               </td>
           </tr>
             <% @sum += (Combo.find(cart_item["combo_id"]).price).to_i * (cart_item["quantity"]).to_i %>
@@ -144,8 +143,17 @@
 
     <script type="text/javascript">
       $('button[name="delete_button"]').click(function() {
-        console.log($(this).parent().parent().find('cart_item'));
-        $(this).parent().parent().find('.cart_item').hide();
+        var cart_items = $(this).data('cart-item');
+        console.log(cart_items);
+        $(this).parent().parent().hide();
+        // $('.cart_item').hide();
+        // var delete_item = $(this).data('item');
+        // console.log(delete_item);
+        // delete cart_items[delete_item]
+        // number = cart_items.indexOf($(this).data('item'));
+        // console.log(number);
+        // result = cart_items.splice($(this).data('item'), 1);
+        // console.log(result);
       });
     </script>
 
@@ -194,7 +202,6 @@
 
 <script type="text/javascript">
   sum = document.getElementById('cart_item_sum').textContent;
-  console.log(sum);
   final_sum = sum;
   point_sum = Number("<%= (@sum / 100).floor * @point_event.bonus %>");
 
