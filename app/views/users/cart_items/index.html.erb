@@ -96,6 +96,7 @@
       </table>
 
 <% else %>
+  <%= form_with url: users_cart_items_delete2_path, method: :post  do |f| %>
     <table class="table table-bordered">
       <tr>
         <th>画像</th>
@@ -133,27 +134,27 @@
             <% end %>
               <td class="price"data-price="<%= Combo.find(cart_item["combo_id"]).price %>"><%= Combo.find(cart_item["combo_id"]).price %></td>
               <td data=cart_item>
-                  <button class="btn btn-danger"name="delete_button"data-cart-item="<%=session[:cart_item] %>"data-item="<%= cart_item %>">削除</button>
+
+                  <%= f.submit '削除', class: "btn btn-danger",name: "delete_button",'data-cart-item': session[:cart_item], 'data-item': cart_item %>
+
               </td>
           </tr>
             <% @sum += (Combo.find(cart_item["combo_id"]).price).to_i * (cart_item["quantity"]).to_i %>
         <% end %>
       <% end %>
     </table>
+  <% end %>
 
     <script type="text/javascript">
-      $('button[name="delete_button"]').click(function() {
-        var cart_items = $(this).data('cart-item');
-        console.log(cart_items);
-        $(this).parent().parent().hide();
-        // $('.cart_item').hide();
-        // var delete_item = $(this).data('item');
-        // console.log(delete_item);
-        // delete cart_items[delete_item]
-        // number = cart_items.indexOf($(this).data('item'));
-        // console.log(number);
-        // result = cart_items.splice($(this).data('item'), 1);
-        // console.log(result);
+      $('input[name="delete_button"]').click(function(){
+        const delIndex = $(this).closest('tr')[0].rowIndex - 1;
+        console.log(delIndex);
+        var q = document.createElement('input');
+           q.type = 'hidden';
+           q.name = "number";
+           q.value = delIndex;
+           document.forms[0].appendChild(q);
+           console.log(document.forms[0]);
       });
     </script>
 
@@ -245,7 +246,7 @@
 
 <% if user_signed_in? %>
   <% unless current_user.status == false || current_user.is_deleted == true %>
-    <%= link_to '購入手続きへ進む',new_users_order_path(current_user),class: "btn btn-info" %>
+    <%= link_to '購入手続きへ進む',new_users_order_path,class: "btn btn-info" %>
   <% else %>
     <h4>購入手続きへは進むには、利用再開申請または管理者へお問い合わせください</h4><br/>
   <% end %>

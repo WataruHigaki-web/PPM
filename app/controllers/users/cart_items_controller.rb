@@ -10,7 +10,9 @@ class Users::CartItemsController < ApplicationController
       search = params[:search]
       @discount = Discount.search(search)
     end
+      @cart_item = Combo.find(1)
       render 'index'
+
   end
 
   def save
@@ -54,10 +56,15 @@ class Users::CartItemsController < ApplicationController
     redirect_to users_cart_items_path(current_user)
   end
 
+  def delete2
+    session[:cart_item].delete_at(params['number'].to_i)
+    redirect_to users_cart_items_path
+  end
+
   def destroy
-    cart_item = CartItem.find(params[:id])
-    cart_item.destroy
-    redirect_to users_cart_items_path(current_user)
+      cart_item = CartItem.find(params[:id])
+      cart_item.destroy
+      redirect_to users_cart_items_path(current_user)
   end
 
   def destroy_all

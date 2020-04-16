@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     get 'users/confirm'
     get 'orders/confirm'
     post 'orders/save'
+    post 'cart_items/delete2'
     get 'orders/thanks'
     delete 'cart_items/destroy_all'
     get 'cart_items/save'
