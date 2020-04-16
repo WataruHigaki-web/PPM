@@ -43,8 +43,8 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'capistrano'
   gem 'capistrano-rails'
-  gem 'capistrano3-puma'
   gem 'capistrano-rbenv'
+  gem 'capistrano3-puma'
 end
 
 group :development do
@@ -84,9 +84,9 @@ group :production do
   gem 'mysql2'
 end
 gem 'payjp'
-gem "refile", require: "refile/rails", github: 'manfe/refile'
-gem "refile-mini_magick"
+gem 'refile', require: 'refile/rails', github: 'manfe/refile'
+gem 'refile-mini_magick'
 group :development do
-  gem "letter_opener"
+  gem 'letter_opener'
   gem 'letter_opener_web'
 end

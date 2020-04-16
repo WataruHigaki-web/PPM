@@ -18,11 +18,11 @@ class Admins::OrdersController < ApplicationController
   def update
     order = Order.find(params[:id])
     order.update(order_params)
-    if order.status == "返却済" && order.pay_status == true && order.give_point == false
+    if order.status == '返却済' && order.pay_status == true && order.give_point == false
       in_point = InPoint.new(
-      point: order.create_point,
-      order_id:   order.id,
-      user_id:  order.user.id
+        point: order.create_point,
+        order_id:   order.id,
+        user_id:  order.user.id
       )
       in_point.save
       order.give_point = true
@@ -43,15 +43,15 @@ class Admins::OrdersController < ApplicationController
     @orders = Order.all
     @combos = Combo.all
     @combo_items = ComboItem.all
-    @reserves = Order.where(status: "予約受付中")
-    @lendings = Order.where(status: "貸出中")
-    @returns = Order.where(status: "郵送中")
+    @reserves = Order.where(status: '予約受付中')
+    @lendings = Order.where(status: '貸出中')
+    @returns = Order.where(status: '郵送中')
   end
 
   private
 
   def order_params
-    params.require(:order).permit(:status,:get_status, :return_status, :address, :zipcode, :day, :start_date, :finish_date, :user_id,:pay_status,:giv_point,:pay_id)
+    params.require(:order).permit(:status, :get_status, :return_status, :address, :zipcode, :day, :start_date, :finish_date, :user_id, :pay_status, :giv_point, :pay_id)
   end
 
   def order_record_params

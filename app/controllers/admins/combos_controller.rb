@@ -34,6 +34,6 @@ class Admins::CombosController < ApplicationController
   private
 
   def combo_params
-    params.require(:combo).permit(:name, :price,:combo_image,:status,:introduction)
+    params.require(:combo).permit(:name, :price, :combo_image, :status, :introduction)
   end
 end
