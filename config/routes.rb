@@ -32,10 +32,6 @@ Rails.application.routes.draw do
       end
     end
     resources :product_kinds, only: %i[index create edit update destroy]
-    resources :combos,       only: %i[index edit create update destroy]
-    resources :combo_items,  only: %i[show index create update destroy]
-    resources :admins,       only: %i[index show edit update]
-    resources :questions,    only: %i[index edit update create destroy update]
     resources :point_events, only: %i[index create edit update destroy]
     resources :discounts, only: %i[index create edit update destroy]
     resources :combos,       only: %i[index edit create update destroy]
@@ -50,7 +46,6 @@ Rails.application.routes.draw do
     get 'users/confirm'
     get 'orders/confirm'
     post 'orders/save'
-    post 'cart_items/delete2'
     get 'orders/thanks'
     delete 'cart_items/destroy_all'
     get 'cart_items/save'
@@ -62,28 +57,24 @@ Rails.application.routes.draw do
       resource  :likes, only: %i[create destroy]
       resources :product_comments, only: %i[create destroy]
     end
-    resources :orders
-    resources :cart_items,   only: %i[index update destroy create]
-    resources :pays,  only: %i[index new destroy create edit update]
-    resources :combo_items,  only: [:index]
-    resources :questions,    only:[:index]
-    end
     resources :orders do
       collection do
         get :search
       end
     end
-    resources :cart_items, only: %i[index update destroy create] do
+    resources :cart_items,   only: %i[index update destroy create] do
       collection do
         get :search
       end
     end
-    resources :pays, only: %i[index new destroy create edit update]
-    resources :combo_items,  only: %i[index show]
-    resources :questions,    only: %i[index create destroy]
-    resources :discounts, only: %i[index show]
+    resources :pays,  only: %i[index new destroy create edit update]
+    resources :combo_items,  only: [:index]
+    resources :questions,    only:[:index,:create,:destroy]
+    resources :discounts, only: %i[index]
   end
 
-  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
-end
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: '/letter_opener'
+  end
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
