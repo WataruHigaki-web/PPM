@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admins::PointEventsController < ApplicationController
   before_action :authenticate_admin!
   def index
@@ -12,7 +14,7 @@ class Admins::PointEventsController < ApplicationController
       status: params[:point_event]['status'],
       start_date: params['start_date'],
       finish_date: params['finish_date']
-      )
+    )
     if point_event.save
       flash[:notice] = "「#{point_event.name}」ジャンル作成しました"
       redirect_to admins_point_events_path
@@ -33,7 +35,7 @@ class Admins::PointEventsController < ApplicationController
       status: params[:point_event]['status'],
       start_date: params['start_date'],
       finish_date: params['finish_date']
-      )
+    )
       flash[:notice] = 'ポイントイベント編集完了しました'
       redirect_to admins_point_events_path
     else
@@ -51,6 +53,6 @@ class Admins::PointEventsController < ApplicationController
   private
 
   def point_event_params
-    params.require(:point_event).permit(:name,:bonus,:status,:start_date,:finish_date)
+    params.require(:point_event).permit(:name, :bonus, :status, :start_date, :finish_date)
   end
 end

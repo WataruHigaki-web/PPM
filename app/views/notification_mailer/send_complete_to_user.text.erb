@@ -75,7 +75,13 @@
   <% end %>
 <% end %>
 
-ボーナス
+クーポン
+
+<% if @order.discount.nil? %>
+  <%= discount = 0 %>
+<% else %>
+  <%= discount = @order.discount.price %>円
+<% end %>
 
 
 
@@ -86,7 +92,7 @@
   <% @sum += (order_record.end_price.to_i) * order_record.quantity.to_i * @order.day %>
 >>>>>>> master
 <% end %>
-<%= @sum %>円
+<%= @sum - discount %>円
 
 税込価格
 <%= (@sum * 1.1).floor %>円

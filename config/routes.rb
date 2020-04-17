@@ -56,6 +56,7 @@ Rails.application.routes.draw do
     get 'users/confirm'
     get 'orders/confirm'
     post 'orders/save'
+    post 'cart_items/delete2'
     get 'orders/thanks'
     delete 'cart_items/destroy_all'
     get 'cart_items/save'
@@ -83,20 +84,18 @@ Rails.application.routes.draw do
         get :search
       end
     end
-    resources :cart_items,   only: %i[index update destroy create] do
+    resources :cart_items, only: %i[index update destroy create] do
       collection do
         get :search
       end
     end
-    resources :pays,  only: %i[index new destroy create edit update]
-    resources :combo_items,  only: [:index]
-    resources :questions,    only:[:index,:create,:destroy]
+    resources :pays, only: %i[index new destroy create edit update]
+    resources :combo_items,  only: %i[index show]
+    resources :questions,    only: %i[index create destroy]
     resources :discounts, only: %i[index show]
 >>>>>>> master
   end
 
-  if Rails.env.development?
-    mount LetterOpenerWeb::Engine, at: '/letter_opener'
-  end
+  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

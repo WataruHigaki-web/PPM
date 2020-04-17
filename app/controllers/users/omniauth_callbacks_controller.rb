@@ -10,15 +10,27 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def facebook
     callback_for(:facebook)
   end
+
   def callback_for(provider)
-    @user = User.from_omniauth(request.env["omniauth.auth"])
+    @omniauth = request.env['omniauth.auth']
+    info = User.find_oauth(@omniauth)
+    @user = info[:user]
     if @user.persisted?
-      sign_in_and_redirect @user, event: :authentication #this will throw if @user is not activated
+      sign_in_and_redirect @user, event: :authentication
       set_flash_message(:notice, :success, kind: "#{provider}".capitalize) if is_navigational_format?
     else
-      session["devise.#{provider}_data"] = request.env["omniauth.auth"].except("extra")
-      redirect_to new_user_registration_url
+      @sns = info[:sns]
+      password = Devise.friendly_token.first(7)
+      if @sns.provider.present? && @sns.uid.present?
+        @user = User.create(name: @user.name, email: @user.email, password: password, password_confirmation: password, phone_number: @user.phone_number)
+        sns = SnsCredential.create(user_id: @user.id,uid: @sns.uid, provider: @sns.provider)
+        sign_in_and_redirect @user
+      end
     end
+  end
+
+  def failure
+    redirect_to root_path and return
   end
 
   # More info at:

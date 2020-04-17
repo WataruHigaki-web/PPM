@@ -10,10 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 2020_04_05_085532) do
-=======
-ActiveRecord::Schema.define(version: 2020_04_11_052530) do
+ActiveRecord::Schema.define(version: 2020_04_16_083612) do
 >>>>>>> master
 
   create_table "admins", force: :cascade do |t|
@@ -57,6 +54,8 @@ ActiveRecord::Schema.define(version: 2020_04_11_052530) do
     t.datetime "updated_at", null: false
     t.integer "price"
     t.string "combo_image_id"
+    t.text "introduction"
+    t.boolean "status", default: false, null: false
   end
 
   create_table "creditcards", force: :cascade do |t|
@@ -216,6 +215,15 @@ ActiveRecord::Schema.define(version: 2020_04_11_052530) do
     t.text "answer"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "sns_credentials", force: :cascade do |t|
+    t.string "provider"
+    t.string "uid"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sns_credentials_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

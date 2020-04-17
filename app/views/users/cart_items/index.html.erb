@@ -36,7 +36,7 @@
           <% else %>
             <td><%= attachment_image_tag cart_item.combo,:combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
             <td>
-              <%= link_to users_combo_items_path(cart_item) do %>
+              <%= link_to users_combo_items_path do %>
                 <%= cart_item.combo.name %>
               <% end %>
             </td>
@@ -225,6 +225,7 @@
       </table>
 
 <% else %>
+  <%= form_with url: users_cart_items_delete2_path, method: :post  do |f| %>
     <table class="table table-bordered">
       <tr>
         <th>画像</th>
@@ -261,8 +262,9 @@
               </td>
             <% end %>
               <td class="price"data-price="<%= Combo.find(cart_item["combo_id"]).price %>"><%= Combo.find(cart_item["combo_id"]).price %></td>
-              <td>
-                <button class="btn btn-danger"name="delete_button">削除</button>
+              <td data=cart_item>
+
+                  <%= f.submit '削除', class: "btn btn-danger",name: "delete_button",'data-cart-item': session[:cart_item], 'data-item': cart_item %>
 
               </td>
           </tr>
@@ -270,11 +272,18 @@
         <% end %>
       <% end %>
     </table>
+  <% end %>
 
     <script type="text/javascript">
-      $('button[name="delete_button"]').click(function() {
-        console.log($(this).parent().parent().find('cart_item'));
-        $(this).parent().parent().find('.cart_item').hide();
+      $('input[name="delete_button"]').click(function(){
+        const delIndex = $(this).closest('tr')[0].rowIndex - 1;
+        console.log(delIndex);
+        var q = document.createElement('input');
+           q.type = 'hidden';
+           q.name = "number";
+           q.value = delIndex;
+           document.forms[0].appendChild(q);
+           console.log(document.forms[0]);
       });
     </script>
 
@@ -323,7 +332,6 @@
 
 <script type="text/javascript">
   sum = document.getElementById('cart_item_sum').textContent;
-  console.log(sum);
   final_sum = sum;
   point_sum = Number("<%= (@sum / 100).floor * @point_event.bonus %>");
 
@@ -378,7 +386,7 @@
   <%= link_to '買い物を続ける',users_combo_items_path,class: "btn btn-primary", data: {"turbolinks" => false} %>
 =======
   <% unless current_user.status == false || current_user.is_deleted == true %>
-    <%= link_to '購入手続きへ進む',new_users_order_path(current_user),class: "btn btn-info" %>
+    <%= link_to '購入手続きへ進む',new_users_order_path,class: "btn btn-info" %>
   <% else %>
     <h4>購入手続きへは進むには、利用再開申請または管理者へお問い合わせください</h4><br/>
   <% end %>

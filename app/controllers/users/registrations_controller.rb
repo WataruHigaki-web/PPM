@@ -12,7 +12,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     super
-      NotificationMailer.send_confirm_to_user(current_user).deliver
+    NotificationMailer.send_confirm_to_user(current_user).deliver
   end
 
   # GET /resource/edit
@@ -42,7 +42,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   protected
 
   def user_params
-    params.require(:user).permit(:name,:name_kana,:zip_code,:address,:phone_number)
+    params.require(:user).permit(:name, :name_kana, :zip_code, :address, :phone_number)
   end
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params

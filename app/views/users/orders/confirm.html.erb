@@ -75,7 +75,7 @@
       <tr>
           <%= form_tag(users_orders_confirm_path, method: :get, remote: false) do %>
             <th>クーポン番号を入力
-                <%= text_field(@search_content, :search) %>
+                <%= number_field(@search_content, :search) %>
                 <%= submit_tag '適用',class: "btn btn-info",id: "discount-button" %>
             </th>
               <% unless @discount.blank? %>
@@ -220,7 +220,11 @@
         require_combo = Number($("#discount-price").data("require-combo"));
         require_item = Number($("#discount-price").data("require-item"));
         combo_count = Number($(".combo_count").data("combo-count"));
+        if ($(".item_count").data("item-count")){
         item_count = Number($(".item_count").data("item-count"));
+        }else{
+         item_count = 0
+        }
 
           if (day >= require_day && combo_count >= require_combo && item_count >= require_item){
             final_sum = final_sum - discount;

@@ -5,6 +5,15 @@
   <%= f.text_field :name %><br/>
   <%= f.attachment_field :combo_image %>
   <%= f.label :コンボ金額 %>
-  <%= f.text_field :price %>円/1日<br/>
+  <%= f.number_field :price %>円/1日<br/>
+
+  <%= f.label :説明 %>
+  <%= f.text_area :introduction %>円/1日<br/>
+
+  <%= f.radio_button :status,true, checked: "checked" %>
+  <%= f.label :有効 %>
+
+  <%= f.radio_button :status,false, checked: "checked" %>
+  <%= f.label :無効 %><br/>
   <%= f.submit '変更を保存する',class:'btn btn-info' %>
   <% end %>

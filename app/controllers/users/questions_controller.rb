@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Users::QuestionsController < ApplicationController
 <<<<<<< HEAD
 
@@ -5,7 +7,7 @@ class Users::QuestionsController < ApplicationController
     @questions = Question.all
 =======
   before_action :authenticate_user!
-  before_action :ensure_correct_user, only:[:destroy]
+  before_action :ensure_correct_user, only: [:destroy]
 
   def index
     @questions = Question.all
@@ -17,7 +19,7 @@ class Users::QuestionsController < ApplicationController
     inquiry = Inquiry.new(inquiry_params)
     inquiry.user_id == current_user.id
     if inquiry.save
-      flash[:notice] = "質問内容を送信しました。返答についてはメールで対応させていただきます。"
+      flash[:notice] = '質問内容を送信しました。返答についてはメールで対応させていただきます。'
       redirect_to users_questions_path(current_user)
     end
   end
@@ -25,14 +27,14 @@ class Users::QuestionsController < ApplicationController
   def destroy
     inquiry = Inquiry.find(params[:id])
     inquiry.destroy
-    flash[:notice] = "質問内容を削除しました。"
+    flash[:notice] = '質問内容を削除しました。'
     redirect_to users_questions_path(current_user)
   end
 
   private
 
   def inquiry_params
-    params.require(:inquiry).permit(:content,:user_id,:status,:staff)
+    params.require(:inquiry).permit(:content, :user_id, :status, :staff)
   end
 
   def ensure_correct_user

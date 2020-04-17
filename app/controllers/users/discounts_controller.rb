@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Users::DiscountsController < ApplicationController
   before_action :authenticate_user!
   def index
@@ -11,6 +13,6 @@ class Users::DiscountsController < ApplicationController
   private
 
   def discount_params
-    params.require(:discount).permit(:name,:introduction,:number,:price,:status,:start_date,:finish_date)
+    params.require(:discount).permit(:name, :introduction, :number, :price, :status, :start_date, :finish_date)
   end
 end
