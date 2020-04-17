@@ -9,5 +9,9 @@ class CreatePays < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
+<<<<<<< HEAD
+    add_foreign_key :pays, :users
+=======
+>>>>>>> master
   end
 end

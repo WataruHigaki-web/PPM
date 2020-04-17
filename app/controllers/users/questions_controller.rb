@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 class Users::QuestionsController < ApplicationController
+<<<<<<< HEAD
+
+  def index
+    @questions = Question.all
+=======
   before_action :authenticate_user!
   before_action :ensure_correct_user, only: [:destroy]
 
@@ -37,5 +42,6 @@ class Users::QuestionsController < ApplicationController
     if inquiry.user_id != current_user.id
       redirect_to users_user_path(current_user)
     end
+>>>>>>> master
   end
 end

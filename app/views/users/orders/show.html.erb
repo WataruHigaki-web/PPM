@@ -89,6 +89,16 @@
         <%= @order.out_point.point %>pt
       <% end %>
     </td>
+<<<<<<< HEAD
+  </tr>
+  <tr>
+    <th width="100">ご請求金額</th>
+    <td width="100"><%= @sum %></td>
+  </tr>
+  <tr>
+    <th width="100">発行ポイント</th>
+    <td width="100"><%= @order.create_point %>pt</td>
+=======
   </tr>
   <tr>
     <th width="100">クーポン</th>
@@ -123,6 +133,7 @@
     <td width="100">
       <%= @order.create_point * @order.point_event.bonus %>pt
     </td>
+>>>>>>> master
   </tr>
   </table>
   </div>
@@ -136,8 +147,11 @@
     <th>商品</th>
     <th>価格</th>
     <th>個数</th>
+<<<<<<< HEAD
+=======
     <th>レンタル日数</th>
     <th>小計</th>
+>>>>>>> master
   </tr>
 
   <% @order.order_records.each do |order_record| %>

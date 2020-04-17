@@ -6,6 +6,10 @@
     <th>レンタル期間</th>
     <th>レンタル日数</th>
     <th>セット名</th>
+<<<<<<< HEAD
+    <th>支払金額</th>
+=======
+>>>>>>> master
     <th>貸出返却ステータス</th>
     <th>注文詳細</th>
   </tr>
@@ -27,6 +31,10 @@
             <% end %>
           <% end %>
         </td>
+<<<<<<< HEAD
+          <td><%= order.order_records.sum(:end_price) %></td>
+=======
+>>>>>>> master
           <td><%= order.status %></td>
           <td><%= link_to '注文詳細',users_order_path(order),class: "btn btn-info" %></td>
       </tr>

@@ -5,7 +5,10 @@ class Admins::QuestionsController < ApplicationController
   def index
     @questions = Question.all
     @question = Question.new
+<<<<<<< HEAD
+=======
     @inquiries = Inquiry.all
+>>>>>>> master
   end
 
   def create
@@ -33,6 +36,8 @@ class Admins::QuestionsController < ApplicationController
     redirect_to admins_questions_path
   end
 
+<<<<<<< HEAD
+=======
   def update2
     inquiry = Inquiry.find(params[:id])
     inquiry.update(
@@ -47,13 +52,17 @@ class Admins::QuestionsController < ApplicationController
     @inquiry = Inquiry.find(params[:id])
   end
 
+>>>>>>> master
   private
 
   def question_params
     params.require(:question).permit(:question, :answer)
   end
+<<<<<<< HEAD
+=======
 
   def inquiry_params
     params.require(:inquiry).permit(:content, :user_id, :status, :staff)
   end
+>>>>>>> master
 end

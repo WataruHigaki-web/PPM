@@ -20,6 +20,8 @@
                   <%= cart_item.product.name %>
                 <% end %>
               </td>
+<<<<<<< HEAD
+=======
               <%= form_with model: cart_item,url:users_cart_item_path(cart_item) do |f| %>
                 <td>
                     <span class="item_count"data-item-count="<%= cart_item.quantity %>"><%= f.number_field :quantity,id: "item_quantity" %></span>
@@ -30,6 +32,7 @@
                   <%= link_to '削除',users_cart_item_path(cart_item),method: :delete,class: "btn btn-danger" %>
                 </td>
               <% end %>
+>>>>>>> master
           <% else %>
             <td><%= attachment_image_tag cart_item.combo,:combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
             <td>
@@ -37,6 +40,22 @@
                 <%= cart_item.combo.name %>
               <% end %>
             </td>
+<<<<<<< HEAD
+          <% end %>
+
+          <%= form_with model: cart_item,url:users_cart_item_path(cart_item) do |f| %>
+            <td>
+              <%= f.number_field :quantity %>
+              <%= f.submit "更新",class: "btn btn-info" %>
+            </td>
+            <td><%= (cart_item.combo.price).to_i * (cart_item.quantity).to_i %></td>
+            <td>
+              <%= link_to '削除',users_cart_item_path(cart_item),method: :delete,class: "btn btn-danger" %>
+            </td>
+          <% end %>
+        </tr>
+
+=======
               <%= form_with model: cart_item,url:users_cart_item_path(cart_item) do |f| %>
                 <td>
                     <span class="combo_count"data-combo-count="<%= cart_item.quantity %>"><%= f.number_field :quantity %></span>
@@ -50,10 +69,120 @@
           <% end %>
         </tr>
 
+>>>>>>> master
       <% @sum += (cart_item.combo.price).to_i * (cart_item.quantity).to_i %>
       <% end %>
     </table>
 
+<<<<<<< HEAD
+  <h4>料金見積もり表（レンタル日数を記入）</h4>
+    <table class="table table-bordered">
+      <tr>
+        <th>合計金額</th>
+        <td id="cart_item_sum"><%= @sum %>  円</td>
+      </tr>
+      <tr>
+        <th>レンタル日数</th>
+        <td>
+        <%= form_with model:@cart_items,url:users_cart_item_path(@cart_items) do |f| %>
+          <%= f.select :day,[1,2,3,4,5,6,7,8,9,10] %>日間
+         <% end %>
+
+         <script type="text/javascript">
+          var sum = Number("<%= @sum %>");
+           $('#cart_item_day').change(function(){
+             var val = Number($(this).val());
+             $('#cart_item_sum').text(String(sum * val) + ' 円');
+           });
+         </script>
+        </td>
+      </tr>
+    <!--   <tr>
+        <th>ボーナス金額計</th>
+        <% if @cart_items.count > 2 %>
+          <td class="discount">1000</td>
+        <% elsif @cart_items.count > 4 %>
+          <td class="discount">2000</td>
+        <% end %>
+      </tr> -->
+    　
+    <!--   <tr>
+        <th>最終支払金額</th>
+        <td>
+          <%= @sum %>円
+        </td>
+      </tr> -->
+    </table>
+<% else %>
+  <%= link_to "カートを空にする",users_cart_items_destroy_all_path,class: "btn btn-danger",method: :delete, "data-confirm" => "本当に削除しますか？" %>
+
+    <table class="table table-bordered">
+      <tr>
+        <th>画像</th>
+        <th>セットまたは商品名</th>
+        <th>個数</th>
+        <th>金額</th>
+        <th></th>
+      </tr>
+      <% @sum = 0 %>
+        <% session[:cart_item].each do |cart_item| %>
+        <tr>
+          <% if cart_item["combo_id"] == 1 %>
+            <td><%= attachment_image_tag Product.find(cart_item["product_id"]),:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
+              <td>
+                <%= link_to users_product_path(cart_item["product_id"]) do %>
+                  <%= Product.find(cart_item["product_id"]).name %>
+                <% end %>
+              </td>
+          <% else %>
+            <td><%= attachment_image_tag Combo.find(cart_item["combo_id"]), :combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
+            <td>
+              <%= link_to users_combo_items_path do %>
+                <%= Combo.find(cart_item["combo_id"]).name%>
+              <% end %>
+            </td>
+          <% end %>
+
+          <%#= form_with model: cart_item,url:users_cart_item_path(cart_item) do |f| %>
+            <td>
+              <%= cart_item["quantity"] %>
+              <%#= f.number_field :quantity %>
+              <%#= f.submit "更新",class: "btn btn-info" %>
+            </td>
+            <td><%= (Combo.find(cart_item["combo_id"]).price).to_i * (cart_item["quantity"]).to_i %></td>
+            <td>
+              <%#= link_to '削除',users_cart_item_path(cart_item),method: :delete,class: "btn btn-danger" %>
+            </td>
+          <%# end %>
+        </tr>
+
+      <% @sum += (Combo.find(cart_item["combo_id"]).price).to_i * (cart_item["quantity"]).to_i %>
+      <% end %>
+    </table>
+
+  <h4>料金見積もり表（レンタル日数を記入）</h4>
+    <table class="table table-bordered">
+      <tr>
+        <th>合計金額</th>
+        <td id="cart_item_sum"><%= @sum %>  円</td>
+      </tr>
+      <tr>
+        <th>レンタル日数</th>
+        <td>
+        <%#= form_with model:cart_item,url:users_cart_item_path(cart_item) do |f| %>
+          <%#= f.select :day,[1,2,3,4,5,6,7,8,9,10] %>日間
+         <%# end %>
+
+         <script type="text/javascript">
+          var sum = Number("<%= @sum %>");
+           $('#cart_item_day').change(function(){
+             var val = Number($(this).val());
+             $('#cart_item_sum').text(String(sum * val) + ' 円');
+           });
+         </script>
+        </td>
+      </tr>
+=======
     <h4>料金早見表（レンタル日数を記入）</h4>
       <table class="table table-bordered">
         <tr>
@@ -243,8 +372,19 @@
   });
 </script>
 
+>>>>>>> master
 
+    </table>
+<% end %>
 <% if user_signed_in? %>
+<<<<<<< HEAD
+  <%= link_to '購入手続きへ進む',new_users_order_path(current_user),class: "btn btn-primary" %>
+<% else %>
+   <%= link_to 'ユーザー登録して注文する',new_user_registration_path,class: "btn btn-primary" %>
+<% end %>
+
+  <%= link_to '買い物を続ける',users_combo_items_path,class: "btn btn-primary", data: {"turbolinks" => false} %>
+=======
   <% unless current_user.status == false || current_user.is_deleted == true %>
     <%= link_to '購入手続きへ進む',new_users_order_path,class: "btn btn-info" %>
   <% else %>
@@ -255,3 +395,4 @@
 <% end %>
 
   <%= link_to '買い物を続ける',users_combo_items_path,class: "btn btn-info", data: {"turbolinks" => false} %>
+>>>>>>> master

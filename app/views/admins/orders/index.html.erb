@@ -1,5 +1,6 @@
 <h2>貸出返却履歴一覧</h2>
 <%= link_to '全注文一覧',admins_orders_path, class: "btn btn-info" %>
+
 <h4>検索</h4>
   <%= form_tag(search_admins_orders_path, method: :get) do %>
     <%= select(@search_content, :search_kind,[["受取日","start_date"],["返却日","finish_date"],["注文者名","user_name"]]) %>

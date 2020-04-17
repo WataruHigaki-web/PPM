@@ -43,7 +43,11 @@
               <% @product_records.each do |record| %>
               <% @quantity = record.quantity %>
               <% end %>
+<<<<<<< HEAD
+                <% if @product.stock - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count * @quantity) <= 0 %>
+=======
                 <% if @product.stock.to_i - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count.to_i * @quantity.to_i) <= 0 %>
+>>>>>>> master
                   <td>売切</td>
                 <% else %>
                   <td>販売中</td>
@@ -66,7 +70,11 @@
 
       <%= link_to '削除',admins_product_path(@product),method: :delete, class: "btn btn-danger" %>
 
+<<<<<<< HEAD
+      <%= f.submit '上記セットアイテムに追加',class: "btn btn-primary" %>
+=======
       <%= f.submit '上記セットアイテムに追加', class: "btn btn-info" %>
+>>>>>>> master
     </div>
   <% end %>
 </div>

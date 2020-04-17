@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+<h2>よくある質問一覧</h2>
+
+=======
 <h2>お問い合わせ</h2>
 <h4>よくある質問一覧</h4>
+>>>>>>> master
 <% @questions.each do |question| %>
   Q:<%= question.question %><br/>
   A:<%= question.answer %>
@@ -12,6 +17,9 @@
   Q:<%= f.text_field :question %><br/>
   A:<%= f.text_field :answer %>
   <%= f.submit '送信',class: "btn btn-info" %>
+<<<<<<< HEAD
+<% end %>
+=======
 <% end %>
 
 <h4>ご利用者からの質問</h4>
@@ -41,3 +49,4 @@
     </tr>
   <% end %>
 </table>
+>>>>>>> master

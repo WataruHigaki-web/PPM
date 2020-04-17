@@ -112,6 +112,18 @@ class Users::OrdersController < ApplicationController
       zip_code = current_user.zip_code
       address = current_user.address
     else
+      return_status = nil
+      zip_code = params["zip_code"]
+      address = params["address"]
+    end
+    order.update(
+      day:  params["day"],
+      finish_date: params["finish_date"],
+      return_status: return_status,
+      zip_code: zip_code,
+      address:  address,
+      status: params["status"]
+      )
       return_status = params[:order]['return_status']
       zip_code = params[:order]['zip_code']
       address = params[:order]['address']
