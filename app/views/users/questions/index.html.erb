@@ -5,14 +5,6 @@
   A:<%= q.answer %>
 <% end %>
 
-<<<<<<< HEAD
-<h4>お問い合わせフォーム</h4>
-<%#= form_with model: @question,url: users_question_path(@question) do |f| %>
-  <%#= f.text_field :question %>
-  <%#= f.submit '送信',class: "btn btn-info" %>
-<%# end %>
-=======
-
 <h4>お問い合わせ</h4>
 <h6>下記に質問内容を記入し、送信ボタンを押してください</h6>
 <%= form_with model: @inquiry,url: users_questions_path(@inquiry) do |f| %>
@@ -41,4 +33,3 @@
     <% end %>
   </table>
 <% end %>
->>>>>>> master

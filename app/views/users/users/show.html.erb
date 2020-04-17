@@ -1,13 +1,8 @@
 <h2>マイページ</h2>
 <h4>
   登録情報
-<<<<<<< HEAD
-  <%= link_to '編集する',edit_users_user_path(current_user) %>
-  <%= link_to 'クレジット情報',users_pays_path(current_user) %>
-=======
   <%= link_to '編集する',edit_users_user_path(current_user),class: "btn btn-info" %>
   <%= link_to 'クレジット情報',users_pays_path(current_user),class: "btn btn-info" %>
->>>>>>> master
 </h4>
 
 <table class="table table-bordered">
@@ -60,12 +55,6 @@
     <th>退会</th>
     <td>
       <%= link_to '退会する',users_users_confirm_path,class: "btn btn-danger" %>
-    </td>
-  </tr>
-  <tr>
-    <th>お問い合わせ</th>
-    <td>
-      <%= link_to 'お問い合わせ',users_questions_path %>
     </td>
   </tr>
 </table>

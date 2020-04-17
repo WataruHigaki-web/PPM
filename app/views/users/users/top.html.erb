@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-
-<%= current_user.name %>さんのページ
-<% if current_user.status == false %>
-　<p>あなたは無効会員です。画面をロックしました</p>
-<% else %>
-  <%= link_to users_users_point_path(current_user) do %>
-   <p>現在の保有ポイント数:<%= @point %>pt</p>
-  <% end %>
-
-  <h2>注文予約一覧</h2>
-=======
 <h2><%= current_user.name %>さんのページ</h2>
 
 <% if current_user.status == false || current_user.is_deleted == true %>
@@ -25,7 +13,6 @@
   <% end %>
 
 <h2>注文予約一覧</h2>
->>>>>>> master
   <% @orders.each do |order|%>
     <% if order.status == "予約受付中" %>
       <table class="table table-bordered">
@@ -51,32 +38,6 @@
           <th class="info">レンタル期間</th>
           <td><%= order.day %>日間</td>
         </tr>
-<<<<<<< HEAD
-
-        <tr>
-          <th class="info">受け取り場所</th>
-          <td>
-            <%= order.get_status %>
-            <%= link_to '詳細',users_order_path(order) %>
-          </td>
-        </tr>
-
-        <tr>
-          <th class="info">予約をキャンセル</th>
-          <td><%= link_to 'この注文をキャンセルする',users_order_path(order),method: :delete,data:{confirm: "本当に削除しますか？"},class: "btn btn-info" %></td>
-        </tr>
-      </table>
-    <% end %>
-  <% end %>
-
-  <h2>未返却物一覧</h2>
-
-  <% @orders.each do |order|%>
-    <% if order.status == "貸出中" %>
-    郵送返却のお客様は、郵送完了後、1.３を記入後郵送完了ボタンを押してください。<br/>延滞の方は1.2を記入後、延滞情報送信を押してください。
-      <table class="table table-bordered">
-        <tr>
-=======
 
         <tr>
           <th class="info">受け取り場所</th>
@@ -103,7 +64,6 @@
     郵送返却のお客様は、郵送完了後、３,4を記入後郵送完了ボタンを押してください。<br/>
       <table class="table table-bordered">
         <tr class="d3">
->>>>>>> master
           <th class="danger">予定返却日</th>
           <td><%= order.finish_date %></td>
         </tr>
@@ -137,13 +97,6 @@
             <% end %>
             </td>
         </tr>
-<<<<<<< HEAD
-
-      　<%= form_with model:order,url:users_order_path(order),method: :patch do |f| %>
-          <tr>
-            <th class="danger">1.郵送返却方法の変更(ご希望の方のみ)</th>
-              <td id="radio_all">
-=======
 
       　<%= form_with model:order,url:users_order_path(order),method: :patch do |f| %>
           <tr>
@@ -179,7 +132,6 @@
               <td id="radio_all">
                <!--  <%= f.radio_button :return_status,4,checked: "checked" %>
                 上記と同様<br/> -->
->>>>>>> master
                 <%= f.radio_button :return_status,0 %>受取場所と同様<br/>
                 <%= f.radio_button :return_status,1 %>現住所から郵送返却<br/>
                 <%= current_user.zip_code %>
@@ -191,85 +143,16 @@
                 </div>
               </td>
           </tr>
-<<<<<<< HEAD
-          <tr>
-            <th class="danger">2.延滞をご希望の方はこちら(ご返却日時の選択)</th>
-            <td id="setting">
-              <div id="start_date"><%= order.start_date %></div>~
-              <%= date_field_tag :finish_date,"",class: "finish_date",'data-start-date': order.start_date %>
-              <%= f.submit '延滞情報送信',data:{confirm: "終了日時を本当に変更しますか？変更した日付より前の日付には変更はできません"},class: "btn btn-info", id: "button" %>
-            </td>
-          </tr>
-          <tr>
-            <th class="danger">3:郵送返却完了の方はチェックと完了ボタンをPUSH!</th>
-            <td>
-              <%= f.radio_button :status,"郵送中" %>ここをチェック
-              <%= f.submit '郵送完了',data:{confirm: "本当に郵送を完了しましたか？"},class: "btn btn-info",id: "button" %>
-=======
-
           <tr>
             <th class="danger">3:郵送返却完了の方はチェックと完了ボタンをPUSH!</th>
             <td>
               <%= f.radio_button :status,"郵送中",class: "order_status" %>ここをチェック
               <%= f.submit '郵送完了',data:{confirm: "本当に郵送を完了しましたか？"},class: "btn btn-info",id: "button2" %>
->>>>>>> master
               <%= link_to '詳細',users_order_path(order) %>
             </td>
           </tr>
         <% end %>
       </table>
-<<<<<<< HEAD
-    <% end %>
-  <% end %>
-<% end %>
-<script type="text/javascript">
-      // var form = document.getElementById('form');
-      // form.style.visibility = 'hidden';
-      $('input[name="order[return_status]"]').parent().find(".form_class").hide();
-      $('input[name="order[return_status]"]').change(function(){
-        if($(this).val() == "2"){
-          $(this).parent().find(".form_class").show();
-        }else{
-          $(this).parent().find(".form_class").hide();
-        }
-      });
-
-
-
-      $('.finish_date').change(function() {
-        console.log($(this).data("start-date"));
-        console.log(document.getElementById("finish_date").value);
-        var d1 = new Date($(this).data("start-date"));
-        console.log(d1);
-        var d2 = new Date(document.getElementById("finish_date").value);
-        console.log(d2);
-        get_date(d1, d2)
-      });
-
-      function get_date(start_date, finish_date){
-        if (start_date && finish_date){
-          var date = (finish_date - start_date)/(24*60*60*1000);
-          $('#date').text(date + '日間');
-          if (Math.sign(date) == -1){
-            document.getElementById("button").disabled = true;
-          }else{
-            document.getElementById("button").disabled = false;
-            var q = document.createElement('input');
-            q.type = 'hidden';
-            q.name = "day";
-            q.value = date;
-            document.forms[0].appendChild(q);
-            console.log(document.forms[0]);
-          }
-        }else{
-          alert ('利用期間の入力に誤りがあります');
-          return
-        }
-      }
-=======
-
-    <%# elsif @order_lending.blank? %>
-      <!-- <h4>現在返却物がありません</h4> -->
     <% end %>
   <% end %>
 <% end %>
@@ -323,5 +206,4 @@
       return
     }
   }
->>>>>>> master
 </script>
