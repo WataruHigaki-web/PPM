@@ -50,6 +50,7 @@ class User < ApplicationRecord
         user = User.new(
           name: auth.info.name,
           email: auth.info.email,
+          profile_image_id: auth.info.image
         )
         sns = SnsCredential.new(
           uid: auth.uid,
