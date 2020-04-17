@@ -18,11 +18,8 @@ Rails.application.routes.draw do
   namespace :admins do
     root 'orders#top'
     get 'orders/stock'
-<<<<<<< HEAD
-=======
     patch 'admins/:id', to: 'questions#update2'
     put 'admins/:id', to: 'questions#update2'
->>>>>>> master
     resources :users, only: %i[index show edit update] do
       collection do
         get :search
@@ -35,19 +32,16 @@ Rails.application.routes.draw do
       end
     end
     resources :product_kinds, only: %i[index create edit update destroy]
-<<<<<<< HEAD
     resources :combos,       only: %i[index edit create update destroy]
     resources :combo_items,  only: %i[show index create update destroy]
     resources :admins,       only: %i[index show edit update]
     resources :questions,    only: %i[index edit update create destroy update]
-=======
     resources :point_events, only: %i[index create edit update destroy]
     resources :discounts, only: %i[index create edit update destroy]
     resources :combos,       only: %i[index edit create update destroy]
     resources :combo_items,  only: %i[show index create update destroy]
     resources :admins,       only: %i[index show edit update]
     resources :questions,    only: %i[index show edit update create destroy update]
->>>>>>> master
   end
 
   namespace :users do
@@ -60,24 +54,19 @@ Rails.application.routes.draw do
     get 'orders/thanks'
     delete 'cart_items/destroy_all'
     get 'cart_items/save'
-<<<<<<< HEAD
-=======
     patch 'users/:id', to: 'users#withdrawal'
     put 'users/:id', to: 'users#withdrawal'
->>>>>>> master
     resources :users,        only: %i[show edit update]
     resources :products,     only: %i[index show] do
       resource :favorites, only: %i[create destroy]
       resource  :likes, only: %i[create destroy]
       resources :product_comments, only: %i[create destroy]
-<<<<<<< HEAD
     end
     resources :orders
     resources :cart_items,   only: %i[index update destroy create]
     resources :pays,  only: %i[index new destroy create edit update]
     resources :combo_items,  only: [:index]
     resources :questions,    only:[:index]
-=======
     end
     resources :orders do
       collection do
@@ -93,7 +82,6 @@ Rails.application.routes.draw do
     resources :combo_items,  only: %i[index show]
     resources :questions,    only: %i[index create destroy]
     resources :discounts, only: %i[index show]
->>>>>>> master
   end
 
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
