@@ -50,7 +50,7 @@
       <tr>
           <%= form_tag(users_orders_confirm_path, method: :get, remote: false) do %>
             <th>クーポン番号を入力
-                <%= text_field(@search_content, :search) %>
+                <%= number_field(@search_content, :search) %>
                 <%= submit_tag '適用',class: "btn btn-info",id: "discount-button" %>
             </th>
               <% unless @discount.blank? %>
