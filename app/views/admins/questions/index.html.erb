@@ -1,35 +1,13 @@
-<<<<<<< HEAD
-<h2>よくある質問一覧</h2>
+<h2>ご利用者からの質問</h2>
 
-=======
-<h2>お問い合わせ</h2>
-<h4>よくある質問一覧</h4>
->>>>>>> master
-<% @questions.each do |question| %>
-  Q:<%= question.question %><br/>
-  A:<%= question.answer %>
-  <%= link_to '編集する',edit_admins_question_path(question),method: :get, class: "btn btn-info" %>
-  <%= link_to '削除',admins_question_path(question),method: :delete,class: "btn btn-info" %>
-<% end %>
-
-<h4>よくある質問作成フォーム</h4>
-<%= form_with model: @question,url: admins_questions_path,method: :post do |f| %>
-  Q:<%= f.text_field :question %><br/>
-  A:<%= f.text_field :answer %>
-  <%= f.submit '送信',class: "btn btn-info" %>
-<<<<<<< HEAD
-<% end %>
-=======
-<% end %>
-
-<h4>ご利用者からの質問</h4>
 <table class="table table-bordered">
   <tr>
     <th>名前</th>
-    <th>日時</th>
+    <th>質問日時</th>
     <th>内容</th>
     <th>担当者</th>
-    <th></th>
+    <th>ステータス</th>
+    <th>最新対応日時</th>
   </tr>
   <% @inquiries.each do |inquiry| %>
     <tr>
@@ -45,8 +23,9 @@
         <% end %>
       </td>
       <td><%= inquiry.staff %></td>
-        <td><%= inquiry.status %></td>
+      <td><%= inquiry.status %></td>
+      <td><%= inquiry.updated_at.strftime("%Y-%m-%d %H:%M") %></td>
     </tr>
   <% end %>
 </table>
->>>>>>> master
+

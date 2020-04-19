@@ -2,7 +2,7 @@
 
 <% @questions.each do |q| %>
   Q:<%= q.question %><br/>
-  A:<%= q.answer %>
+  A:<%= q.answer %><br/>
 <% end %>
 
 <h4>お問い合わせ</h4>
@@ -10,7 +10,7 @@
 <%= form_with model: @inquiry,url: users_questions_path(@inquiry) do |f| %>
   <%= f.text_field :content %>
   <%= f.hidden_field :user_id, :value => current_user.id %>
-  <%= f.hidden_field :status, :value => 0 %>
+  <%= f.hidden_field :status, :value => "未対応" %>
   <%= f.submit '送信',class: "btn btn-info" %>
 <% end %>
 

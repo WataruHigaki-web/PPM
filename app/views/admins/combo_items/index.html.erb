@@ -20,12 +20,12 @@
     <th>商品名</th>
     <th>商品画像</th>
     <th>販売ステータス</th>
-    <th>コンボステータス</th>
+    <th>セット名</th>
   </tr>
   <% @combo_items.each do |combo_item| %>
   <tr>
     <td>
-      <%= link_to admins_product_path(combo_item) do %>
+      <%= link_to admins_product_path(combo_item.product) do %>
        <%= combo_item.product.id %>
       <% end %>
     </td>

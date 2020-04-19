@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   namespace :admins do
     root 'orders#top'
+    get 'questions/index2'
     get 'orders/stock'
     patch 'admins/:id', to: 'questions#update2'
     put 'admins/:id', to: 'questions#update2'
@@ -46,12 +47,14 @@ Rails.application.routes.draw do
     get 'users/confirm'
     get 'orders/confirm'
     post 'orders/save'
+    post 'cart_items/delete2'
     get 'orders/thanks'
     delete 'cart_items/destroy_all'
     get 'cart_items/save'
     patch 'users/:id', to: 'users#withdrawal'
     put 'users/:id', to: 'users#withdrawal'
     resources :users,        only: %i[show edit update]
+    resources :discounts, only: %i[index show]
     resources :products,     only: %i[index show] do
       resource :favorites, only: %i[create destroy]
       resource  :likes, only: %i[create destroy]
@@ -68,7 +71,7 @@ Rails.application.routes.draw do
       end
     end
     resources :pays,  only: %i[index new destroy create edit update]
-    resources :combo_items,  only: [:index]
+    resources :combo_items,  only: [:index,:show]
     resources :questions,    only:[:index,:create,:destroy]
     resources :discounts, only: %i[index]
   end

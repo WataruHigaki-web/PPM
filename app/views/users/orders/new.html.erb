@@ -50,8 +50,8 @@
     var today = new Date(Date.now());
 
     function get_date(start_date, finish_date){
-      if (d1 && d2){
-        var date = (d2-d1)/(24*60*60*1000);
+      if (start_date && finish_date){
+        var date = (finish_date - start_date)/(24*60*60*1000);
         if (Math.sign(date) == -1　||　today > d1 || date == 0 || $('#alert').length){
           document.getElementById("button").disabled = true;
         }else{
@@ -61,11 +61,10 @@
           q.name = "day";
           q.value = date;
           document.forms[0].appendChild(q);
-          console.log(document.forms[0]);
         }
       }else{
+        document.getElementById("button").disabled = true;
         alert ('利用期間の入力に誤りがあります');
-        return
       }
     }
   </script>

@@ -31,8 +31,12 @@ class Admins::ComboItemsController < ApplicationController
 
   def update
     combo_item = ComboItem.find(params[:id])
-    combo_item.update(combo_item_params)
-    redirect_to admins_combo_item_path(combo_item)
+    combo_item.update(
+      product_id: params['product_id'],
+      combo_id: params['combo_id'],
+      quantity: 1
+      )
+    redirect_to admins_product_path(combo_item.product)
   end
 
   private

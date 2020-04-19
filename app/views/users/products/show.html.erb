@@ -11,11 +11,7 @@
     <% end %>
 
     <div class="col-xs-6">
-<<<<<<< HEAD
-        <%= attachment_image_tag @product ,:product_image,:fill,500,500, fallback:"no_image.jpg" %>
-=======
         <%= attachment_image_tag @product ,:product_image,:fill,300,300, fallback:"no_image.jpg" %>
->>>>>>> master
     </div>
     <div class="col-xs-6">
      <table class="table table-bordered">
@@ -66,36 +62,6 @@
             </td>
           </tr>
           <tr>
-<<<<<<< HEAD
-            <th>ステータス</th>
-            <% @product_records = OrderRecord.where(product_id: @product.id) %>
-            <% @product_records.each do |record| %>
-              <% @quantity = record.quantity %>
-            <% end %>
-            
-             <% if @product.stock - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count * @quantity) <= 0 %>
-                <td id="status">売切</td>
-              <% else %>
-                <td id="status">販売中</td>
-              <% end %>
-         </tr>
-
-         <tr>
-           <th>個数</th>
-           <td>
-             <%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %>
-           </td>
-         </tr>
-        <% if user_signed_in? %>
-          <tr>
-            <th></th>
-            <td>
-              <%= render 'users/favorites/favorite',product: @product %>
-            </td>
-          </tr>
-          <tr>
-=======
->>>>>>> master
             <th>いいね</th>
             <td>
               <%= render 'users/likes/like',product: @product %>
@@ -104,15 +70,12 @@
         <% else %>
         <% end %>
     </table>
-<<<<<<< HEAD
-      <%= f.submit 'カートに入れる',class: "btn btn-primary", id: 
-      'button' %>
-=======
-    <% unless @combo_item.nil? %>
+    <% if @combo_item.nil? %>
+      <h4>単品注文は受け付けておりません</h4>
+    <% else %>
       <%= f.submit 'カートに入れる',class: "btn btn-info", id: 
       'button', data: {"turbolinks" => false} %>
     <% end %>
->>>>>>> master
   <% end %>
 
   <script>

@@ -15,6 +15,7 @@ class Admins::ProductsController < ApplicationController
   def show
     @product = Product.find(params[:id])
     @combo_item = ComboItem.new
+    @comboitem = ComboItem.find_by(product_id: @product.id)
   end
 
   def create

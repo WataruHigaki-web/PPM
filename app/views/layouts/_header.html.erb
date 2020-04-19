@@ -9,7 +9,6 @@
         </button>
             <a class="navbar-brand" href="#">
               <%= link_to "PPM",root_path %><br/>
-              (Pay-Per-site for Minimalist)
             </a>
       </div>
         <div class="collapse navbar-collapse" id="navbarEexample10">
@@ -17,94 +16,119 @@
             <% if user_signed_in? && current_user.status == true && current_user.is_deleted == false %>
               <li>
                 <%= link_to users_root_path(current_user), data: {"turbolinks" => false} do %>
-                  <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-home" aria-hidden="true"> ホーム</span>
                 <% end %>
               </li>
               <li>
-                <%= link_to '商品', users_combo_items_path, data: {"turbolinks" => false} %>
+                <%= link_to users_combo_items_path, data: {"turbolinks" => false} do %>
+                  <span class="glyphicon glyphicon-plane" aria-hidden="true"> 商品</span>
+                <% end %>
               </li>
               <li>
                 <%= link_to users_cart_items_path(current_user) do %>
-                  <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"> カート</span>
                 <% end %>
               </li>
               <li>
                 <%= link_to users_products_path(current_user) do %>
-                  <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star-empty" aria-hidden="true">お気に入り</span>
                 <% end %>
               </li>
               <li>
                 <%= link_to users_discounts_path do %>
-                  クーポン
+                  <span class="glyphicon glyphicon-gift" aria-hidden="true">クーポン</span>
                 <% end %>
               </li>
               <li>
                 <%= link_to users_user_path(current_user) do %>
-                  <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-cog" aria-hidden="true"> 設定</span>
                 <% end %>
               </li>
               <li>
-                <%= link_to 'logout',destroy_user_session_path,method: :delete %>
+                <%= link_to destroy_user_session_path,method: :delete do %>
+                  <span class="glyphicon glyphicon-log-out" aria-hidden="true"> ログアウト</span>
+                <% end %>
               </li>
 
             <% elsif admin_signed_in? %>
               <li>
                 <%= link_to admins_root_path(current_admin) do %>
-                  <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-home" aria-hidden="true"> ホーム</span>
                 <% end %>
               </li>
               <li>
-                <%= link_to '商品',admins_products_path %>
+                <%= link_to admins_products_path do %>
+                  <span class="glyphicon glyphicon-plane" aria-hidden="true"> 商品設定</span>
+                <% end %>
               </li>
               <li>
                 <%= link_to admins_users_path do %>
-                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-user" aria-hidden="true"> 会員情報</span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to admins_questions_index2_path do %>
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true">よくある質問</span>
                 <% end %>
               </li>
               <li>
                 <%= link_to admins_admin_path(current_admin) do %>
-                  <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-cog" aria-hidden="true"> 設定</span>
                 <% end %>
               </li>
               <li>
-                <%= link_to 'logout',destroy_admin_session_path,method: :delete %>
+                <%= link_to destroy_admin_session_path,method: :delete do %>
+                  <span class="glyphicon glyphicon-log-out" aria-hidden="true"> ログアウト</span>
+                <% end %>
               </li>
 
             <% elsif user_signed_in? && current_user.status == false || user_signed_in? && current_user.is_deleted == true %>
               <li>
                 <%= link_to users_root_path(current_user), data: {"turbolinks" => false} do %>
-                  <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-home" aria-hidden="true"> ホーム</span>
                 <% end %>
               </li>
               <li>
-                <%= link_to '商品',users_combo_items_path, data: {"turbolinks" => false} %>
+                <%= link_to users_combo_items_path, data: {"turbolinks" => false} do %>
+                  <span class="glyphicon glyphicon-plane" aria-hidden="true"> 商品</span>
+                <% end %>
               </li>
               <li>
                 <%= link_to users_cart_items_path do %>
-                  <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"> カート</span>
                 <% end %>
               </li>
               <li>
-                <%= link_to 'logout',destroy_user_session_path,method: :delete %>
+                <%= link_to destroy_user_session_path,method: :delete do %>
+                  <span class="glyphicon glyphicon-log-out" aria-hidden="true"> ログアウト</span>
+                <% end %>
               </li>
 
             <% else %>
               <li>
-                <%= link_to 'TOP',root_path %>
-              </li>
-              <li>
-                <%= link_to '商品',users_combo_items_path, data: {"turbolinks" => false}  %>
-              </li>
-              <li>
-                <%= link_to users_cart_items_path do %>
-                  <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+                <%= link_to root_path do %>
+                  <span class="glyphicon glyphicon-home" aria-hidden="true"> トップ</span>
                 <% end %>
               </li>
               <li>
-                <%= link_to 'login',new_user_session_path %>
+                <%= link_to users_combo_items_path, data: {"turbolinks" => false} do %>
+                  <span class="glyphicon glyphicon-plane" aria-hidden="true"> 商 品</span>
+                <% end %>
               </li>
               <li>
-                <%= link_to 'signup',new_user_registration_path %>
+                <%= link_to users_cart_items_path do %>
+                  <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"> カート</span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to new_user_session_path do %>
+                  <span class="glyphicon glyphicon-log-in" aria-hidden="true"> ログイン</span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to new_user_registration_path do %>
+                  <span class="glyphicon glyphicon-pencil" aria-hidden="true"> 新規登録</span>
+                <% end %>
               </li>
             <% end %>
           </ul>

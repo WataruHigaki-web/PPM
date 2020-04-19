@@ -11,7 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2020_04_16_083612) do
->>>>>>> master
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -62,8 +61,6 @@ ActiveRecord::Schema.define(version: 2020_04_16_083612) do
     t.integer "user_id"
     t.integer "customer_id"
     t.integer "card_id"
-<<<<<<< HEAD
-=======
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -76,7 +73,6 @@ ActiveRecord::Schema.define(version: 2020_04_16_083612) do
     t.date "start_date"
     t.date "finish_date"
     t.boolean "status"
->>>>>>> master
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "require_day"
@@ -171,8 +167,6 @@ ActiveRecord::Schema.define(version: 2020_04_16_083612) do
     t.datetime "updated_at", null: false
   end
 
-<<<<<<< HEAD
-=======
   create_table "point_events", force: :cascade do |t|
     t.string "name"
     t.integer "bonus"
@@ -183,7 +177,6 @@ ActiveRecord::Schema.define(version: 2020_04_16_083612) do
     t.boolean "status", default: false, null: false
   end
 
->>>>>>> master
   create_table "product_comments", force: :cascade do |t|
     t.integer "user_id"
     t.integer "product_id"
@@ -246,10 +239,7 @@ ActiveRecord::Schema.define(version: 2020_04_16_083612) do
     t.datetime "updated_at", null: false
     t.string "provider"
     t.string "uid"
-<<<<<<< HEAD
-=======
     t.boolean "is_deleted", default: false, null: false
->>>>>>> master
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

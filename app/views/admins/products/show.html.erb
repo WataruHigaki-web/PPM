@@ -1,4 +1,4 @@
-<h2>商品詳細</h2>
+<h2>商品詳細(セットアイテム追加画面）</h2>
 
 
 <div class="row">
@@ -11,70 +11,66 @@
     </div>
 
     <div class="col-xs-6">
+       <table class="table table-bordered">
+            <tr>
+              <th>商品id</th>
+              <td><%= @product.id %></td>
+            </tr>
 
-      <%= link_to new_admins_product_path do %>
-      <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-      <% end %>
-      
-     <table class="table table-bordered">
-          <tr>
-            <th>商品id</th>
-            <td><%= @product.id %></td>
-          </tr>
+            <tr>
+              <th>商品名</th>
+              <td><%= @product.name %></td>
+            </tr>
 
-          <tr>
-            <th>商品名</th>
-            <td><%= @product.name %></td>
-          </tr>
+            <tr>
+              <th>商品説明</th>
+              <td><%= @product.introduction %></td>
+            </tr>
 
-          <tr>
-            <th>商品説明</th>
-            <td><%= @product.introduction %></td>
-          </tr>
+            <tr>
+              <th>ジャンル</th>
+              <td><%= @product.product_kind.name %></td>
+            </tr>
 
-          <tr>
-            <th>ジャンル</th>
-            <td><%= @product.product_kind.name %></td>
-          </tr>
-
-          <tr>
-            <th>販売ステータス</th>
-            <% @product_records = OrderRecord.where(product_id: @product.id) %>
-              <% @product_records.each do |record| %>
-              <% @quantity = record.quantity %>
-              <% end %>
-<<<<<<< HEAD
-                <% if @product.stock - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count * @quantity) <= 0 %>
-=======
-                <% if @product.stock.to_i - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count.to_i * @quantity.to_i) <= 0 %>
->>>>>>> master
-                  <td>売切</td>
-                <% else %>
-                  <td>販売中</td>
+            <tr>
+              <th>販売ステータス</th>
+              <% @product_records = OrderRecord.where(product_id: @product.id) %>
+                <% @product_records.each do |record| %>
+                <% @quantity = record.quantity %>
                 <% end %>
-         </tr>
+                  <% if @product.stock.to_i - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count.to_i * @quantity.to_i) <= 0 %>
+                    <td>売切</td>
+                  <% else %>
+                    <td>販売中</td>
+                  <% end %>
+            </tr>
+            <% unless @comboitem.blank? %>
+              <tr>
+                <th>追加セット名</th>
+                <td>
+                    <%= @comboitem.combo.name %>
+               </td>
+              </tr>
+              <% else %>
+              <tr>
+               <th>セット選択</th>
+               <td>
+                 <%= f.collection_select :combo_id,Combo.all, :id, :name %>
+               </td>
+              </tr>
+            <% end %>
 
-         <tr>
-           <th>個数</th>
-           <td><%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %></td>
-         </tr>
-
-         <tr>
-           <th>セット選択</th>
-           <td>
-             <%= f.collection_select :combo_id,Combo.all, :id, :name %>
-           </td>
-         </tr>
-    </table>
-      <%= link_to '編集する',edit_admins_product_path(@product), class: "btn btn-info" %>
-
-      <%= link_to '削除',admins_product_path(@product),method: :delete, class: "btn btn-danger" %>
-
-<<<<<<< HEAD
-      <%= f.submit '上記セットアイテムに追加',class: "btn btn-primary" %>
-=======
-      <%= f.submit '上記セットアイテムに追加', class: "btn btn-info" %>
->>>>>>> master
+            <tr>
+             <th></th>
+             <td>
+               <%= link_to '編集する',edit_admins_product_path(@product), class: "btn btn-info" %>
+               <%= link_to '削除',admins_product_path(@product),method: :delete, class: "btn btn-danger" %>
+             </td>
+            </tr>
+      </table>
+      <% if @comboitem.blank? %>
+        <%= f.submit '選択セットへ追加', class: "btn btn-info" %>
+      <% end %>
     </div>
   <% end %>
 </div>

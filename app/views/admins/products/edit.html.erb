@@ -1,11 +1,11 @@
-<h2>商品　編集画面</h2>
+<h2>商品　情報編集</h2>
 <div class="row">
   <%= form_for @product,url: admins_product_path do |f|%>
-  <div class="col-xs-6">
+  <div class="col-xs-5">
     <%= f.attachment_field :product_image %>
   </div>
-    <div class="col-xs-6">
-      <table class="products-table">
+    <div class="col-xs-7">
+      <table class="table">
       <tr>
         <th>商品名</th>
         <td><%= f.text_field :name %></td>
@@ -29,4 +29,20 @@
             <%= f.submit "変更を保存", class: "btn btn-info" %>
          </div>
   <% end %>
-</div>
+
+<h2>商品　セット情報編集</h2>
+  <%= form_with model: @combo_item,url: admins_combo_item_path,method: :patch do |f|%>
+  <%= f.hidden_field :product_id, :value => @product.id %>
+
+      <table class="table">
+      <tr>
+        <th>セット選択</th>
+        <td>
+          <%= f.collection_select :combo_id,Combo.all, :id, :name %>
+        </td>
+      </tr>
+      </table>
+         <div class="text-right">
+            <%= f.submit "セット情報を変更", class: "btn btn-info" %>
+         </div>
+  <% end %>

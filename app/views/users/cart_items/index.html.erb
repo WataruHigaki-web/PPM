@@ -20,6 +20,16 @@
                   <%= cart_item.product.name %>
                 <% end %>
               </td>
+              <%= form_with model: cart_item,url:users_cart_item_path(cart_item) do |f| %>
+                <td>
+                    <span class="combo_count"data-combo-count="<%= cart_item.quantity %>"><%= f.number_field :quantity %></span>
+                  <%= f.submit "更新",class: "btn btn-info" %>
+                </td>
+                <td><%= cart_item.combo.price %></td>
+                <td>
+                  <%= link_to '削除',users_cart_item_path(cart_item),method: :delete,class: "btn btn-danger" %>
+                </td>
+              <% end %>
           <% else %>
             <td><%= attachment_image_tag cart_item.combo,:combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
             <td>
@@ -143,7 +153,6 @@
            q.name = "number";
            q.value = delIndex;
            document.forms[0].appendChild(q);
-           console.log(document.forms[0]);
       });
     </script>
 
@@ -232,19 +241,7 @@
   });
 </script>
 
->>>>>>> master
-
-    </table>
-<% end %>
 <% if user_signed_in? %>
-<<<<<<< HEAD
-  <%= link_to '購入手続きへ進む',new_users_order_path(current_user),class: "btn btn-primary" %>
-<% else %>
-   <%= link_to 'ユーザー登録して注文する',new_user_registration_path,class: "btn btn-primary" %>
-<% end %>
-
-  <%= link_to '買い物を続ける',users_combo_items_path,class: "btn btn-primary", data: {"turbolinks" => false} %>
-=======
   <% unless current_user.status == false || current_user.is_deleted == true %>
     <%= link_to '購入手続きへ進む',new_users_order_path,class: "btn btn-info" %>
   <% else %>
@@ -255,4 +252,4 @@
 <% end %>
 
   <%= link_to '買い物を続ける',users_combo_items_path,class: "btn btn-info", data: {"turbolinks" => false} %>
->>>>>>> master
+

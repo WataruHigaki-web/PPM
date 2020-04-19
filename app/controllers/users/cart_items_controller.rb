@@ -36,7 +36,7 @@ class Users::CartItemsController < ApplicationController
     if user_signed_in?
       cart_item.user_id = current_user.id
       cart_item.save
-      redirect_to users_cart_items_path(current_user)
+      redirect_to users_cart_items_path
     else
       session[:cart_item].push(cart_item)
       redirect_to users_cart_items_path
