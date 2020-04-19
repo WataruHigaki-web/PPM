@@ -23,24 +23,14 @@
         <td><%= attachment_image_tag favorite.product,:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
         <td><%= favorite.product.introduction %></td>
 
-         <% @product_records = OrderRecord.where(product_id: favorite.product.id) %>
-          <% @product_records.each do |record| %>
-            <% @quantity = record.quantity %>
-          <% end %>
-<<<<<<< HEAD
-           <% if favorite.product.stock - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count * @quantity) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count * @quantity) <= 0  %>
-              <td class="product_status" data-status="売切">売切</td>
+            <% @re_q = OrderRecord.where(combo_id: 1, product_id: favorite.product.id, status: "予約受付中").sum(:quantity) %>
+            <% @le_q = OrderRecord.where(combo_id: 1, product_id: favorite.product.id, status: "貸出中").sum(:quantity) %>
+            <% @tur_q = OrderRecord.where(combo_id: 1, product_id: favorite.product.id, status: "郵送中").sum(:quantity) %>
+            <% if favorite.product.stock - @re_q.to_i - @le_q.to_i - @tur_q.to_i == 0 %>
+              <td>売切</td>
             <% else %>
-              <td class="product_status" data-status="販売中">販売中</td>
+              <td>販売中</td>
             <% end %>
-=======
-           <%# if favorite.product.stock.to_i - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count.to_i * @quantity.to_i) <= 0  %>
-              <!-- <td class="product_status" data-status="売切">売切</td> -->
-            <%# else %>
-              <!-- <td class="product_status" data-status="販売中">販売中</td> -->
-            <%# end %>
->>>>>>> master
-          </td>
         <td>
           <% if favorite.product.favorited_by?(current_user) %>
             <%= link_to'お気に入りを外す',users_product_favorites_path(product_id: favorite.product.id,user_id: current_user.id), method: :delete %>

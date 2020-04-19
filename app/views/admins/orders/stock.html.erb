@@ -104,7 +104,7 @@
           <td><%= @re_q %></td>
           <td><%= @le_q %></td>
           <td><%= @tur_q %></td>
-          <% if combo_item.product.stock - @re_q.to_i - @le_q.to_i - @tur_q.to_i %>
+          <% if combo_item.product.stock - @re_q.to_i - @le_q.to_i - @tur_q.to_i == 0 %>
             <td>売切</td>
           <% else %>
             <td>販売中</td>

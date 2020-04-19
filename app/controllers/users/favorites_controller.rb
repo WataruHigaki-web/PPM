@@ -13,7 +13,7 @@ class Users::FavoritesController < ApplicationController
     @product = Product.find(params[:user_id])
     favorite = Favorite.find_by(user_id: current_user.id)
     favorite.destroy
-    redirect_to users_products_path(current_user)
+    redirect_to users_product_path(@product)
   end
 
   private

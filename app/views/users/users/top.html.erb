@@ -1,14 +1,21 @@
 <h2><%= current_user.name %>さんのページ</h2>
 
 <% if current_user.status == false || current_user.is_deleted == true %>
-　<p>あなたは無効会員または退会手続済会員です。画面をロックしています</p>
-    <h4>ご利用再開ご希望の方</h4>
+<div class="alert alert-warning alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>あなたは無効会員または退会手続済会員です。画面をロックしています</strong>
+</div>
+    <h3>ご利用再開ご希望の方</h3>
       <h6>申請後、登録メールアドレスにてご対応させていただきます</h6>
-        <%= form_with model: @user,url: users_path(current_user),method: :patch do |f| %>
-          <%= f.submit '利用再開申請を送信',class: "btn btn-info","data-confirm" => "本当に利用再開申請を送信しますか？" %>
+        <% if current_user.is_deleted %>
+          <%= form_with model: @user,url: users_path(current_user),method: :patch do |f| %>
+            <%= f.submit '利用再開申請を送信',class: "btn btn-info","data-confirm" => "本当に利用再開申請を送信しますか？" %>
+          <% end %>
+        <% else %>
+          <div class="alert alert-success"><a>利用再開申請中</a></div>
         <% end %>
 <% else %>
-  <%= link_to users_users_point_path(current_user) do %>
+  <%= link_to users_users_point_path do %>
     <p>現在の保有ポイント数:<%= @point %>pt</p>
   <% end %>
 
@@ -52,16 +59,15 @@
           <td><%= link_to 'この注文をキャンセルする',users_order_path(order),method: :delete,data:{confirm: "本当に削除しますか？"},class: "btn btn-info" %></td>
         </tr>
     </table>
-  <%# elsif @order_reserve.empty? %>
-    <!-- <h4>現在予約がありません</h4> -->
   <% end %>
 <% end %>
 
 <h2>未返却物一覧</h2>
   <% @orders.each do |order|%>
     <% if order.status == "貸出中" %>
-    延滞の方は1,2を記入後、延滞情報送信を押してください。<br/>
-    郵送返却のお客様は、郵送完了後、３,4を記入後郵送完了ボタンを押してください。<br/>
+    <div class="alert alert-warning">延滞の方は1,2を記入後、延滞情報送信を押してください。<br/>
+    郵送返却のお客様は、郵送完了後、３,4を記入後郵送完了ボタンを押してください。
+  </div>
       <table class="table table-bordered">
         <tr class="d3">
           <th class="danger">予定返却日</th>
@@ -181,10 +187,11 @@
     var d2 = new Date(document.getElementById("finish_date").value);
     var d3 = new Date($(this).data("finish-date"));
     var d4 = d2 - d3
-    if (d4 >= 0){
+    if (d4 > 0){
       document.getElementById("button").disabled = false;
-    }else{
       get_date(d1, d2)
+    }else{
+      document.getElementById("button").disabled = true;
     }
   });
 

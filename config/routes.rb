@@ -51,8 +51,8 @@ Rails.application.routes.draw do
     get 'orders/thanks'
     delete 'cart_items/destroy_all'
     get 'cart_items/save'
-    patch 'users/:id', to: 'users#withdrawal'
-    put 'users/:id', to: 'users#withdrawal'
+    patch 'users/withdrawal/:id', to: 'users#withdrawal'
+    put 'users/withdrawal/:id', to: 'users#withdrawal'
     resources :users,        only: %i[show edit update]
     resources :discounts, only: %i[index show]
     resources :products,     only: %i[index show] do

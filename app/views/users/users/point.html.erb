@@ -27,20 +27,6 @@
           <th>ポイント</th>
         </tr>
         <% @out_points.each do |point| %>
-<<<<<<< HEAD
-          <tr>
-            <td>
-              <%= link_to users_order_path(point.order) do %>
-                <%= point.created_at.strftime("%Y-%m-%d %H:%M") %>
-              <% end %>
-            </td>
-            <td><%= point.point %>pt</td>
-          </tr>
-        <% end %>
-      </table>
-  </div>
-
-=======
           <% unless point.point.nil? %>
             <tr>
               <td>
@@ -55,11 +41,8 @@
         <% end %>
       </table>
   </div>
-
->>>>>>> master
   <div class="col-xs-4">
     <h4>保有ポイント数</h4>
     <%= @point %>pt
   </div>
-
 </div>

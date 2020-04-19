@@ -1,3 +1,20 @@
+<div class="alert alert-warning alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>
+    <h4>イベント情報</h4>
+      <% unless @discount.nil? %>
+        <%= @discounts.each do |discount| %>
+          <h4><%= discount.name %>開催中！！</h4></br>
+        <% end %>
+      <% end %>
+      <% unless @point_event.nil? %>
+        <h4><%= @point_event.name %>開催中！！</h4>
+      <% end %>
+      <% if !@discount && !@point_event %>
+        <h6>特にありません</h6>
+      <% end %>
+  </strong>
+</div>
 <div class="wrapper">
   <section class="hero vertical-center" style="background: url('https://dl.dropbox.com/s/9u786zwyehzuvam/cliffSide_mini.jpg?dl=1') no-repeat 50% 50% fixed;">
     <div class="container text-center">

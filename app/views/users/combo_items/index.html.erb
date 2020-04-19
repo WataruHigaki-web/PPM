@@ -1,7 +1,7 @@
 <div class="row">
 <h2>セット商品一覧</h2>
 
-<table class="table table-bordered">
+<table class="table">
   <tr>
     <th>セット検索</th>
     <th>価格</th>
@@ -10,11 +10,11 @@
   </tr>
   <% @combos.each do |combo| %>
 
-   <%= form_with model: @cart_item,url:users_cart_items_path(combo_id:combo.id),method: :post,local: true do |f| %>
-     <%= f.hidden_field :combo_id, :value => combo.id %>
-     <% if user_signed_in? %>
-      <%= f.hidden_field :user_id, :value => current_user.id %>
-    <% end %>
+  <%= form_with model: @cart_item,url:users_cart_items_path(combo_id:combo.id),method: :post,local: true do |f| %>
+    <%= f.hidden_field :combo_id, :value => combo.id %>
+      <% if user_signed_in? %>
+        <%= f.hidden_field :user_id, :value => current_user.id %>
+      <% end %>
         <tr>
           <td>
             <%= link_to "#{combo.name}",users_combo_items_path(combo_id: combo.id), data: {"turbolinks" => false}%>
@@ -23,14 +23,16 @@
             <% end %>
           </td>
           <td><%= combo.price %></td>
-          <% if combo.id != 1 %>
-          <else>
+          <% unless combo.id == 1 %>
             <td>
               <%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %>個
             </td>
             <td>
               <%= f.submit 'カートに入れる',class: "btn btn-info" %>
             </td>
+          <% else %>
+            <td></td>
+            <td>単品商品購入は商品名をクリック!!</td>
           <% end %>
         </tr>
     <% end %>
@@ -55,16 +57,14 @@
             <% end %>
           </td>
           <td><%= attachment_image_tag combo_item.product,:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
-          <% @product_records = OrderRecord.where(product_id: combo_item.product.id) %>
-          <% @product_records.each do |record| %>
-            <% @quantity = record.quantity %>
-          <% end %>
-          
-          <%# if combo_item.product.stock.to_i - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count.to_i * @quantity.to_i) <= 0 %>
-            <!-- <td>売切</td> -->
-          <%# else %>
-            <!-- <td>販売中</td> -->
-          <%# end %>
+            <% @re_q = OrderRecord.where(combo_id: 1, product_id: combo_item.product.id, status: "予約受付中").sum(:quantity) %>
+            <% @le_q = OrderRecord.where(combo_id: 1, product_id: combo_item.product.id, status: "貸出中").sum(:quantity) %>
+            <% @tur_q = OrderRecord.where(combo_id: 1, product_id: combo_item.product.id, status: "郵送中").sum(:quantity) %>
+            <% if combo_item.product.stock - @re_q.to_i - @le_q.to_i - @tur_q.to_i == 0 %>
+              <td>売切</td>
+            <% else %>
+              <td>販売中</td>
+            <% end %>
 
           <td><%= combo_item.combo.name %></td>
         </tr>

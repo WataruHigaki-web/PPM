@@ -33,7 +33,7 @@
           <% else %>
             <td><%= attachment_image_tag cart_item.combo,:combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
             <td>
-              <%= link_to users_combo_items_path do %>
+              <%= link_to users_combo_item_path(cart_item.combo) do %>
                 <%= cart_item.combo.name %>
               <% end %>
             </td>

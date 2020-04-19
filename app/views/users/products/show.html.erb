@@ -37,15 +37,14 @@
             </tr>
             <tr>
               <th>ステータス</th>
-              <% @product_records = OrderRecord.where(product_id: @product.id) %>
-              <% @product_records.each do |record| %>
-                <% @quantity = record.quantity %>
-              <% end %>
-               <%# if @product.stock.to_i - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count.to_i * @quantity.to_i) <= 0 %>
-                  <!-- <td id="status">売切</td> -->
-                <%# else %>
-                  <!-- <td id="status">販売中</td> -->
-                <%# end %>
+                <% @re_q = OrderRecord.where(combo_id: 1, product_id: @product.id, status: "予約受付中").sum(:quantity) %>
+                <% @le_q = OrderRecord.where(combo_id: 1, product_id: @product.id, status: "貸出中").sum(:quantity) %>
+                <% @tur_q = OrderRecord.where(combo_id: 1, product_id: @product.id, status: "郵送中").sum(:quantity) %>
+                <% if @product.stock - @re_q.to_i - @le_q.to_i - @tur_q.to_i == 0 %>
+                  <td>売切</td>
+                <% else %>
+                  <td>販売中</td>
+                <% end %>
             </tr>
             <tr>
              <th>個数</th>
@@ -56,7 +55,7 @@
           <% end %>
         <% if user_signed_in? %>
           <tr>
-            <th></th>
+            <th>お気に入り</th>
             <td>
               <%= render 'users/favorites/favorite',product: @product %>
             </td>
@@ -71,7 +70,7 @@
         <% end %>
     </table>
     <% if @combo_item.nil? %>
-      <h4>単品注文は受け付けておりません</h4>
+      <h4>こちらの単品注文は受け付けておりません</h4>
     <% else %>
       <%= f.submit 'カートに入れる',class: "btn btn-info", id: 
       'button', data: {"turbolinks" => false} %>
