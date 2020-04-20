@@ -6,8 +6,6 @@
     <%= f.hidden_field :product_id, :value => @product.id %>
     <% if user_signed_in? %>
       <%= f.hidden_field :user_id, :value => current_user.id %>
-    <% else %>
-      <%= f.hidden_field :user_id, :value => 1 %>
     <% end %>
 
     <div class="col-xs-6">
@@ -54,19 +52,20 @@
             </tr>
           <% end %>
         <% if user_signed_in? %>
-          <tr>
-            <th>お気に入り</th>
-            <td>
-              <%= render 'users/favorites/favorite',product: @product %>
-            </td>
-          </tr>
+          <% unless @combo_item.nil? %>
+            <tr>
+              <th>お気に入り</th>
+              <td>
+                <%= render 'users/favorites/favorite',product: @product %>
+              </td>
+            </tr>
+          <% end %>
           <tr>
             <th>いいね</th>
             <td>
               <%= render 'users/likes/like',product: @product %>
             </td>
           </tr>
-        <% else %>
         <% end %>
     </table>
     <% if @combo_item.nil? %>

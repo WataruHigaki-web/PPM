@@ -31,7 +31,7 @@ class Users::CartItemsController < ApplicationController
   end
 
   def create
-    session[:cart_item] = [] if session[:cart_item].blank?
+    session[:cart_item] = [] if !session[:cart_item]
     cart_item = CartItem.new(cart_item_params)
     if user_signed_in?
       cart_item.user_id = current_user.id

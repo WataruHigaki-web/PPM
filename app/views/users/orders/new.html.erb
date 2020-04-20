@@ -1,73 +1,78 @@
-<h2>購入情報入力</h2>
-<%= form_with url:users_orders_save_path,method: :post do |f| %>
-<h4>クレジットカード</h4>
+<div class="row">
+  <div class="order_new">
+    <h2>購入情報入力(４つの項目)</h2>
+    <%= form_with url:users_orders_save_path,method: :post do |f| %>
+    <h3>1.クレジットカード</h3>
 
-<% if current_user.pays.blank? %>
-  <%= link_to users_pays_path(current_user) do %>
-    <div id="alert">クレジットカードを登録はこちら</div>
-  <% end %>
-<% else %>
-  <% current_user.pays.each do |pay|%>
-    <%= f.radio_button(:pay,pay.id,checked: "checked") %>
-    クレジットナンバー:<%= pay.number %><br/>
-    クレジット名義:<%= pay.name %><br/>
-  <% end %>
-<% end %>
-
-
-<h4>受取場所選択</h4>
-  <%= f.select :get_status, Order.get_statuses.keys.to_a, {} %>
-<h4>返却場所</h4>
-  <%= f.radio_button :return_status,0,checked: "checked" %>受取場所と同様<br/>
-  <%= f.radio_button(:return_status,1) %>現住所から郵送返却<br/>
-    <%= current_user.zip_code %>
-    <%= current_user.address %><br/>
-  <%= f.radio_button(:return_status,2) %>新しい住所から郵送返却<br/>
-    <%= f.text_field :zip_code %>
-    <%= f.text_field :address %><br/>
-
-<h4>レンタル期間選択</h4>
-　<%= date_field_tag :start_date %> ~
-  <%= date_field_tag :finish_date %><br/>
+    <% if current_user.pays.blank? %>
+      <%= link_to users_pays_path(current_user) do %>
+        <div id="alert">クレジットカードを登録はこちら</div>
+      <% end %>
+    <% else %>
+      <% current_user.pays.each do |pay|%>
+        <%= f.radio_button(:pay,pay.id,checked: "checked") %>
+        クレジットナンバー:<%= pay.number %><br/>
+        クレジット名義:<%= pay.name %><br/>
+      <% end %>
+    <% end %>
+    <%= link_to '別のクレジットカードを追加',users_pays_path %>
 
 
-  <script type="text/javascript">
-    if($('#alert').length){
-      alert ('クレジットカード登録してください。')
-    }
-    $('#start_date').change(function() {
-      d1 = new Date(document.getElementById("start_date").value);
-      d2 = new Date(document.getElementById("finish_date").value);
-      get_date(d1, d2)
-    });
+    <h3>2.受取場所選択</h3>
+      <%= f.select :get_status, Order.get_statuses.keys.to_a, {} %>
+    <h3>3.返却場所選択</h3>
+      <div class="order_new_radio">
+        <%= f.radio_button :return_status,0,checked: "checked" %>受取場所と同様<br/>
+        <%= f.radio_button(:return_status,1) %>現住所から郵送返却<br/>
+        <%= f.radio_button(:return_status,2) %>新しい住所から郵送返却<br/>
+          郵便番号:<%= f.text_field :zip_code %><br/>
+          住 所:<%= f.text_field :address %>
+      </div>
 
-    $('#finish_date').change(function() {
-      d1 = new Date(document.getElementById("start_date").value);
-      d2 = new Date(document.getElementById("finish_date").value);
-      get_date(d1, d2)
-    });
+    <h3>4.レンタル期間選択</h3>
+    　<%= date_field_tag :start_date %> ~
+      <%= date_field_tag :finish_date %><br/>
 
-    var today = new Date(Date.now());
 
-    function get_date(start_date, finish_date){
-      if (start_date && finish_date){
-        var date = (finish_date - start_date)/(24*60*60*1000);
-        if (Math.sign(date) == -1　||　today > d1 || date == 0 || $('#alert').length){
-          document.getElementById("button").disabled = true;
-        }else{
-          document.getElementById("button").disabled = false;
-          var q = document.createElement('input');
-          q.type = 'hidden';
-          q.name = "day";
-          q.value = date;
-          document.forms[0].appendChild(q);
+      <script type="text/javascript">
+        if($('#alert').length){
+          alert ('クレジットカード登録してください。')
         }
-      }else{
-        document.getElementById("button").disabled = true;
-        alert ('利用期間の入力に誤りがあります');
-      }
-    }
-  </script>
+        $('#start_date').change(function() {
+          d1 = new Date(document.getElementById("start_date").value);
+          d2 = new Date(document.getElementById("finish_date").value);
+          get_date(d1, d2)
+        });
 
-  <%= f.submit '注文確認画面へ進む', data: {"turbolinks" => false},class: "btn btn-info",id: "button", disabled: true %>
-<% end %>
+        $('#finish_date').change(function() {
+          d1 = new Date(document.getElementById("start_date").value);
+          d2 = new Date(document.getElementById("finish_date").value);
+          get_date(d1, d2)
+        });
+
+        var today = new Date(Date.now());
+
+        function get_date(start_date, finish_date){
+          if (start_date && finish_date){
+            var date = (finish_date - start_date)/(24*60*60*1000);
+            if (Math.sign(date) == -1　||　today > d1 || date == 0 || $('#alert').length){
+              document.getElementById("button").disabled = true;
+            }else{
+              document.getElementById("button").disabled = false;
+              var q = document.createElement('input');
+              q.type = 'hidden';
+              q.name = "day";
+              q.value = date;
+              document.forms[0].appendChild(q);
+            }
+          }else{
+            document.getElementById("button").disabled = true;
+            alert ('利用期間の入力に誤りがあります');
+          }
+        }
+      </script>
+
+      <%= f.submit '注文確認画面へ進む', data: {"turbolinks" => false},class: "btn btn-info",id: "button", disabled: true %>
+    <% end %>
+  </div>
+</div>

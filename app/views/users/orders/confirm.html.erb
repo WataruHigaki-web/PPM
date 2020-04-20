@@ -1,24 +1,42 @@
 <h2>注文情報確認</h2>
-  <p>注文者名:<%= current_user.name %></p>
-  <p>クレジットカード情報<br/>
-    番号:<%= Pay.find(session["pay"]).number %><br/>
-    名義:<%= Pay.find(session["pay"]).name %>
-    </p>
-  <p>受取場所:<%= session[:order]["get_status"] %></p>
-  <p>返却場所:
-    <% if session[:order]["return_status"] == 0 %>
+<table class="table">
+  <tr>
+    <th>注文者名</th>
+    <td><%= current_user.name %></td>
+  </tr>
+  <tr>
+    <th>クレジットカード情報</th>
+    <td>
+      番号: <%= Pay.find(session["pay"]).number %><br/>
+      名義: <%= Pay.find(session["pay"]).name %>
+    </td>
+  </tr>
+  <tr>
+    <th>受取場所</th>
+    <td><%= session[:order]["get_status"] %></td>
+  </tr>
+  <tr>
+    <th>返却場所</th>
+    <td>
+      <% if session[:order]["return_status"] == 0 %>
       <%= session[:order]["get_status"] %>
-    <% else %>
-      <%= session[:order]["zip_code"] %>
-      <%= session[:order]["address"] %>
-    <% end %>
-  </p>
-  <p>利用期間:
-    <%= session[:order]["start_date"]%>~
-    <%= session[:order]["finish_date"] %>
-  </p>
-  <p>レンタル期間:<%= session[:order]["day"] %>日間</p>
-
+      <% else %>
+        <%= session[:order]["zip_code"] %>
+        <%= session[:order]["address"] %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th>利用期間</th>
+    <td>
+      <%= session[:order]["start_date"]%>~<%= session[:order]["finish_date"] %>
+    </td>
+  </tr>
+  <tr>
+    <th>レンタル期間</th>
+    <td><%= session[:order]["day"] %>日間</td>
+  </tr>
+</table>
     <table class="table table-bordered">
       <tr>
         <th>商品名</th>

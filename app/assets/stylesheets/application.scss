@@ -101,22 +101,6 @@ body, html {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @import url(https://fonts.googleapis.com/css?family=Work+Sans:400,300,200,700);
 
 header{
@@ -323,6 +307,12 @@ article{
   align-items: center;
 }
 
-
+.order_new{
+  text-align: center;
+}
+.order_new_radio{
+  display: inline-block;
+  text-align: left;
+}
 
 

@@ -53,7 +53,10 @@
       <% end %>
     </table>
 
-    <h4>料金早見表（レンタル日数を記入）</h4>
+    <h2>料金早見表</h2>
+    <div class="alert alert-info alert-dismissible">
+      <p>商品の個数、レンタル日数、クーポン記入(<%= link_to 'クーポン一覧はこちら', users_discounts_path %>)</p>
+    </div>
       <table class="table table-bordered">
         <tr>
           <th>お見積もり金額</th>
@@ -157,7 +160,10 @@
     </script>
 
 
-  <h4>料金見積もり表（レンタル日数を変更）</h4>
+  <h2>料金早見表</h2>
+    <div class="alert alert-info alert-dismissible">
+      <p>商品の個数、レンタル日数、クーポン記入(<%= link_to 'クーポン一覧はこちら', users_discounts_path %>)</p>
+    </div>
     <table class="table table-bordered">
       <tr>
         <th>お見積もり金額(円）</th>
