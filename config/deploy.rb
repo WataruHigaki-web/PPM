@@ -3,7 +3,7 @@
 # config valid for current version and patch releases of Capistrano
 lock '~> 3.12.1'
 
-set :application, 'PPM'
+set :application, 'PPM2'
 set :repo_url, 'git@github.com:WataruHigaki-web/PPM.git'
 set :deploy_to, '/home/ec2-user/PPM'
 set :rbenv_ruby, '2.5.7'
