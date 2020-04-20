@@ -114,14 +114,22 @@ class Users::OrdersController < ApplicationController
       zip_code = params["zip_code"]
       address = params["address"]
     end
+    if params[:order]["status"].nil?
+      params["status"] = "貸出中"
+    end
+    if params["day"].nil? && params["finish_date"].nil?
+      params["day"] = order.day
+      params["finish_date"] = order.finish_date
+    end
     order.update(
       day:  params["day"],
       finish_date: params["finish_date"],
       return_status: return_status,
       zip_code: zip_code,
       address:  address,
-      status: params["status"]
+      status: params[:order]["status"]
       )
+    binding.pry
     flash[:notice] = '返却情報を送信しました。'
     redirect_to users_root_path(current_user)
   end
