@@ -1,0 +1,37 @@
+<h2>セット情報編集</h2>
+
+<%= form_for((@combo),url:admins_combo_path) do |f| %>
+  <table class="table">
+    <tr>
+      <th><%= f.label :セット名 %></th>
+      <td><%= f.text_field :name %></td>
+    </tr>
+
+    <tr>
+      <th><%= f.label :画像 %></th>
+      <td><%= f.attachment_field :combo_image %></td>
+    </tr>
+
+    <tr>
+      <th><%= f.label :コンボ金額 %></th>
+      <td><%= f.number_field :price %>円/1日</td>
+    </tr>
+
+    <tr>
+      <th><%= f.label :説明 %></th>
+      <td><%= f.text_area :introduction %>円/1日</td>
+    </tr>
+
+    <tr>
+      <th><%= f.label :ステータス %></th>
+      <td>
+        <%= f.radio_button :status,true, checked: "checked" %>
+        <%= f.label :有効 %>
+
+        <%= f.radio_button :status,false, checked: "checked" %>
+        <%= f.label :無効 %>
+      </td>
+    </tr>
+  </table>
+  <%= f.submit '変更を保存する',class:'btn btn-info' %>
+<% end %>

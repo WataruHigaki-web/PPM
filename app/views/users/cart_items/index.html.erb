@@ -1,0 +1,261 @@
+<h2>カート内一覧</h2>
+<% if user_signed_in? %>
+  <%= link_to "カートを空にする",users_cart_items_destroy_all_path,class: "btn btn-danger",method: :delete, "data-confirm" => "本当に削除しますか？" %>
+
+    <table class="table table-bordered">
+      <tr>
+        <th>画像</th>
+        <th>セットまたは商品名</th>
+        <th>個数</th>
+        <th>金額</th>
+        <th></th>
+      </tr>
+      <% @sum = 0 %>
+        <% @cart_items.each do |cart_item| %>
+        <tr>
+          <% if cart_item.combo.id == 1 %>
+            <td><%= attachment_image_tag cart_item.product,:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
+              <td>
+                <%= link_to users_product_path(cart_item.product) do %>
+                  <%= cart_item.product.name %>
+                <% end %>
+              </td>
+              <%= form_with model: cart_item,url:users_cart_item_path(cart_item) do |f| %>
+                <td>
+                    <span class="combo_count"data-combo-count="<%= cart_item.quantity %>"><%= f.number_field :quantity %></span>
+                  <%= f.submit "更新",class: "btn btn-info" %>
+                </td>
+                <td><%= cart_item.combo.price %></td>
+                <td>
+                  <%= link_to '削除',users_cart_item_path(cart_item),method: :delete,class: "btn btn-danger" %>
+                </td>
+              <% end %>
+          <% else %>
+            <td><%= attachment_image_tag cart_item.combo,:combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
+            <td>
+              <%= link_to users_combo_item_path(cart_item.combo) do %>
+                <%= cart_item.combo.name %>
+              <% end %>
+            </td>
+              <%= form_with model: cart_item,url:users_cart_item_path(cart_item) do |f| %>
+                <td>
+                    <span class="combo_count"data-combo-count="<%= cart_item.quantity %>"><%= f.number_field :quantity %></span>
+                  <%= f.submit "更新",class: "btn btn-info" %>
+                </td>
+                <td><%= cart_item.combo.price %></td>
+                <td>
+                  <%= link_to '削除',users_cart_item_path(cart_item),method: :delete,class: "btn btn-danger" %>
+                </td>
+              <% end %>
+          <% end %>
+        </tr>
+      <% @sum += (cart_item.combo.price).to_i * (cart_item.quantity).to_i %>
+      <% end %>
+    </table>
+
+    <h2>料金早見表</h2>
+    <div class="alert alert-info alert-dismissible">
+      <p>商品の個数、レンタル日数、クーポン記入(<%= link_to 'クーポン一覧はこちら', users_discounts_path %>)</p>
+    </div>
+      <table class="table table-bordered">
+        <tr>
+          <th>お見積もり金額</th>
+          <td id="cart_item_sum"><%= @sum %></td>
+        </tr>
+        <tr>
+          <th>レンタル日数</th>
+          <td>
+            <input id="day"type="number">日間
+          </td>
+        </tr>
+        <tr>
+          <%= form_tag(users_cart_items_path, method: :get) do %>
+            <th>クーポン番号を入力
+                <%= text_field(@search_content, :search) %>
+                <%= submit_tag '適用',class: "btn btn-info",id: "discount-button" %>
+            </th>
+              <% unless @discount.blank? %>
+                <td id="discount">
+                  <%= @discount.name %>:
+                  <span id="discount-price" data-price="<%= @discount.price %>" data-require-day="<%= @discount.require_day %>" data-require-combo="<%= @discount.require_combo %>" data-require-item="<%= @discount.require_item %>">
+                    <%= @discount.price %>
+                  </span>円割引
+                  <%= submit_tag '削除',class: "btn btn-danger" %>
+                </td>
+              <% else %>
+                <td>クーポン無し</td>
+            <% end %>
+          <% end %>
+        </tr>
+        <tr>
+          <th>ポイントイベント(<%= @point_event.name %>)</th>
+          <td>ポイント<%= @point_event.bonus %>倍</td>
+        </tr>
+        <tr>
+          <th>ポイント獲得数</th>
+          <td id="point_sum"><%= (@sum / 100).floor * @point_event.bonus %>pt</td>
+        </tr>
+      </table>
+
+<% else %>
+  <%= form_with url: users_cart_items_delete2_path, method: :post  do |f| %>
+    <table class="table table-bordered">
+      <tr>
+        <th>画像</th>
+        <th>セットまたは商品名</th>
+        <th>個数</th>
+        <th>金額</th>
+        <th></th>
+      </tr>
+      <% @sum = 0 %>
+      <% if session[:cart_item].nil? %>
+        <h2>カートに商品がありません</h2>
+      <% else %>
+        <% session[:cart_item].each do |cart_item| %>
+          <tr class="cart_item"data-cart-item="cart_item">
+            <% if cart_item["combo_id"] == 1 %>
+              <td><%= attachment_image_tag Product.find(cart_item["product_id"]),:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
+                <td>
+                  <%= link_to users_product_path(cart_item["product_id"]) do %>
+                    <%= Product.find(cart_item["product_id"]).name %>
+                  <% end %>
+                </td>
+                <td>
+                  <input type="number" class="item_count" name="quantity" id="" data-item-count="<%= cart_item["quantity"] %>" value="<%= cart_item["quantity"]%>">
+                </td>
+            <% else %>
+              <td><%= attachment_image_tag Combo.find(cart_item["combo_id"]), :combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
+              <td>
+                <%= link_to users_combo_items_path do %>
+                  <%= Combo.find(cart_item["combo_id"]).name%>
+                <% end %>
+              </td>
+              <td class="quantity">
+                <input type="number"class="combo_count" name="quantity" id="" data-combo-count="<%= cart_item["quantity"] %>" value="<%= cart_item["quantity"]%>">
+              </td>
+            <% end %>
+              <td class="price"data-price="<%= Combo.find(cart_item["combo_id"]).price %>"><%= Combo.find(cart_item["combo_id"]).price %></td>
+              <td data=cart_item>
+
+                  <%= f.submit '削除', class: "btn btn-danger",name: "delete_button",'data-cart-item': session[:cart_item], 'data-item': cart_item %>
+
+              </td>
+          </tr>
+            <% @sum += (Combo.find(cart_item["combo_id"]).price).to_i * (cart_item["quantity"]).to_i %>
+        <% end %>
+      <% end %>
+    </table>
+  <% end %>
+
+    <script type="text/javascript">
+      $('input[name="delete_button"]').click(function(){
+        const delIndex = $(this).closest('tr')[0].rowIndex - 1;
+        console.log(delIndex);
+        var q = document.createElement('input');
+           q.type = 'hidden';
+           q.name = "number";
+           q.value = delIndex;
+           document.forms[0].appendChild(q);
+      });
+    </script>
+
+
+  <h2>料金早見表</h2>
+    <div class="alert alert-info alert-dismissible">
+      <p>商品の個数、レンタル日数、クーポン記入(<%= link_to 'クーポン一覧はこちら', users_discounts_path %>)</p>
+    </div>
+    <table class="table table-bordered">
+      <tr>
+        <th>お見積もり金額(円）</th>
+        <td id="cart_item_sum"><%= @sum %></td>
+      </tr>
+      <tr>
+        <th>レンタル日数</th>
+        <td>
+          <input id="day"type="number"value="1">日間
+        </td>
+      </tr>
+      <tr>
+          <%= form_tag(users_cart_items_path, method: :get) do %>
+            <th>クーポン番号を入力
+                <%= text_field(@search_content, :search) %>
+                <%= submit_tag '適用',class: "btn btn-info",id: "discount-button" %>
+            </th>
+              <% unless @discount.blank? %>
+                <td id="discount">
+                  <%= @discount.name %>:
+                  <span id="discount-price" data-price="<%= @discount.price %>" data-require-day="<%= @discount.require_day %>" data-require-combo="<%= @discount.require_combo %>" data-require-item="<%= @discount.require_item %>">
+                    <%= @discount.price %>
+                  </span>円割引
+                  <%= submit_tag '削除',class: "btn btn-danger" %>
+                </td>
+              <% else %>
+                <td>クーポン無し</td>
+            <% end %>
+          <% end %>
+        </tr>
+      <tr>
+        <th>ポイントイベント(<%= @point_event.name %>)</th>
+        <td>ポイント<%= @point_event.bonus %>倍</td>
+      </tr>
+      <tr>
+        <th>ポイント獲得数</th>
+        <td id="point_sum"><%= (@sum / 100).floor * @point_event.bonus %>pt</td>
+      </tr>
+    </table>
+<% end %>
+
+<script type="text/javascript">
+  sum = document.getElementById('cart_item_sum').textContent;
+  final_sum = sum;
+  point_sum = Number("<%= (@sum / 100).floor * @point_event.bonus %>");
+
+  $('input[name="quantity"]').change(function() {
+    var quantity = Number($(this).val());
+    var price = Number($('.price').data('price'));
+    var day = Number($('#day').val());
+    $('#cart_item_sum').text(String(quantity * price * day));
+    sum = document.getElementById('cart_item_sum').textContent;
+  });
+  $('#day').change(function(){
+    var day = Number($(this).val());
+    var discount = 0;
+    if ($("#discount-price").length) {
+      discount = Number($("#discount-price").data("price"));
+      require_day = Number($("#discount-price").data("require-day"));
+      require_combo = Number($("#discount-price").data("require-combo"));
+      require_item = Number($("#discount-price").data("require-item"));
+      combo_count = Number($(".combo_count").data("combo-count"));
+      if ($(".item_count").data("item-count")){
+        item_count = Number($(".item_count").data("item-count"));
+      }else{
+         item_count = 0
+      }
+
+      if (day >= require_day && combo_count >= require_combo && item_count >= require_item){
+        $('#cart_item_sum').text(String(sum * day) - discount + '円');
+        $('#point_sum').text(String(point_sum * day) - (discount / 100) + 'pt');
+      }else{
+        alert ('クーポンの条件に一致しておりません')
+        $('#cart_item_sum').text(String(sum * day));
+        $('#point_sum').text(String(point_sum * day) + 'pt');
+      }
+    }else{
+      $('#cart_item_sum').text(String(sum * day));
+      $('#point_sum').text(String(point_sum * day) + 'pt');
+    }
+  });
+</script>
+
+<% if user_signed_in? %>
+  <% unless current_user.status == false || current_user.is_deleted == true %>
+    <%= link_to '購入手続きへ進む',new_users_order_path,class: "btn btn-info" %>
+  <% else %>
+    <h4>購入手続きへは進むには、利用再開申請または管理者へお問い合わせください</h4><br/>
+  <% end %>
+<% else %>
+   <%= link_to 'ユーザー登録してこの商品を注文',new_user_registration_path,class: "btn btn-info" %>
+<% end %>
+
+  <%= link_to '買い物を続ける',users_combo_items_path,class: "btn btn-info", data: {"turbolinks" => false} %>
+

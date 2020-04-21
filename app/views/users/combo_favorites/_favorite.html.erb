@@ -1,0 +1,13 @@
+<div class="combo-favorite-link" id="combo-favorite-link-<%= combo.id %>">
+  <% if current_user.combo_favorites.find_by(combo_id: combo.id) %>
+    <%= link_to users_combo_combo_favorites_path(combo_id: combo.id,user_id: current_user.id), method: :delete, remote: true do %>
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+    <% end %>
+
+  <% else %>
+
+    <%= link_to users_combo_combo_favorites_path(combo_id: combo.id,user_id: current_user.id), method: :post, remote: true do%>
+      <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+    <% end %>
+  <% end %>
+</div>

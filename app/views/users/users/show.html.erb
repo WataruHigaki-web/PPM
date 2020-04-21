@@ -1,0 +1,60 @@
+<h2>マイページ</h2>
+<h4>
+  登録情報
+  <%= link_to '編集する',edit_users_user_path(current_user),class: "btn btn-info" %>
+  <%= link_to 'クレジット情報',users_pays_path(current_user),class: "btn btn-info" %>
+</h4>
+
+<table class="table table-bordered">
+  <tr>
+    <th>profile画像</th>
+    <td><%= attachment_image_tag @user ,:profile_image,:fill,200,200, fallback:"no_image.jpg" %></td>
+  </tr>
+  <tr>
+    <th>名前</th>
+    <td><%= @user.name %></td>
+  </tr>
+  <tr>
+    <th>カナ</th>
+    <td><%= @user.name_kana %></td>
+  </tr>
+  <tr>
+    <th>郵便番号</th>
+    <td><%= @user.zip_code %></td>
+  </tr>
+  <tr>
+    <th>住所</th>
+    <td><%= @user.address %></td>
+  </tr>
+  <tr>
+    <th>電話番号</th>
+    <td><%= @user.phone_number %></td>
+  </tr>
+  <tr>
+    <th>メールアドレス</th>
+    <td><%= @user.email %></td>
+  </tr>
+</table>
+<table class="table">
+
+  <tr>
+    <th>注文履歴</th>
+    <td>
+      <%= link_to '一覧を見る',users_orders_path(current_user),class: "btn btn-info" %>
+    </td>
+  </tr>
+  
+  <tr>
+    <th>お問い合わせ</th>
+    <td>
+      <%= link_to 'お問い合わせ',users_questions_path(current_user),class: "btn btn-info" %>
+    </td>
+  </tr>
+
+  <tr>
+    <th>退会</th>
+    <td>
+      <%= link_to '退会する',users_users_confirm_path,class: "btn btn-danger" %>
+    </td>
+  </tr>
+</table>

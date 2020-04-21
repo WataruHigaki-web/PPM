@@ -1,0 +1,35 @@
+<h2>商品新規登録画面</h2>
+
+<div class="row">
+  <%= form_with model:@product,url:admins_products_path,local: true do |f| %>
+    <div class="col-xs-5">
+        <%= f.attachment_field :product_image %>
+      </div>
+    <div class="col-xs-7">
+    <table class="table">
+      <tr>
+        <th><%= f.label :商品名 %></th>
+        <td><%= f.text_field :name %></td>
+      </tr>
+
+      <tr>
+        <th><%= f.label :商品説明 %></th>
+        <td><%= f.text_area :introduction %></td>
+      </tr>
+
+      <tr>
+        <th><%= f.label :ジャンル %></th>
+        <td><%= f.collection_select :product_kind_id,ProductKind.all,:id,:name %></td>
+      </tr>
+
+      <tr>
+        <th><%= f.label :在庫数 %></th>
+        <td><%= f.number_field :stock %></td>
+      </tr>
+    </table>
+    </div>
+      <div class="text-right">
+      <%= f.submit '新規登録', class: "btn btn-info" %>
+      </div>
+    <% end %>
+</div>

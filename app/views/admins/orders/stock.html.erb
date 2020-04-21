@@ -1,0 +1,177 @@
+<h2>在庫管理</h2>
+
+<table class="table table-bordered">
+  <tr>
+    <th>全注文数</th>
+    <th>予約数</th>
+    <th>貸出数</th>
+    <th>郵送返却数</th>
+  </tr>
+  <tr>
+    <td><%= @orders.count %></td>
+    <td><%= @reserves.count %></td>
+    <td><%= @lendings.count %></td>
+    <td><%= @returns.count %></td>
+  </tr>
+</table>
+
+<h4>セット在庫一覧</h4>
+<table class="table table-bordered">
+  <tr>
+    <th>セット名</th>
+    <th>予約注文数</th>
+    <th>貸出数</th>
+    <th>郵送返却数</th>
+  </tr>
+
+  <% @combos.each do |combo| %>
+    <% if combo.id == 1 %>
+      <tr>
+        <td>
+          <%= link_to admins_combo_items_path do %>
+            <%= combo.name %>
+          <% end %>
+        </td>
+
+        <td><%= @re_q1 = OrderRecord.where(combo_id: 1,status: "予約受付中").sum(:quantity) %></td>
+        <td><%= @re_q1 = OrderRecord.where(combo_id: 1,status: "貸出中").sum(:quantity) %></td>
+        <td><%= @re_q1 = OrderRecord.where(combo_id: 1,status: "郵送中").sum(:quantity) %></td>
+      </tr>
+
+    <% elsif combo.id == 2 %>
+      <tr>
+        <td>
+          <%= link_to admins_combo_items_path do %>
+            <%= combo.name %>
+          <% end %>
+        </td>
+        <td><%= @re_q2 = OrderRecord.where(combo_id: 2,status: "予約受付中").sum(:quantity) %></td>
+        <td><%= @le_q2 = OrderRecord.where(combo_id: 2,status: "貸出中").sum(:quantity) %></td>
+        <td><%= @tur_q2 = OrderRecord.where(combo_id: 2,status: "郵送中").sum(:quantity) %></td>
+      </tr>
+
+    <% elsif combo.id == 3 %>
+      <tr>
+        <td>
+          <%= link_to admins_combo_items_path do %>
+            <%= combo.name %>
+          <% end %>
+        </td>
+        <td><%= @re_q3 = OrderRecord.where(combo_id: 3,status: "予約受付中").sum(:quantity) %></td>
+        <td><%= @le_q3 = OrderRecord.where(combo_id: 3,status: "貸出中").sum(:quantity) %></td>
+        <td><%= @tur_q3 = OrderRecord.where(combo_id: 3,status: "郵送中").sum(:quantity) %></td>
+      </tr>
+
+    <% else %>
+      <tr>
+        <td>
+          <%= link_to admins_combo_items_path do %>
+            <%= combo.name %>
+          <% end %>
+        </td>
+        <td><%= @re_q4 = OrderRecord.where(combo_id: 4,status: "予約受付中").sum(:quantity) %></td>
+        <td><%= @le_q4 = OrderRecord.where(combo_id: 4,status: "貸出中").sum(:quantity) %></td>
+        <td><%= @tur_q4 = OrderRecord.where(combo_id: 4,status: "郵送中").sum(:quantity) %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
+
+<h4>商品在庫一覧</h4>
+<table class="table table-bordered">
+  <tr>
+    <th>商品名</th>
+    <th>在庫数</th>
+    <th>予約受付中</th>
+    <th>貸出数</th>
+    <th>郵送返却中</th>
+    <th>販売ステータス</th>
+  </tr>
+
+  <% @combos.each do |combo| %>
+    <% if combo.id == 1 %>
+      <% combo.combo_items.each do |combo_item| %>
+        <% @re_q = OrderRecord.where(combo_id: 1, product_id: combo_item.product.id, status: "予約受付中").sum(:quantity) %>
+        <% @le_q = OrderRecord.where(combo_id: 1, product_id: combo_item.product.id, status: "貸出中").sum(:quantity) %>
+        <% @tur_q = OrderRecord.where(combo_id: 1, product_id: combo_item.product.id, status: "郵送中").sum(:quantity) %>
+        <tr>
+          <td>
+            <%= link_to admins_product_path(combo_item.product) do %>
+            　<%= combo_item.product.name %>
+          　<% end %>
+          </td>
+          <td><%= combo_item.product.stock - @re_q.to_i - @le_q.to_i - @tur_q.to_i %></td>
+          <td><%= @re_q %></td>
+          <td><%= @le_q %></td>
+          <td><%= @tur_q %></td>
+          <% if combo_item.product.stock - @re_q.to_i - @le_q.to_i - @tur_q.to_i == 0 %>
+            <td>売切</td>
+          <% else %>
+            <td>販売中</td>
+          <% end %>
+        </tr>
+      <% end %>
+
+    <% elsif combo.id == 2 %>
+      <% combo.combo_items.each do |combo_item| %>
+        <tr>
+          <td>
+            <%= link_to admins_product_path(combo_item.product) do %>
+            　<%= combo_item.product.name %>
+          　<% end %>
+          </td>
+          <td><%= combo_item.product.stock - @re_q2.to_i - @le_q2.to_i - @tur_q2.to_i %></td>
+          <td><%= @re_q2 %></td>
+          <td><%= @le_q2 %></td>
+          <td><%= @tur_q2 %></td>
+          <% if combo_item.product.stock - @re_q2.to_i - @le_q2.to_i - @tur_q2.to_i <= 0 %>
+            <td>売切</td>
+          <% else %>
+            <td>販売中</td>
+          <% end %>
+        </tr>
+      <% end %>
+
+    <% elsif combo.id == 3 %>
+      <% combo.combo_items.each do |combo_item| %>
+        <tr>
+          <td>
+            <%= link_to admins_product_path(combo_item.product) do %>
+            　<%= combo_item.product.name %>
+          　<% end %>
+          </td>
+          <td><%= combo_item.product.stock - @re_q3.to_i - @le_q3.to_i - @tur_q3.to_i %></td>
+          <td><%= @re_q3 %></td>
+          <td><%= @le_q3 %></td>
+          <td><%= @tur_q3 %></td>
+
+          <% if combo_item.product.stock - @re_q3.to_i - @le_q3.to_i - @tur_q3.to_i <= 0 %>
+            <td>売切</td>
+          <% else %>
+            <td>販売中</td>
+          <% end %>
+        </tr>
+      <% end %>
+
+    <% else %>
+      <% combo.combo_items.each do |combo_item| %>
+        <tr>
+          <td>
+            <%= link_to admins_product_path(combo_item.product) do %>
+            　<%= combo_item.product.name %>
+          　<% end %>
+          </td>
+          <td><%= combo_item.product.stock - @re_q4.to_i - @le_q4.to_i - @tur_q4.to_i %></td>
+          <td><%= @re_q4 %></td>
+          <td><%= @le_q4 %></td>
+          <td><%= @tur_q4 %></td>
+          <% if combo_item.product.stock - @re_q4.to_i - @le_q4.to_i - @tur_q4.to_i <= 0 %>
+            <td>売切</td>
+          <% else %>
+            <td>販売中</td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+  <% end %>
+</table>

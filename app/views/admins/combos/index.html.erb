@@ -1,0 +1,65 @@
+<h2>セット新規作成</h2>
+<%= form_for((@combo),url:admins_combos_path) do |f| %>
+
+  <table class="table">
+    <tr>
+      <th><%= f.label :コンボ名 %></th>
+      <td><%= f.text_field :name %></td>
+    </tr>
+
+    <tr>
+      <th><%= f.label :画像 %></th>
+      <td><%= f.attachment_field :combo_image %></td>
+    </tr>
+
+    <tr>
+      <th><%= f.label :コンボ金額 %></th>
+      <td><%= f.number_field :price %>円/1日</td>
+    </tr>
+
+    <tr>
+      <th><%= f.label :説明 %></th>
+      <td><%= f.text_area :introduction %></td>
+    </tr>
+
+    <tr>
+      <th><%= f.label :ステータス %></th>
+      <td>
+        <%= f.radio_button :status,true, checked: "checked" %>
+        <%= f.label :有効 %>
+
+        <%= f.radio_button :status,false, checked: "checked" %>
+        <%= f.label :無効 %>
+      </td>
+    </tr>
+  </table>
+  <%= f.submit 'セットを作成',class:'btn btn-info' %>
+<% end %>
+
+<h2>セット一覧</h2>
+<table class="table table-bordered">
+  <tr>
+    <th>セットid</th>
+    <th>セット名</th>
+    <th>セット画像</th>
+    <th>価格/1日</th>
+    <th></th>
+    <th></th>
+  </tr>
+    <% @combos.each do |combo| %>
+      <tr>
+        <td><%= combo.id %></td>
+        <td><%= combo.name %></td>
+        <td><%= attachment_image_tag combo,:combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
+        <td><%= combo.price %></td>
+        <td>
+          <%= link_to '編集',edit_admins_combo_path(combo), class: "btn btn-info" %>
+        </td>
+        <td>
+          <%= link_to users_combo_path(combo), class: "btn btn-info" do %>
+            詳細
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+</table>

@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="user_point">
+    <h4>総保有ポイント</h4>
+    <h1><%= @point %>pt</h1>
+  </div>
+  <div class="col-xs-6">
+    <h4>ポイント付与履歴</h4>
+      <table class="table table-bordered">
+        <tr>
+          <th>付与日付</th>
+          <th>ポイント</th>
+        </tr>
+        <% @in_points.each do |point| %>
+          <tr>
+            <td>
+              <%= link_to users_order_path(point.order) do %>
+                <%= point.created_at.strftime("%Y-%m-%d %H:%M") %>
+              <% end %>
+            </td>
+            <td><%= point.point %>pt</td>
+          </tr>
+        <% end %>
+      </table>
+  </div>
+
+  <div class="col-xs-6">
+    <h4>ポイント利用履歴</h4>
+      <table class="table table-bordered">
+        <tr>
+          <th>利用日付</th>
+          <th>ポイント</th>
+        </tr>
+        <% @out_points.each do |point| %>
+          <% unless point.point.nil? %>
+            <tr>
+              <td>
+
+                <%= link_to users_order_path(point.order) do %>
+                  <%= point.created_at.strftime("%Y-%m-%d %H:%M") %>
+                <% end %>
+              </td>
+              <td><%= point.point %>pt</td>
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+  </div>
+</div>

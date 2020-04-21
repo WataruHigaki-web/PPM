@@ -1,0 +1,52 @@
+<h2>会員詳細画面</h2>
+
+<table class="table table-bordered">
+  <tr>
+    <th>顧客ID</th>
+    <td><%= @user.id %>
+      <span class="bg-primary">
+        <% if @user.status %>
+         有効会員
+        <% else %>
+         無効会員
+        <% end %>
+      </span>
+    </td>
+  </tr>
+  <tr>
+    <th>画像</th>
+    <td><%= attachment_image_tag @user, :profile_image,:fill,200,200, fallback:"no_image.jpg" %></td>
+  </tr>
+  <tr>
+    <th>氏名</th>
+    <td><%= @user.name %>
+    </td>
+  </tr>
+  <tr>
+    <th>フリガナ</th>
+    <td><%= @user.name_kana %>
+    </td>
+  </tr>
+  <tr>
+    <th>郵便番号</th>
+    <td><%= @user.zip_code %></td>
+  </tr>
+  <tr>
+    <th>住所</th>
+    <td><%= @user.address %></td>
+  </tr>
+  <tr>
+    <th>電話番号</th>
+    <td><%= @user.phone_number %></td>
+  </tr>
+  <tr>
+    <th>メールアドレス</th>
+    <td><%= @user.email %></td>
+  </tr>
+</table>
+</div>
+
+
+  <%= link_to '編集する',edit_admins_user_path(@user),class:'btn btn-info' %>
+  <%= link_to '注文一覧を見る',admins_orders_path,class:"btn btn-info" %>
+

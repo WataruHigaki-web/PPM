@@ -1,0 +1,49 @@
+<div class="alert alert-warning alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>
+    <h4>イベント情報</h4>
+      <% unless @discount.nil? %>
+        <%= @discounts.each do |discount| %>
+          <h4><%= discount.name %>開催中！！</h4></br>
+        <% end %>
+      <% end %>
+      <% unless @point_event.nil? %>
+        <h4><%= @point_event.name %>開催中！！</h4>
+      <% end %>
+      <% if !@discount && !@point_event %>
+        <h6>現在開催イベントはありません</h6>
+      <% end %>
+  </strong>
+</div>
+<div class="wrapper">
+  <section class="hero vertical-center" style="background: url('https://dl.dropbox.com/s/9u786zwyehzuvam/cliffSide_mini.jpg?dl=1') no-repeat 50% 50% fixed;">
+    <div class="container text-center">
+      <h1>
+        Great Journey with only phone
+        <div class="wrap">
+          <button class="button"><%= link_to '旅に出る',users_combo_items_path, data: {"turbolinks" => false}  %></button>
+        </div>
+      </h1>
+    </div>
+    <div class="optional-rainbow"></div>
+  </section>
+  <section class="content">
+    <div class="container">
+      <article>
+        <div class="col-sm-6 article-left">
+          <img src="https://www.pakutaso.com/shared/img/thumb/YUKI0211009_TP_V.jpg?dl=1" alt="top-image" class="article-image" style="max-width:100%;">
+        </div>
+        <div class="col-sm-6 article-right">
+          <h2>About</h2>
+          <p>トラベルグッツを旅先でレンタル！！<br/>（現在国内のみ）</p>
+          <p>ミニマリスト向けのサービスです！！</p>
+          <p>①トラベルグッツ予約<br/>②指定場所で受け取り<br/>③好きな場所で返却</p>
+          <p><%= link_to 'さあ、旅に出よう',users_combo_items_path %></p>
+          <div class="control row">
+            <%= link_to '管理者はこちら',new_admin_session_path %>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,43 @@
+<h2>会員編集画面</h2>
+<%= form_with model: @admin,url:admins_admin_path do |f| %>
+<table class="table table-bordered">
+  <tr>
+    <th>profile画像</th>
+    <td><%= f.attachment_field :profile_image %></td>
+  </tr>
+  <tr>
+    <th class="edit-th">会員ID</th>
+    <td><%= @admin.id %></td>
+  </tr>
+  <tr>
+    <th class="edit-th">氏名</th>
+    <td>
+      <%= f.text_field :name %>
+    </td>
+  </tr>
+    <tr>
+    <th class="edit-th">フリガナ</th>
+    <td>
+      <%= f.text_field :name_kana %>
+
+    </td>
+  </tr>
+
+  <tr>
+    <th class="edit-th">電話番号</th>
+    <td>
+      <%= f.text_field :phone_number %>
+    </td>
+  </tr>
+  <tr>
+    <th class="edit-th">メールアドレス</th>
+    <td>
+      <%= f.text_field :email %>
+    </td>
+  </tr>
+
+</table>
+
+    <%= f.submit "変更を保存",class: "btn btn-info" %>
+
+<% end %>

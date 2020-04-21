@@ -1,0 +1,321 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+
+body, html {
+    height: 100%;
+    background-repeat: no-repeat;
+
+}
+
+.card-container.card {
+    max-width: 350px;
+    padding: 40px 40px;
+}
+
+.btn {
+    font-weight: 700;
+    height: 36px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+/*
+ * Card component
+ */
+.card {
+    background-color: #F7F7F7;
+    /* just in case there no content*/
+    padding: 20px 25px 30px;
+    margin: 0 auto 25px;
+    margin-top: 50px;
+    /* shadows and rounded borders */
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.profile-img-card {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+
+
+.form-signin input[type=email],
+.form-signin input[type=password],
+.form-signin input[type=text],
+.form-signin button {
+    width: 100%;
+    display: block;
+    margin-bottom: 10px;
+    z-index: 1;
+    position: relative;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+
+.btn.btn-signin {
+    padding: 0px;
+    font-weight: 700;
+    font-size: 14px;
+    height: 36px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: none;
+    -o-transition: all 0.218s;
+    -moz-transition: all 0.218s;
+    -webkit-transition: all 0.218s;
+    transition: all 0.218s;
+}
+
+
+
+
+@import url(https://fonts.googleapis.com/css?family=Work+Sans:400,300,200,700);
+
+header{
+  font-size: 20px;
+  text-align: center;
+}
+
+.wrap {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  margin-top:100px;
+  margin-bottom:50px;
+  width: 200px;
+  height: 70px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 30px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  }
+
+.button:hover {
+  background-color: #2EE59D;
+  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  color: #fff;
+  transform: translateY(-7px);
+}
+
+html,body{
+  display:block;
+  width:100%;
+  height:100%;
+  background-color: #EEFFFF;
+}
+h1, h2, p {
+  font-family:"Work Sans", serif;
+}
+
+.wrapper{ display:block; height:auto; position:relative; padding-bottom:3em;}
+
+//THE IMPORTANT BIT
+
+.hero{
+  position:relative;
+  height:100%;
+  width:100%;
+  background-size:200%;
+  overflow:hidden;
+
+  h1{
+    position:relative;
+    z-index:50;
+    color:white;
+    font-size:80px;
+    font-weight:200;
+  }
+
+  &.fadeout{
+    .optional-rainbow{
+      display:block;
+    }
+    &:before{
+    display:none;
+    }
+  }
+
+  &:before{
+    display:block;
+    position:absolute;
+    height:100%;
+    width:100%;
+    z-index:5;
+    content:"";
+    background:-webkit-linear-gradient(#30f89c, #352ce6, #fc5e9d);
+    background: -moz-linear-gradient(left, #30f89c, #352ce6, #fc5e9d);
+    background:linear-gradient(#30f89c, #352ce6, #fc5e9d);
+    opacity:0.4;
+  }
+
+  &:after{
+    display:block;
+    position:absolute;
+    bottom:0;
+    left:0;
+    content:"";
+    width:100%;
+    height:6px;
+    background: -webkit-linear-gradient(left, #30f89c, #352ce6, #fc5e9d);
+    background: -moz-linear-gradient(left, #30f89c, #352ce6, #fc5e9d);
+    background: linear-gradient(left, #30f89c, #352ce6, #fc5e9d);
+
+  }
+  .optional-rainbow{
+    display:none;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: -webkit-linear-gradient(#30f89c, #352ce6, #fc5e9d);
+    background: -moz-linear-gradient(#30f89c, #352ce6, #fc5e9d);
+    background: linear-gradient(#30f89c, #352ce6, #fc5e9d);
+    opacity:0.4;
+    z-index:4;
+  }
+
+}
+
+
+//SUPERFLUOUS STYLEY STUFF
+
+article{
+  padding:3em 0;
+  color:#545454;
+  font-size:18px;
+
+  .article-right{
+    max-width:400px;
+    margin:0 auto;
+  }
+
+  @media(max-width:767px){
+    text-align:center;
+    img{
+      margin-bottom:2em;
+    }
+  }
+
+  p{
+    margin:2em 0;
+  }
+
+  h2{
+    font-size:54px;
+    font-weight:200;
+    margin-top:0;
+    text-transform:uppercase;
+  }
+
+  img{
+    border:3px solid #e6e6e6;
+  }
+}
+
+.control{
+  width:100%;
+  padding:0.5em 1em;
+  background:#e6e6e6;
+  border-radius:10px;
+}
+
+//control
+.selectable{
+  display:block;
+  position:relative;
+  width:40px;
+  height:20px;
+  background:rgba(255,44,44,0.6);
+  border-radius:10px;
+  box-shadow:inset 0 1px 2px rgba(0,0,0,0.2);
+  transition:all .2s linear;
+
+  &:before{
+    display:block;
+    position:absolute;
+    content:"";
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:white;
+    box-shadow:0 2px 1px rgba(0,0,0,0.2);
+    top:0;
+    left:0;
+    transition:all .2s linear;
+  }
+
+  &.on {
+    background:rgba(44,255,44,0.5);
+
+    &:before{
+      left:calc(100% - 20px);
+    }
+  }
+}
+
+.vertical-center{
+    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
+
+.order_new{
+  text-align: center;
+}
+.order_new_radio{
+  display: inline-block;
+  text-align: left;
+}
+
+.user_point{
+  text-align: center;
+}
+

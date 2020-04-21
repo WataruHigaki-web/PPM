@@ -1,0 +1,39 @@
+<h2>ジャンル追加・一覧画面</h2>
+<h3>ジャンル</h3>
+<%= form_with model: @product_kind,url:admins_product_kinds_path,method: :post do |f| %>
+  <%= f.text_field :name %>
+  <%= f.radio_button :status,true, checked: "checked" %>
+  <%= f.label :有効 %>
+
+  <%= f.radio_button :status,false, checked: "checked" %>
+
+  <%= f.label :無効 %><br/>
+
+  <%= f.submit '追加',class:'btn btn-info' %>
+<% end %>
+
+  <table class="table table-bordered">
+    <tr>
+      <th>ジャンル</th>
+      <th>状態</th>
+      <th></th>
+    </tr>
+
+    <tr>
+      <% @product_kinds.each do |product_kind| %>
+        <td>
+          <%= product_kind.name %>
+        </td>
+      <% if product_kind.status %>
+        <td>有効</td>
+      <% else %>
+        <td>無効</td>
+      <% end %>
+      <td>
+        <%= link_to '編集する',edit_admins_product_kind_path(product_kind.id),class: 'btn btn-info' %>
+        <%= link_to '削除する',admins_product_kind_path(product_kind.id),method: :delete,data:{confirm: "本当に削除しますか？"},class: 'btn btn-danger' %>
+        </td>
+    </tr>
+    <% end %>
+  </table>
+</div>

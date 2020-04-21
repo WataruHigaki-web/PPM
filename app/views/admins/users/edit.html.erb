@@ -1,0 +1,58 @@
+<h2>会員編集画面</h2>
+<%= form_with model: @user,url:admins_user_path(@user) do |f| %>
+<table>
+  <tr>
+    <th>会員ID</th>
+    <td><%= @user.id %></td>
+  </tr>
+  <tr>
+    <th>氏名</th>
+    <td>
+      <%= @user.name %>
+    </td>
+  </tr>
+    <tr>
+    <th>フリガナ</th>
+    <td>
+      <%= @user.name_kana %>
+
+    </td>
+  </tr>
+  <tr>
+    <th>郵便番号</th>
+    <td>
+      <%= @user.zip_code %>
+    </td>
+  </tr>
+  <tr>
+    <th>住所</th>
+    <td>
+      <%= @user.address %>
+    </td>
+  </tr>
+  <tr>
+    <th>電話番号</th>
+    <td>
+      <%= @user.phone_number %>
+    </td>
+  </tr>
+  <tr>
+    <th>メールアドレス</th>
+    <td>
+      <%= @user.email %>
+    </td>
+  </tr>
+  <tr>
+    <th>会員ステータス</th>
+    <td>
+      <%= f.radio_button(:status, true) %>
+      <%= f.label :有効　%>
+      <%= f.radio_button(:status,false)%>
+      <%= f.label :無効　%>
+    </td>
+  </tr>
+</table>
+
+    <%= f.submit "変更を保存", class: "btn btn-info" %>
+
+<% end %>

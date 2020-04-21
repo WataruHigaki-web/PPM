@@ -1,0 +1,55 @@
+<h2>マイページ</h2>
+<h4>
+  登録情報
+  <%= link_to '編集する',edit_admins_admin_path(@admin) %>
+
+</h4>
+
+<table class="table table-bordered">
+  <tr>
+    <th>admin ID</th>
+    <td><%= current_admin.id %></td>
+  </tr>
+  <tr>
+    <th>profile画像</th>
+    <td>
+      <%= attachment_image_tag @admin,:profile_image,:fill,100,100, fallback:"no_image.jpg" %>
+    </td>
+  </tr>
+
+  <tr>
+    <th>名前</th>
+    <td>
+      <%= current_admin.name %>
+    </td>
+  </tr>
+
+  <tr>
+    <th>カナ</th>
+    <td>
+      <%= current_admin.name_kana %>
+    </td>
+  </tr>
+
+  <tr>
+    <th>電話番号</th>
+    <td>
+      <%= current_admin.phone_number %>
+    </td>
+  </tr>
+  <tr>
+    <th>メールアドレス</th>
+    <td>
+      <%= current_admin.email %>
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>担当履歴</th>
+    <td>
+      <%= link_to '一覧を見る',admins_orders_path(current_admin),class: "btn btn-info" %>
+    </td>
+  </tr>
+</table>

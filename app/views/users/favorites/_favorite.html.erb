@@ -1,0 +1,13 @@
+<div class="favorite-link" id="favorite-link-<%= product.id %>">
+  <% if current_user.favorited_by?(product) %>
+    <%= link_to users_product_favorites_path(product_id: product.id,user_id: current_user.id), method: :delete, remote: true do %>
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+    <% end %>
+
+  <% else %>
+
+    <%= link_to users_product_favorites_path(product_id: product.id,user_id: current_user.id), method: :post, remote: true do %>
+      <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+    <% end %>
+  <% end %>
+</div>
