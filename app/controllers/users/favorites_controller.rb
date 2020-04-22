@@ -17,14 +17,9 @@ class Users::FavoritesController < ApplicationController
 
   private
 
-  def favorite_params
-    params.require(:favorite).permit(:product_id, :user_id)
-  end
-
-  private
-
   def set_variable
     @product = Product.find(params[:product_id])
     @id_name = "#favorite-link-#{@product.id}"
   end
 end
+

@@ -6,5 +6,4 @@ class Combo < ApplicationRecord
   has_many :order_records
   has_many :combo_favorites
   attachment :combo_image
-
 end

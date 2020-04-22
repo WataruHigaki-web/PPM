@@ -17,5 +17,4 @@ class Users::ComboItemsController < ApplicationController
   def combo_item_params
     params.require(:combo_item).permit(:product_id, :combo_id, :quantity)
   end
-
 end

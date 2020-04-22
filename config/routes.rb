@@ -47,16 +47,12 @@ Rails.application.routes.draw do
     get 'users/confirm'
     get 'orders/confirm'
     post 'orders/save'
-
-    #あえてpostにしている
     post 'cart_items/delete2'
     get 'orders/thanks'
     delete 'cart_items/destroy_all'
     get 'cart_items/save'
     patch 'users/withdrawal/:id', to: 'users#withdrawal'
     put 'users/withdrawal/:id', to: 'users#withdrawal'
-    post 'favorites/create2'
-    delete 'favorites/delete2'
     resources :users,        only: %i[show edit update]
     resources :discounts, only: %i[index show]
     resources :products,     only: %i[index show] do
@@ -75,10 +71,7 @@ Rails.application.routes.draw do
       end
     end
     resources :pays,  only: %i[index new destroy create edit update]
-    resources :combo_items,  only: [:index]
-    resources :combos, only: %i[show] do
-      resource :combo_favorites, only: %i[create destroy]
-    end
+    resources :combo_items,  only: [:index,:show]
     resources :questions,    only:[:index,:create,:destroy]
     resources :discounts, only: %i[index]
   end
