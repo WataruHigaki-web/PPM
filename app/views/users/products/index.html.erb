@@ -1,4 +1,4 @@
-<h2>お気に入り単品商品一覧</h2>
+<h2>お気に入り商品一覧</h2>
 <div class="row">
   <%= form_with model:@cart_item,url:users_cart_items_path(@cart_item),method: :post do |f| %>
     <%= f.hidden_field :combo_id, :value => 1 %>
@@ -13,31 +13,48 @@
         <th></th>
       </tr>
     <% @favorites.each do |favorite| %>
-      <tr class="favorite">
-        <td>
-          <%= f.radio_button :product_id,favorite.product.id %>
-          <%= link_to users_product_path(favorite.product) do %>
-            <%= favorite.product.name %>
-          <% end %>
-        </td>
-        <td><%= attachment_image_tag favorite.product,:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
-        <td><%= favorite.product.introduction %></td>
-
-            <% @re_q = OrderRecord.where(combo_id: 1, product_id: favorite.product.id, status: "予約受付中").sum(:quantity) %>
-            <% @le_q = OrderRecord.where(combo_id: 1, product_id: favorite.product.id, status: "貸出中").sum(:quantity) %>
-            <% @tur_q = OrderRecord.where(combo_id: 1, product_id: favorite.product.id, status: "郵送中").sum(:quantity) %>
-            <% if favorite.product.stock - @re_q.to_i - @le_q.to_i - @tur_q.to_i == 0 %>
-              <td>売切</td>
-            <% else %>
-              <td>販売中</td>
+        <tr class="favorite">
+          <td>
+            <%= f.radio_button :product_id,favorite.product.id %>
+            <%= link_to users_product_path(favorite.product) do %>
+              <%= favorite.product.name %>
             <% end %>
-        <td>
-          <% if favorite.product.favorited_by?(current_user) %>
-            <%= link_to'お気に入りを外す',users_product_favorites_path(product_id: favorite.product.id,user_id: current_user.id), method: :delete %>
-          <% else %>
-          <% end %>
-        </td>
-      </tr>
+          </td>
+          <td><%= attachment_image_tag favorite.product,:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
+          <td><%= favorite.product.introduction %></td>
+
+              <% @re_q = OrderRecord.where(combo_id: 1, product_id: favorite.product.id, status: "予約受付中").sum(:quantity) %>
+              <% @le_q = OrderRecord.where(combo_id: 1, product_id: favorite.product.id, status: "貸出中").sum(:quantity) %>
+              <% @tur_q = OrderRecord.where(combo_id: 1, product_id: favorite.product.id, status: "郵送中").sum(:quantity) %>
+              <% if favorite.product.stock - @re_q.to_i - @le_q.to_i - @tur_q.to_i == 0 %>
+                <td>売切</td>
+              <% else %>
+                <td>販売中</td>
+              <% end %>
+          <td>
+            <%= render 'users/favorites/favorite',product: favorite.product %>
+          </td>
+        </tr>
+   <% end %>
+      <% @combo_favorites.each do |favorite| %>
+        <tr class="favorite">
+          <td>
+            <%= f.radio_button :combo_id,favorite.combo.id %>
+            <%= link_to users_combo_path(favorite.combo) do %>
+              <%= favorite.combo.name %>
+            <% end %>
+          </td>
+          <td><%= attachment_image_tag favorite.combo,:combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
+          <td><%= favorite.combo.introduction %></td>
+              <% if favorite.combo.status %>
+                <td>販売中</td>
+              <% else %>
+                <td>売切</td>
+              <% end %>
+          <td>
+            <%= render 'users/combo_favorites/favorite',combo: favorite.combo %>
+          </td>
+        </tr>
     <% end %>
     </table>
 
@@ -48,8 +65,6 @@
   <script>
     $('input[name="cart_item[product_id]"]').on("change", function(){
       var status = $(this).parent().parent().find(".product_status").data("status");
-
-      // var t2 = document.getElementById('false').textContent;
       if(status == "売切"){
         document.getElementById("button").disabled = true;
         alert('この商品は売り切れのためカートに入れることはできません')

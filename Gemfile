@@ -72,7 +72,6 @@ end
 gem 'bootstrap-sass', '~> 3.3.7'
 gem 'devise'
 gem 'dotenv-rails'
-gem 'dotenv-rails'
 gem 'jquery-rails'
 gem 'kaminari', '~> 1.1.1'
 gem 'omniauth-facebook'

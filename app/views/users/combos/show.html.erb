@@ -1,0 +1,61 @@
+<h4>セット商品詳細</h4>
+
+<div class="row">
+  <%= form_with model: @cart_item,url:users_cart_items_path(@combo.id),method: :post,local: true do |f| %>
+     <%= f.hidden_field :combo_id, :value => @combo.id %>
+     <% if user_signed_in? %>
+      <%= f.hidden_field :user_id, :value => current_user.id %>
+    <% end %>
+
+    <div class="col-xs-6">
+        <%= attachment_image_tag @combo ,:combo_image,:fill,300,300, fallback:"no_image.jpg" %>
+    </div>
+    <div class="col-xs-6">
+      <table class="table table-bordered">
+          <tr>
+            <th>セット名</th>
+            <td><%= @combo.name %></td>
+          </tr>
+
+          <tr>
+            <th>商品説明</th>
+            <td><%= @combo.introduction %></td>
+          </tr>
+          <tr>
+            <th>価格/1日</th>
+            <td>100円</td>
+          </tr>
+          <tr>
+            <th>ステータス</th>
+            <% if @combo.status %>
+              <td id="status">販売中</td>
+            <% else %>
+              <td>売切</td>
+            <% end %>
+          </tr>
+          <tr>
+            <th>お気に入り</th>
+            <td>
+              <%= render 'users/combo_favorites/favorite',combo: @combo %>
+            </td>
+          </tr>
+          <tr>
+           <th>個数</th>
+           <td>
+             <%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %>
+           </td>
+          </tr>
+      </table>
+      <%= f.submit 'カートに入れる',class: "btn btn-info", id: 
+      'button', data: {"turbolinks" => false} %>
+  <% end %>
+
+  <script>
+    const status = $('#status').text();
+    if(status == "売切"){
+      document.getElementById("button").disabled = true;
+      alert('この商品は売切のためカートに入れることはできません')
+    }else{
+      document.getElementById("button").disabled = false;
+    }
+  </script>

@@ -1,5 +1,9 @@
 <div class="row">
-  <div class="col-xs-4">
+  <div class="user_point">
+    <h4>総保有ポイント</h4>
+    <h1><%= @point %>pt</h1>
+  </div>
+  <div class="col-xs-6">
     <h4>ポイント付与履歴</h4>
       <table class="table table-bordered">
         <tr>
@@ -19,7 +23,7 @@
       </table>
   </div>
 
-  <div class="col-xs-4">
+  <div class="col-xs-6">
     <h4>ポイント利用履歴</h4>
       <table class="table table-bordered">
         <tr>
@@ -40,9 +44,5 @@
           <% end %>
         <% end %>
       </table>
-  </div>
-  <div class="col-xs-4">
-    <h4>保有ポイント数</h4>
-    <%= @point %>pt
   </div>
 </div>

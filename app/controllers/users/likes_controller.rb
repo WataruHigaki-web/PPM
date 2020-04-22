@@ -22,3 +22,4 @@ class Users::LikesController < ApplicationController
     @id_name = "#like-link-#{@product.id}"
   end
 end
+

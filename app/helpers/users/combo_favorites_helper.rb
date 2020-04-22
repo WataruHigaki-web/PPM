@@ -1,0 +1,2 @@
+module Users::ComboFavoritesHelper
+end

@@ -5,7 +5,8 @@ class Users::ProductsController < ApplicationController
   def top; end
 
   def index
-    @favorites = Favorite.all
+    @favorites = current_user.favorites
+    @combo_favorites = current_user.combo_favorites
     @cart_item = CartItem.new
   end
 

@@ -88,7 +88,7 @@
 
   <h4>コメント</h4>
   <% if user_signed_in? %>
-    <div id ="comments_form">
+    <div id="comments_form">
       <%= render 'users/product_comments/form', product: @product,comment: @comment %>
     </div>
   <% else %>

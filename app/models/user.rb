@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :cart_items
   has_many :orders
   has_many :favorites
+  has_many :combo_favorites
   has_many :pays
   has_many :out_points
   has_many :in_points
@@ -36,6 +37,14 @@ class User < ApplicationRecord
 
   def already_liked?(product)
     likes.exists?(product_id: product.id)
+  end
+
+  def favorited_by?(user)
+    favorites.where(user_id: user.id).exists?
+  end
+
+  def combo_favorited_by?(user)
+    combo_favorites.where(user_id: user.id).exists?
   end
 
   def self.without_sns_data(auth)

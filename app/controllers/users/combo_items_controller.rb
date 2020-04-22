@@ -12,11 +12,6 @@ class Users::ComboItemsController < ApplicationController
     end
   end
 
-  def show
-    @combo = Combo.find(params[:id])
-    @cart_item = CartItem.new
-  end
-
   private
 
   def combo_item_params
