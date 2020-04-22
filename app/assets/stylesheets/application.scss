@@ -239,6 +239,8 @@ article{
     text-align:center;
     img{
       margin-bottom:2em;
+    }.article-image{
+      width:100%;
     }
   }
 
@@ -319,4 +321,42 @@ article{
   text-align: center;
 }
 
+.confirm-button{
+  margin-top:30px;
+}
+.cart-button{
+  margin-bottom:30px;
+}
 
+
+
+@media screen and (max-width: 767px) {
+  .tbl-r04 {
+    width: 80%;
+  } 
+  .tbl-r04 .thead {
+    display: none;
+  }
+  .tbl-r04 tr,
+  .tbl-r04 td{
+    display: block;
+    width: 100%;
+    position: relative;
+  }
+  .tbl-r04 td:first-child:before {
+    background: #e9727e;
+    box-sizing: border-box;
+    color: #fff;
+    font-weight: bold;
+    height: 40px;
+    padding: 10px;
+    position: absolute;
+    top: -41px;
+    left: -0.2%;
+    display: block;
+    width: 100.5%;
+  }
+  .tbl-r04 tr {
+    margin-bottom: 40px;
+  }
+}
