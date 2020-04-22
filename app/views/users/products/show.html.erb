@@ -8,10 +8,10 @@
       <%= f.hidden_field :user_id, :value => current_user.id %>
     <% end %>
 
-    <div class="col-xs-6">
-        <%= attachment_image_tag @product ,:product_image,:fill,300,300, fallback:"no_image.jpg" %>
+    <div class="col-md-12">
+        <%= attachment_image_tag @product ,:product_image,:fill,300,300, fallback:"no_image.jpg", class: "img-fluid" %>
     </div>
-    <div class="col-xs-6">
+    <div class="col-md-12">
      <table class="table table-bordered">
           <tr>
             <th>商品id</th>
@@ -91,7 +91,6 @@
     <div id="comments_form">
       <%= render 'users/product_comments/form', product: @product,comment: @comment %>
     </div>
-  <% else %>
   <% end %>
     <div id="comments_area">
       <%= render 'users/product_comments/index',comments: @comments %>

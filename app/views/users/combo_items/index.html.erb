@@ -1,89 +1,94 @@
 <div class="row">
-  <div class="alert alert-info alert-dismissible">
-    <p>セット検索欄の名前をクリックすると下にその商品が表示されます</p>
-  </div>
-<h2>セット商品一覧</h2>
+  <div class="col-md-12">
+    <div class="alert alert-info alert-dismissible">
+      <p>セット検索欄の名前をクリックすると下にその商品が表示されます</p>
+    </div>
 
-<table class="table">
-  <tr>
-    <th>セット検索</th>
-    <th>価格</th>
-    <th>個数選択</th>
-    <th></th>
-  </tr>
-  <% @combos.each do |combo| %>
+    <h2>セット商品一覧</h2>
+    <table class="table">
+      <tr>
+        <th>セット検索</th>
+        <th>価格</th>
+        <th>個数選択</th>
+        <th></th>
+      </tr>
+      <% @combos.each do |combo| %>
 
-  <%= form_with model: @cart_item,url:users_cart_items_path(combo_id:combo.id),method: :post,local: true do |f| %>
-    <%= f.hidden_field :combo_id, :value => combo.id %>
-      <% if user_signed_in? %>
-        <%= f.hidden_field :user_id, :value => current_user.id %>
-      <% end %>
-        <tr>
-          <td>
-            <%= link_to "#{combo.name}",users_combo_items_path(combo_id: combo.id), data: {"turbolinks" => false}%>
-            <% unless combo.id == 1 %>
-              <%= link_to '詳細',users_combo_path(combo),class: "btn btn-info" %>
-            <% end %>
-          </td>
-          <td><%= combo.price %></td>
-          <% unless combo.id == 1 %>
-            <td>
-              <%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %>個
-            </td>
-            <td>
-              <%= f.submit 'カートに入れる',class: "btn btn-info" %>
-            </td>
-          <% else %>
-            <td></td>
-            <td>単品商品購入は商品名をクリック!!</td>
+      <%= form_with model: @cart_item,url:users_cart_items_path(combo_id:combo.id),method: :post,local: true do |f| %>
+        <%= f.hidden_field :combo_id, :value => combo.id %>
+          <% if user_signed_in? %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
           <% end %>
-        </tr>
-    <% end %>
-  <% end %>
-</table>
-</div>
-
-<h2>セット内商品一覧</h2>
-<table class="table table-bordered">
-  <tr>
-    <th>商品名</th>
-    <th>商品画像</th>
-    <th>販売ステータス</th>
-    <th>セットステータス</th>
-  </tr>
-
-  <% @combo_items.each do |combo_item| %>
-        <tr>
-          <td>
-            <%= link_to users_product_path(combo_item.product.id) do %>
-              <%= combo_item.product.name %>
-            <% end %>
-          </td>
-          <td><%= attachment_image_tag combo_item.product,:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
-            <% @re_q = OrderRecord.where(combo_id: 1, product_id: combo_item.product.id, status: "予約受付中").sum(:quantity) %>
-            <% @le_q = OrderRecord.where(combo_id: 1, product_id: combo_item.product.id, status: "貸出中").sum(:quantity) %>
-            <% @tur_q = OrderRecord.where(combo_id: 1, product_id: combo_item.product.id, status: "郵送中").sum(:quantity) %>
-            <% if combo_item.product.stock - @re_q.to_i - @le_q.to_i - @tur_q.to_i == 0 %>
-              <td>売切</td>
-            <% else %>
-              <td>販売中</td>
-            <% end %>
-
-          <td>
-            <%= combo_item.combo.name %>
-              <% if combo_item.combo.id == 1 %>
-                <%= form_with model:@cart_item,url:users_cart_items_path(@cart_item),method: :post do |f| %>
-                  <%= f.hidden_field :combo_id, :value => 1 %>
-                  <%= f.hidden_field :product_id, :value => combo_item.product.id %>
-                  <%= f.hidden_field :quantity, :value => 1 %>
-                   <% if user_signed_in? %>
-                      <%= f.hidden_field :user_id, :value => current_user.id %>
-                    <% end %>
-                    <%= f.submit 'カートに入れる',class: "btn btn-info", id: 'button', data: {"turbolinks" => false} %>
+            <tr>
+              <td>
+                <%= link_to "#{combo.name}",users_combo_items_path(combo_id: combo.id), data: {"turbolinks" => false}%>
+                <% unless combo.id == 1 %>
+                  <%= link_to '詳細',users_combo_path(combo),class: "btn btn-info" %>
+                <% end %>
+              </td>
+              <td><%= combo.price %></td>
+              <% unless combo.id == 1 %>
+                <td>
+                  <%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %>個
+                </td>
+                <td>
+                  <%= f.submit 'カートに入れる',class: "btn btn-info" %>
+                </td>
+              <% else %>
+                <td></td>
+                <td>単品商品購入は商品名をクリック!!</td>
               <% end %>
-            <% end %>
-          </td>
-        </tr>
-  <% end %>
-</table>
+            </tr>
+        <% end %>
+      <% end %>
+    </table>
+  </div>
+
+
+
+  <div class="col-md-12">
+    <h2>セット内商品一覧</h2>
+    <table class="table table-bordered tbl-r04">
+      <tr class="thead">
+        <th>商品名</th>
+        <th>商品画像</th>
+        <th>販売ステータス</th>
+        <th>セットステータス</th>
+      </tr>
+
+      <% @combo_items.each do |combo_item| %>
+            <tr>
+              <td>
+                <%= link_to users_product_path(combo_item.product.id) do %>
+                  <%= combo_item.product.name %>
+                <% end %>
+              </td>
+              <td><%= attachment_image_tag combo_item.product,:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
+                <% @re_q = OrderRecord.where(combo_id: 1, product_id: combo_item.product.id, status: "予約受付中").sum(:quantity) %>
+                <% @le_q = OrderRecord.where(combo_id: 1, product_id: combo_item.product.id, status: "貸出中").sum(:quantity) %>
+                <% @tur_q = OrderRecord.where(combo_id: 1, product_id: combo_item.product.id, status: "郵送中").sum(:quantity) %>
+                <% if combo_item.product.stock - @re_q.to_i - @le_q.to_i - @tur_q.to_i == 0 %>
+                  <td>売切</td>
+                <% else %>
+                  <td>販売中</td>
+                <% end %>
+
+              <td>
+                <%= combo_item.combo.name %>
+                  <% if combo_item.combo.id == 1 %>
+                    <%= form_with model:@cart_item,url:users_cart_items_path(@cart_item),method: :post do |f| %>
+                      <%= f.hidden_field :combo_id, :value => 1 %>
+                      <%= f.hidden_field :product_id, :value => combo_item.product.id %>
+                      <%= f.hidden_field :quantity, :value => 1 %>
+                       <% if user_signed_in? %>
+                          <%= f.hidden_field :user_id, :value => current_user.id %>
+                        <% end %>
+                        <%= f.submit 'カートに入れる',class: "btn btn-info", id: 'button', data: {"turbolinks" => false} %>
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+      <% end %>
+    </table>
+  </div>
 </div>

@@ -6,11 +6,13 @@
     <%= f.hidden_field :product_id, :value => @product.id %>
 
 
-    <div class="col-xs-6">
-        <%= attachment_image_tag @product,:product_image,:fill,300,300, fallback:"no_image.jpg" %>
+    <div class="col-md-12">
+      <div class="product-image">
+        <%= attachment_image_tag @product,:product_image,:fill,300,300, fallback:"no_image.jpg",:fill,300,300,class: "img-fluid" %>
+      </div>
     </div>
 
-    <div class="col-xs-6">
+    <div class="col-md-12">
        <table class="table table-bordered">
             <tr>
               <th>商品id</th>

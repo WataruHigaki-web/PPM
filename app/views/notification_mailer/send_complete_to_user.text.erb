@@ -67,7 +67,7 @@
 
 クーポン
 
-<% if @order.discount.nil? %>
+<% if @order.discount == 0 %>
   <%= discount = 0 %>
 <% else %>
   <%= discount = @order.discount.price %>円

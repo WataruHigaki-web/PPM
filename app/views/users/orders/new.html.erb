@@ -1,8 +1,9 @@
 <div class="row">
   <div class="order_new">
-    <h2>購入情報入力(４つの項目)</h2>
+    <h2>購入情報入力<span class="label label-danger">全必須</span></h2>
     <%= form_with url:users_orders_save_path,method: :post do |f| %>
-    <h3>1.クレジットカード</h3>
+    <h3>1.クレジットカード選択
+    </h3>
 
     <% if current_user.pays.blank? %>
       <%= link_to users_pays_path(current_user) do %>
@@ -23,18 +24,29 @@
     <h3>3.返却場所選択</h3>
       <div class="order_new_radio">
         <%= f.radio_button :return_status,0,checked: "checked" %>受取場所と同様<br/>
-        <%= f.radio_button(:return_status,1) %>現住所から郵送返却<br/>
+        <%= f.radio_button(:return_status,1) %>登録住所から郵送返却<br/>
         <%= f.radio_button(:return_status,2) %>新しい住所から郵送返却<br/>
+        <div class="form_class">
           郵便番号:<%= f.text_field :zip_code %><br/>
           住 所:<%= f.text_field :address %>
+        </div>
       </div>
 
-    <h3>4.レンタル期間選択</h3>
+    <h3>4.レンタル期間入力</h3>
     　<%= date_field_tag :start_date %> ~
       <%= date_field_tag :finish_date %><br/>
 
 
       <script type="text/javascript">
+        $('.order_new_radio').find(".form_class").hide();
+        $('input[name="return_status"]').change(function(){
+          if($(this).val() == "2"){
+            $(this).parent().find(".form_class").show();
+          }else{
+            $(this).parent().find(".form_class").hide();
+          }
+        });
+
         if($('#alert').length){
           alert ('クレジットカード登録してください。')
         }
@@ -72,7 +84,7 @@
         }
       </script>
 
-      <%= f.submit '注文確認画面へ進む', data: {"turbolinks" => false},class: "btn btn-info",id: "button", disabled: true %>
+      <%= f.submit '注文確認画面へ進む', data: {"turbolinks" => false},class: "btn btn-info confirm-button",id: "button", disabled: true %>
     <% end %>
   </div>
 </div>
