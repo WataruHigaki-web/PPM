@@ -1,5 +1,4 @@
-<%= current_admin.name %>さんようこそ
-<h2>管理者トップ</h2>
+<h2><%= current_admin.name %>さんのページ</h2>
 
 <div class="alert alert-warning alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -19,17 +18,32 @@
       <% end %>
     </strong>
 </div>
-<button class="button"><%= link_to '貸出返却',admins_orders_path %></button>
 
-<button class="button"><%= link_to '在庫',admins_orders_stock_path %></button>
+<h2>
+<%= link_to admins_orders_path do %>
+  <a href="#" class="btn-flat-border">貸出返却</a>
+<% end %>
 
+<%= link_to admins_orders_stock_path do %>
+  <a href="#" class="btn-flat-border">在庫</a>
+<% end %>
 
-<button class="button"><%= link_to '問い合わせ',admins_questions_path %></button>
+<%= link_to admins_orders_path do %>
+  <a href="#" class="btn-flat-border">お問い合わせ</a>
+<% end %>
+</h2>
 
-<button class="button"><%= link_to '商品設定',admins_products_path %></button>
+<h2>
+<%= link_to admins_orders_path do %>
+  <a href="#" class="btn-flat-border">商品設定</a>
+<% end %>
 
-<button class="button"><%= link_to 'イベント',admins_point_events_path %></button>
+<%= link_to admins_orders_path do %>
+  <a href="#" class="btn-flat-border">イベント</a>
+<% end %>
 
-<button class="button"><%= link_to 'クーポン',admins_discounts_path %></button>
+<%= link_to admins_orders_path do %>
+  <a href="#" class="btn-flat-border">クーポン</a>
+<% end %>
 
-
+</h2>
