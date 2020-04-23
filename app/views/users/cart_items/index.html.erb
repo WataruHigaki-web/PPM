@@ -2,58 +2,64 @@
   <div class="col-md-12">
     <h2>カート内一覧</h2>
     <% if user_signed_in? %>
-      <%= link_to "カートを空にする",users_cart_items_destroy_all_path,class: "btn btn-danger",method: :delete, "data-confirm" => "本当に削除しますか？" %>
-
-        <table class="table table-bordered">
-          <tr>
-            <th>画像</th>
-            <th>セットまたは商品名</th>
-            <th>個数</th>
-            <th>金額</th>
-            <th></th>
-          </tr>
-          <% @sum = 0 %>
-            <% @cart_items.each do |cart_item| %>
-            <tr>
-              <% if cart_item.combo.id == 1 %>
-                <td><%= attachment_image_tag cart_item.product,:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
+      <% if @cart_items.blank? %>
+        <div class="alert alert-warning alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>カートに商品がありません</strong>
+        </div>
+      <% else %>
+        <%= link_to "カートを空にする",users_cart_items_destroy_all_path,class: "btn btn-danger",method: :delete, "data-confirm" => "本当に削除しますか？" %>
+      <% end %>
+          <table class="table table-bordered tbl-r04">
+            <tr class="thead">
+              <th>画像</th>
+              <th>セットまたは商品名</th>
+              <th>個数</th>
+              <th>金額</th>
+              <th></th>
+            </tr>
+            <% @sum = 0 %>
+              <% @cart_items.each do |cart_item| %>
+              <tr>
+                <% if cart_item.combo.id == 1 %>
+                  <td><%= attachment_image_tag cart_item.product,:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
+                    <td>
+                      <%= link_to users_product_path(cart_item.product) do %>
+                        <%= cart_item.product.name %>
+                      <% end %>
+                    </td>
+                    <%= form_with model: cart_item,url:users_cart_item_path(cart_item) do |f| %>
+                      <td>
+                          <span class="combo_count"data-combo-count="<%= cart_item.quantity %>"><%= f.number_field :quantity %></span>
+                        <%= f.submit "更新",class: "btn btn-info" %>
+                      </td>
+                      <td><%= cart_item.combo.price %></td>
+                      <td>
+                        <%= link_to '削除',users_cart_item_path(cart_item),method: :delete,class: "btn btn-danger" %>
+                      </td>
+                    <% end %>
+                <% else %>
+                  <td><%= attachment_image_tag cart_item.combo,:combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
                   <td>
-                    <%= link_to users_product_path(cart_item.product) do %>
-                      <%= cart_item.product.name %>
+                    <%= link_to users_combo_path(cart_item.combo) do %>
+                      <%= cart_item.combo.name %>
                     <% end %>
                   </td>
-                  <%= form_with model: cart_item,url:users_cart_item_path(cart_item) do |f| %>
-                    <td>
-                        <span class="combo_count"data-combo-count="<%= cart_item.quantity %>"><%= f.number_field :quantity %></span>
-                      <%= f.submit "更新",class: "btn btn-info" %>
-                    </td>
-                    <td><%= cart_item.combo.price %></td>
-                    <td>
-                      <%= link_to '削除',users_cart_item_path(cart_item),method: :delete,class: "btn btn-danger" %>
-                    </td>
-                  <% end %>
-              <% else %>
-                <td><%= attachment_image_tag cart_item.combo,:combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
-                <td>
-                  <%= link_to users_combo_path(cart_item.combo) do %>
-                    <%= cart_item.combo.name %>
-                  <% end %>
-                </td>
-                  <%= form_with model: cart_item,url:users_cart_item_path(cart_item) do |f| %>
-                    <td>
-                        <span class="combo_count"data-combo-count="<%= cart_item.quantity %>"><%= f.number_field :quantity %></span>
-                      <%= f.submit "更新",class: "btn btn-info" %>
-                    </td>
-                    <td><%= cart_item.combo.price %></td>
-                    <td>
-                      <%= link_to '削除',users_cart_item_path(cart_item),method: :delete,class: "btn btn-danger" %>
-                    </td>
-                  <% end %>
-              <% end %>
-            </tr>
-          <% @sum += (cart_item.combo.price).to_i * (cart_item.quantity).to_i %>
-          <% end %>
-        </table>
+                    <%= form_with model: cart_item,url:users_cart_item_path(cart_item) do |f| %>
+                      <td>
+                          <span class="combo_count"data-combo-count="<%= cart_item.quantity %>"><%= f.number_field :quantity %></span>
+                        <%= f.submit "更新",class: "btn btn-info" %>
+                      </td>
+                      <td><%= cart_item.combo.price %></td>
+                      <td>
+                        <%= link_to '削除',users_cart_item_path(cart_item),method: :delete,class: "btn btn-danger" %>
+                      </td>
+                    <% end %>
+                <% end %>
+              </tr>
+            <% @sum += (cart_item.combo.price).to_i * (cart_item.quantity).to_i %>
+            <% end %>
+          </table>
   </div>
 
       <div class="col-md-12">
@@ -105,8 +111,8 @@
     <% else %>
     <div class="col-md-12">
       <%= form_with url: users_cart_items_delete2_path, method: :post  do |f| %>
-        <table class="table table-bordered">
-          <tr>
+        <table class="table table-bordered tbl-r04">
+          <tr class="thead">
             <th>画像</th>
             <th>セットまたは商品名</th>
             <th>個数</th>
@@ -115,7 +121,10 @@
           </tr>
           <% @sum = 0 %>
           <% if session[:cart_item].nil? %>
-            <h2>カートに商品がありません</h2>
+            <div class="alert alert-warning alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>カートに商品がありません</strong>
+            </div>
           <% else %>
             <% session[:cart_item].each do |cart_item| %>
               <tr class="cart_item"data-cart-item="cart_item">
@@ -140,7 +149,7 @@
                     <input type="number"class="combo_count" name="quantity" id="" data-combo-count="<%= cart_item["quantity"] %>" value="<%= cart_item["quantity"]%>">
                   </td>
                 <% end %>
-                  <td class="price"data-price="<%= Combo.find(cart_item["combo_id"]).price %>"><%= Combo.find(cart_item["combo_id"]).price %></td>
+                  <td class="price"data-price="<%= Combo.find(cart_item["combo_id"]).price %>"><%= Combo.find(cart_item["combo_id"]).price %>円</td>
                   <td data=cart_item>
 
                       <%= f.submit '削除', class: "btn btn-danger",name: "delete_button",'data-cart-item': session[:cart_item], 'data-item': cart_item %>
