@@ -56,7 +56,6 @@ class Users::CartItemsController < ApplicationController
           cart_item.save
         end
       end
-      binding.pry
       cart_item = CartItem.new(cart_item_params)
       cart_item.user_id = current_user.id
       cart_item.save
