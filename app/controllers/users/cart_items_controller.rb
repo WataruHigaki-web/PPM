@@ -31,16 +31,37 @@ class Users::CartItemsController < ApplicationController
   end
 
   def create
-    session[:cart_item] = [] if !session[:cart_item]
-    cart_item = CartItem.new(cart_item_params)
-    if user_signed_in?
-      cart_item.user_id = current_user.id
-      cart_item.save
-      redirect_to users_cart_items_path
-    else
+    unless user_signed_in?
+      session[:cart_item] = [] if !session[:cart_item]
+      cart_item = CartItem.new(cart_item_params)
       session[:cart_item].push(cart_item)
       redirect_to users_cart_items_path
+    else
+      if params["favorite"] == "all"
+        current_user.favorites.each do |favorite|
+          cart_item = CartItem.new(
+            product_id: favorite.product.id,
+            combo_id: 1,
+            quantity: 1,
+            user_id: current_user.id
+            )
+          cart_item.save
+        end
+        current_user.combo_favorites.each do |favorite|
+          cart_item = CartItem.new(
+            combo_id: favorite.combo.id,
+            quantity: 1,
+            user_id: current_user.id
+            )
+          cart_item.save
+        end
+      end
+      binding.pry
+      cart_item = CartItem.new(cart_item_params)
+      cart_item.user_id = current_user.id
+      cart_item.save
     end
+    redirect_to users_cart_items_path
   end
 
   def update

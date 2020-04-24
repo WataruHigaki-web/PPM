@@ -2,20 +2,34 @@
 
 <h3>ジャンル</h3>
 <%= form_with model: @point_event,url:admins_point_event_path do |f| %>
-  <%= f.label :クーポン名 %>
-  <%= f.text_field :name %><br/>
+  <table class="table">
+        <tr>
+          <th><%= f.label :ポイントイベント名 %></th>
+          <td><%= f.text_field :name %></td>
+        </tr>
 
-  <%= f.label :ポイント倍数%>
-  <%= f.text_field :bonus %><br/>
+        <tr>
+          <th><%= f.label :ポイント倍数 %></th>
+          <td><%= f.text_field :bonus %>倍</td>
+        </tr>
 
-  <%= f.label :期間 %>
-  <%= date_field_tag :start_date %>から<br/>
-  <%= date_field_tag :finish_date %>０時まで<br/>
+        <tr>
+          <th><%= f.label :期間 %></th>
+          <td><%= date_field_tag :start_date %>から
+              <%= date_field_tag :finish_date %>０時まで
+          </td>
+        </tr>
 
-  <%= f.radio_button :status,true %>
-  <%= f.label :有効 %>
+        <tr>
+          <th>ステータス</th>
+          <td>
+            <%= f.radio_button :status,true %>
+            <%= f.label :有効 %>
 
-  <%= f.radio_button :status,false %>
-  <%= f.label :無効 %><br/>
+            <%= f.radio_button :status,false, checked: "checked" %>
+            <%= f.label :無効 %>
+          </td>
+        </tr>
+      </table>
   <%= f.submit '変更を保存する',class:'btn btn-info' %>
   <% end %>

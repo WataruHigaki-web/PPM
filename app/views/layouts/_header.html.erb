@@ -15,7 +15,7 @@
           <ul class="nav navbar-nav">
             <% if user_signed_in? && current_user.status == true && current_user.is_deleted == false %>
               <li>
-                <%= link_to users_root_path(current_user), data: {"turbolinks" => false} do %>
+                <%= link_to users_root_path, data: {"turbolinks" => false} do %>
                   <span class="glyphicon glyphicon-home" aria-hidden="true"> ホーム</span>
                 <% end %>
               </li>
@@ -25,12 +25,12 @@
                 <% end %>
               </li>
               <li>
-                <%= link_to users_cart_items_path(current_user) do %>
+                <%= link_to users_cart_items_path do %>
                   <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"> カート</span>
                 <% end %>
               </li>
               <li>
-                <%= link_to users_products_path(current_user) do %>
+                <%= link_to users_products_path do %>
                   <span class="glyphicon glyphicon-star-empty" aria-hidden="true">お気に入り</span>
                 <% end %>
               </li>
@@ -52,7 +52,7 @@
 
             <% elsif admin_signed_in? %>
               <li>
-                <%= link_to admins_root_path(current_admin) do %>
+                <%= link_to admins_root_path do %>
                   <span class="glyphicon glyphicon-home" aria-hidden="true">   ホーム</span>
                 <% end %>
               </li>

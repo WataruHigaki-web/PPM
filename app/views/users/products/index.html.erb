@@ -1,27 +1,26 @@
 <h2>お気に入り商品一覧</h2>
 <div class="row">
-  <%= form_with model:@cart_item,url:users_cart_items_path(@cart_item),method: :post do |f| %>
-    <%= f.hidden_field :combo_id, :value => 1 %>
-    <%= f.hidden_field :user_id, :value => current_user.id %>
+  <%= form_with(url:users_cart_items_path,method: :post) do |f| %>
+    <%= f.hidden_field :favorite, :value => "all" %>
+    <%= f.submit '全商品をカートに入れる',class: "btn btn-info",id: "button" %>
+  <% end %>
     <div class="col-md-12">
       <table class="table table-bordered tbl-r04">
         <tr class="thead">
           <th>商品名</th>
           <th>画像</th>
-          <th>商品紹介</th>
           <th>販売ステータス</th>
           <th></th>
         </tr>
+
       <% @favorites.each do |favorite| %>
           <tr class="favorite">
             <td>
-              <%= f.radio_button :product_id,favorite.product.id %>
               <%= link_to users_product_path(favorite.product) do %>
                 <%= favorite.product.name %>
               <% end %>
             </td>
             <td><%= attachment_image_tag favorite.product,:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
-            <td><%= favorite.product.introduction %></td>
 
                 <% @re_q = OrderRecord.where(combo_id: 1, product_id: favorite.product.id, status: "予約受付中").sum(:quantity) %>
                 <% @le_q = OrderRecord.where(combo_id: 1, product_id: favorite.product.id, status: "貸出中").sum(:quantity) %>
@@ -33,19 +32,25 @@
                 <% end %>
             <td>
               <%= render 'users/favorites/favorite',product: favorite.product %>
+              <%= form_with model: @cart_item,url:users_cart_items_path,method: :post do |f| %>
+                <p>個数選択:<%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %></p>
+                <%= f.hidden_field :combo_id, :value => 1 %>
+                <%= f.hidden_field :user_id, :value => current_user.id %>
+                <%= f.hidden_field :product_id, :value => favorite.product.id %>
+                <%= f.submit 'カートに追加',class: "btn btn-info",id: "button" %>
+              <% end %>
             </td>
           </tr>
+
      <% end %>
         <% @combo_favorites.each do |favorite| %>
           <tr class="favorite">
             <td>
-              <%= f.radio_button :combo_id,favorite.combo.id %>
               <%= link_to users_combo_path(favorite.combo) do %>
                 <%= favorite.combo.name %>
               <% end %>
             </td>
             <td><%= attachment_image_tag favorite.combo,:combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
-            <td><%= favorite.combo.introduction %></td>
                 <% if favorite.combo.status %>
                   <td>販売中</td>
                 <% else %>
@@ -53,15 +58,17 @@
                 <% end %>
             <td>
               <%= render 'users/combo_favorites/favorite',combo: favorite.combo %>
+              <%= form_with model: @cart_item,url:users_cart_items_path,method: :post do |f| %>
+                <p>個数選択:<%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %></p>
+                <%= f.hidden_field :combo_id, :value => favorite.combo.id %>
+                <%= f.hidden_field :user_id, :value => current_user.id %>
+                <%= f.submit 'カートに追加',class: "btn btn-info",id: "button" %>
+              <% end %>
             </td>
           </tr>
       <% end %>
       </table>
     </div>
-
-  <p>個数選択:<%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %></p>
-  <%= f.submit '選択商品をカートアイテムに追加',class: "btn btn-info",id: "button" %>
-  <% end %>
 
   <script>
     $('input[name="cart_item[product_id]"]').on("change", function(){

@@ -1,53 +1,71 @@
-<h2>ポイントイベント追加・一覧画面</h2>
-<%= form_with model: @point_event,url:admins_point_events_path,method: :post do |f| %>
-  <%= f.label :ポイントイベント名 %>
-  <%= f.text_field :name %><br/>
+<div class="row">
+  <div class="col-md-12">
+  <h2>ポイントイベント追加・一覧画面</h2>
+    <%= form_with model: @point_event,url:admins_point_events_path,method: :post do |f| %>
+      <table class="table">
+        <tr>
+          <th><%= f.label :ポイントイベント名 %></th>
+          <td><%= f.text_field :name %></td>
+        </tr>
 
-  <%= f.label :ポイント倍数 %>
-  <%= f.text_field :bonus %>倍<br/>
+        <tr>
+          <th><%= f.label :ポイント倍数 %></th>
+          <td><%= f.text_field :bonus %>倍</td>
+        </tr>
 
-  <%= f.label :期間 %>
-  <%= date_field_tag :start_date %>から<br/>
-  <%= date_field_tag :finish_date %>０時まで<br/>
+        <tr>
+          <th><%= f.label :期間 %></th>
+          <td><%= date_field_tag :start_date %>から
+              <%= date_field_tag :finish_date %>０時まで
+          </td>
+        </tr>
 
-  <%= f.radio_button :status,true %>
-  <%= f.label :有効 %>
+        <tr>
+          <th>ステータス</th>
+          <td>
+            <%= f.radio_button :status,true %>
+            <%= f.label :有効 %>
 
-  <%= f.radio_button :status,false, checked: "checked" %>
-  <%= f.label :無効 %><br/>
-
-  <%= f.submit '追加',class:'btn btn-info' %>
-<% end %>
-
-  <table class="table table-bordered">
-    <tr>
-      <th>名前</th>
-      <th>ポイント倍数</th>
-      <th>期間</th>
-      <th></th>
-      <th></th>
-    </tr>
-
-    <% @point_events.each do |point_event| %>
-      <tr>
-        <td>
-          <%= point_event.name %>
-        </td>
-        <td><%= point_event.bonus %>倍</td>
-        <td>
-          <%= point_event.start_date %>から<br/>
-          <%= point_event.finish_date %>０時まで
-        </td>
-          <% if point_event.status %>
-            <td>有効</td>
-          <% else %>
-            <td>無効</td>
-          <% end %>
-        <td>
-          <%= link_to '編集する',edit_admins_point_event_path(point_event.id),class: 'btn btn-info' %>
-          <%= link_to '削除する',admins_point_event_path(point_event.id),method: :delete,data:{confirm: "本当に削除しますか？"},class: 'btn btn-danger' %>
-        </td>
-      </tr>
+            <%= f.radio_button :status,false, checked: "checked" %>
+            <%= f.label :無効 %>
+          </td>
+        </tr>
+      </table>
+      <%= f.submit '追加',class:'btn btn-info' %>
     <% end %>
-  </table>
+  </div>
+
+  <div class="col-md-12">
+    <table class="table table-bordered">
+      <tr>
+        <th>名前</th>
+        <th>ポイント倍数</th>
+        <th>期間</th>
+        <th></th>
+        <th></th>
+      </tr>
+
+      <% @point_events.each do |point_event| %>
+        <tr>
+          <td>
+            <%= point_event.name %>
+          </td>
+          <td><%= point_event.bonus %>倍</td>
+          <td>
+            <%= point_event.start_date %>から<br/>
+            <%= point_event.finish_date %>０時まで
+          </td>
+            <% if point_event.status %>
+              <td>有効</td>
+            <% else %>
+              <td>無効</td>
+            <% end %>
+          <td>
+            <%= link_to '編集する',edit_admins_point_event_path(point_event.id),class: 'btn btn-info' %>
+            <%= link_to '削除する',admins_point_event_path(point_event.id),method: :delete,data:{confirm: "本当に削除しますか？"},class: 'btn btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
 </div>
