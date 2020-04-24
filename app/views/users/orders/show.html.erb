@@ -2,118 +2,113 @@
   <h2>注文履歴詳細</h2>
 
  <div class="col-md-12">
-  <div class="order-show1">
   <h4>注文情報</h4>
   <table class="table-bordered">
-  <tr>
-    <th>注文日</th>
-    <td width="300">
-      <%= @order.created_at.strftime('%Y/%m/%d　%H:%M') %>
-    </td>
-  </tr>
+    <tr>
+      <th>注文日</th>
+      <td width="300">
+        <%= @order.created_at.strftime('%Y/%m/%d　%H:%M') %>
+      </td>
+    </tr>
 
-  <tr>
-    <th>受取場所</th>
-    <td width="300">
-      <%= @order.get_status %>
-    </td>
-  </tr>
-
-  <tr>
-    <th>予定受取日</th>
-    <td><%= @order.start_date %></td>
-  </tr>
-
-  <tr>
-    <th>返却場所</th>
-    <td>
-      <% if @order.return_status == 0 %>
+    <tr>
+      <th>受取場所</th>
+      <td width="300">
         <%= @order.get_status %>
-      <% else %>
-        <%= @order.zip_code %></br>
-        <%= @order.address %></br>
-      <% end %>
-    </td>
-  </tr>
-  <tr>
-    <th>予定返却時間</th>
-    <td><%= @order.finish_date %></td>
-  </tr>
-  <tr>
-    <th>クレジット情報</th>
-    <td width="300">
-      番号:<%= Pay.find(@order.pay_id).number %></br/>
-      名義:<%= Pay.find(@order.pay_id).name %>
-    </td>
-  </tr>
+      </td>
+    </tr>
 
-  <tr>
-    <th>貸し出し返却ステータス</th>
-    <td width="300">
-        <%= @order.status %>
-    </td>
-  </tr>
-  <tr>
-    <th>支払いステータス</th>
-      <% if @order.pay_status %>
-        <td width="300">支払済</td>
-      <% else %>
-        <td width="300">未支払</td>
-      <% end %>
-  </tr>
+    <tr>
+      <th>予定受取日</th>
+      <td><%= @order.start_date %></td>
+    </tr>
 
+    <tr>
+      <th>返却場所</th>
+      <td>
+        <% if @order.return_status == 0 %>
+          <%= @order.get_status %>
+        <% else %>
+          <%= @order.zip_code %></br>
+          <%= @order.address %></br>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <th>予定返却時間</th>
+      <td><%= @order.finish_date %></td>
+    </tr>
+    <tr>
+      <th>クレジット情報</th>
+      <td width="300">
+        番号:<%= Pay.find(@order.pay_id).number %></br/>
+        名義:<%= Pay.find(@order.pay_id).name %>
+      </td>
+    </tr>
+
+    <tr>
+      <th>貸し出し返却ステータス</th>
+      <td width="300">
+          <%= @order.status %>
+      </td>
+    </tr>
+    <tr>
+      <th>支払いステータス</th>
+        <% if @order.pay_status %>
+          <td width="300">支払済</td>
+        <% else %>
+          <td width="300">未支払</td>
+        <% end %>
+    </tr>
   </table>
-  </div>
  </div>
+
 <% @sum = 0 %>
 <% @order.order_records.each do |order_record| %>
   <% @sum += (order_record.end_price.to_i) * order_record.quantity.to_i * @order.day.to_i  %>
 <% end %>
 
 
-<div class="order-show3">
 <h4>注文内容</h4>
-<table class="table-bordered">
-  <tr>
-    <th>商品</th>
-    <th>価格</th>
-    <th>個数</th>
-    <th>レンタル日数</th>
-    <th>小計</th>
-  </tr>
+  <table class="table-bordered">
+    <tr>
+      <th>商品</th>
+      <th>価格</th>
+      <th>個数</th>
+      <th>レンタル日数</th>
+      <th>小計</th>
+    </tr>
 
-  <% @order.order_records.each do |order_record| %>
-  <tr>
-      <td width="300">
-        <% if order_record.combo.id == 1 %>
-          <%= order_record.product.name %>
-        <% else %>
-          <%= order_record.combo.name %>
-        <% end %>
-      </td>
-      <td width="100">
-          <%= (order_record.end_price.to_i) * 1.1.floor %>
-      </td>
-      <td width="100">
-        <%= order_record.quantity %>
-      </td>
-      <td width="100">
-        <%= @order.day %>日
-      </td>
-      <td width="100">
-        <%= ((order_record.end_price.to_i) * 1.1.floor) * order_record.quantity.to_i * @order.day.to_i %>
-      </td>
-  </tr>
-  <% @sum += ((order_record.end_price.to_i) * 1.1.floor) * order_record.quantity.to_i * @order.day.to_i  %>
-  <% end %>
-</table>
-</div>
+    <% @order.order_records.each do |order_record| %>
+    <tr>
+        <td width="300">
+          <% if order_record.combo.id == 1 %>
+            <%= order_record.product.name %>
+          <% else %>
+            <%= order_record.combo.name %>
+          <% end %>
+        </td>
+        <td width="100">
+            <%= (order_record.end_price.to_i) * 1.1.floor %>
+        </td>
+        <td width="100">
+          <%= order_record.quantity %>
+        </td>
+        <td width="100">
+          <%= @order.day %>日
+        </td>
+        <td width="100">
+          <%= ((order_record.end_price.to_i) * 1.1.floor) * order_record.quantity.to_i * @order.day.to_i %>
+        </td>
+    </tr>
+    <% @sum += ((order_record.end_price.to_i) * 1.1.floor) * order_record.quantity.to_i * @order.day.to_i  %>
+    <% end %>
+  </table>
 
   <div class="col-md-12">
-    <div class="order-show2">
-      <h4>請求情報</h4>
+    <h4>請求情報</h4>
 
-      <table class="table-bordered">
+    <table class="table-bordered">
       <tr>
         <th width="100">商品合計</th>
         <td width="100"><%= @sum %></td>
@@ -162,7 +157,6 @@
           <%= @order.create_point * @order.point_event.bonus %>pt
         </td>
       </tr>
-      </table>
-    </div>
+    </table>
    </div>
   </div>

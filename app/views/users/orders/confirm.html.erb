@@ -1,69 +1,70 @@
 <h2>注文情報確認</h2>
-<table class="table">
-  <tr>
-    <th>注文者名</th>
-    <td><%= current_user.name %></td>
-  </tr>
-  <tr>
-    <th>クレジットカード情報</th>
-    <td>
-      番号: <%= Pay.find(session["pay"]).number %><br/>
-      名義: <%= Pay.find(session["pay"]).name %>
-    </td>
-  </tr>
-  <tr>
-    <th>受取場所</th>
-    <td><%= session[:order]["get_status"] %></td>
-  </tr>
-  <tr>
-    <th>返却場所</th>
-    <td>
-      <% if session[:order]["return_status"] == 0 %>
-      <%= session[:order]["get_status"] %>
-      <% else %>
-        <%= session[:order]["zip_code"] %>
-        <%= session[:order]["address"] %>
-      <% end %>
-    </td>
-  </tr>
-  <tr>
-    <th>利用期間</th>
-    <td>
-      <%= session[:order]["start_date"]%>~<%= session[:order]["finish_date"] %>
-    </td>
-  </tr>
-  <tr>
-    <th>レンタル期間</th>
-    <td><%= session[:order]["day"] %>日間</td>
-  </tr>
-</table>
-    <table class="table table-bordered">
-      <tr>
-        <th>商品名</th>
-        <th>個数</th>
-        <th>価格/1日</th>
-      </tr>
-      <% @sum = 0 %>
-      <% @cart_items.each do |item| %>
-          <tr>
-            <% if item.combo.id == 1 %>
-                <%= link_to users_product_path(item.product) do %>
-        　　　     <td><%= item.product.name %></td>
-                <% end %>
-                <td class="item_count" data-item-count="<%= item.quantity %>"><%= item.quantity %></td>
-      　　　 <% else %>
-                <%= link_to users_combo_items_path do %>
-                  <td><%= item.combo.name %></td>
-                <% end %>
-                <td class="combo_count" data-combo-count="<%= item.quantity %>"><%= item.quantity %></td>
-            <% end %>
-            <td><%= item.combo.price %></td>
-          </tr>
-        <% @sum += (item.quantity).to_i * (item.combo.price).to_i %>
-      <% end %>
-    </table>
+  <table class="table">
+    <tr>
+      <th>注文者名</th>
+      <td><%= current_user.name %></td>
+    </tr>
+    <tr>
+      <th>クレジットカード情報</th>
+      <td>
+        番号: <%= Pay.find(session["pay"]).number %><br/>
+        名義: <%= Pay.find(session["pay"]).name %>
+      </td>
+    </tr>
+    <tr>
+      <th>受取場所</th>
+      <td><%= session[:order]["get_status"] %></td>
+    </tr>
+    <tr>
+      <th>返却場所</th>
+      <td>
+        <% if session[:order]["return_status"] == 0 %>
+        <%= session[:order]["get_status"] %>
+        <% else %>
+          <%= session[:order]["zip_code"] %>
+          <%= session[:order]["address"] %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <th>利用期間</th>
+      <td>
+        <%= session[:order]["start_date"]%>~<%= session[:order]["finish_date"] %>
+      </td>
+    </tr>
+    <tr>
+      <th>レンタル期間</th>
+      <td><%= session[:order]["day"] %>日間</td>
+    </tr>
+  </table>
 
-    <h4>クーポン</h4>
+  <table class="table table-bordered">
+    <tr>
+      <th>商品名</th>
+      <th>個数</th>
+      <th>価格/1日</th>
+    </tr>
+    <% @sum = 0 %>
+    <% @cart_items.each do |item| %>
+        <tr>
+          <% if item.combo.id == 1 %>
+              <%= link_to users_product_path(item.product) do %>
+      　　　     <td><%= item.product.name %></td>
+              <% end %>
+              <td class="item_count" data-item-count="<%= item.quantity %>"><%= item.quantity %></td>
+    　　　 <% else %>
+              <%= link_to users_combo_items_path do %>
+                <td><%= item.combo.name %></td>
+              <% end %>
+              <td class="combo_count" data-combo-count="<%= item.quantity %>"><%= item.quantity %></td>
+          <% end %>
+          <td><%= item.combo.price %></td>
+        </tr>
+      <% @sum += (item.quantity).to_i * (item.combo.price).to_i %>
+    <% end %>
+  </table>
+
+  <h4>クーポン</h4>
     <table class="table table-bordered">
       <tr>
           <%= form_tag(users_orders_confirm_path, method: :get, remote: false) do %>
@@ -185,5 +186,3 @@
   <% end %>
 
 <%= link_to '商品一覧に戻る',users_combo_items_path,class: "btn btn-info" %>
-
-
