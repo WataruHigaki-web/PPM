@@ -1,14 +1,13 @@
-<div class="wrap">
-<button class="button"><%= link_to 'ジャンル',admins_product_kinds_path %></button>
+<h2>商品設定</h2>
+  <div class="cart-button">
+    <%= link_to 'ジャンル',admins_product_kinds_path,class: "btn btn-info" %>
 
-<button class="button"><%= link_to 'セット',admins_combos_path %></button>
+    <%= link_to 'セット',admins_combos_path,class: "btn btn-info" %>
 
-<button class="button"><%= link_to '商品一覧',admins_combo_items_path %></button>
+    <%= link_to 'アイテム',new_admins_product_path,class: "btn btn-info" %>
 
-<button class="button">
-<%= link_to 'アイテム',new_admins_product_path %>
-</button>
-</div>
+    <%= link_to '商品一覧',admins_combo_items_path,class: "btn btn-info" %>
+  </div>
 
 <table class="table table-bordered">
   <tr>
