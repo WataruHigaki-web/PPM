@@ -33,21 +33,25 @@
               <td>売切</td>
             <% end %>
           </tr>
-          <tr>
-            <th>お気に入り</th>
-            <td>
-              <%= render 'users/combo_favorites/favorite',combo: @combo %>
-            </td>
-          </tr>
-          <tr>
-           <th>個数</th>
-           <td>
-             <%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %>
-           </td>
-          </tr>
+          <% if user_signed_in? %>
+            <tr>
+              <th>お気に入り</th>
+              <td>
+                <%= render 'users/combo_favorites/favorite',combo: @combo %>
+              </td>
+            </tr>
+            <tr>
+             <th>個数</th>
+             <td>
+               <%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %>
+             </td>
+            </tr>
+          <% end %>
       </table>
-      <%= f.submit 'カートに入れる',class: "btn btn-info", id: 
+      <% if user_signed_in? %>
+        <%= f.submit 'カートに入れる',class: "btn btn-info", id: 
       'button', data: {"turbolinks" => false} %>
+      <% end %>
   <% end %>
 
   <script>

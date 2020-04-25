@@ -5,7 +5,7 @@
     <%= f.submit '全商品をカートに入れる',class: "btn btn-info",id: "button" %>
   <% end %>
     <div class="col-md-12">
-      <table class="table table-bordered tbl-r04">
+      <table class="table table-bordered tbl-r04"align="center">
         <tr class="thead">
           <th>商品名</th>
           <th>画像</th>
@@ -16,6 +16,7 @@
       <% @favorites.each do |favorite| %>
           <tr class="favorite">
             <td>
+              <%= render 'users/favorites/favorite',product: favorite.product %>
               <%= link_to users_product_path(favorite.product) do %>
                 <%= favorite.product.name %>
               <% end %>
@@ -31,7 +32,6 @@
                   <td>販売中</td>
                 <% end %>
             <td>
-              <%= render 'users/favorites/favorite',product: favorite.product %>
               <%= form_with model: @cart_item,url:users_cart_items_path,method: :post do |f| %>
                 <p>個数選択:<%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %></p>
                 <%= f.hidden_field :combo_id, :value => 1 %>
@@ -46,6 +46,7 @@
         <% @combo_favorites.each do |favorite| %>
           <tr class="favorite">
             <td>
+              <%= render 'users/combo_favorites/favorite',combo: favorite.combo %>
               <%= link_to users_combo_path(favorite.combo) do %>
                 <%= favorite.combo.name %>
               <% end %>
@@ -57,7 +58,6 @@
                   <td>売切</td>
                 <% end %>
             <td>
-              <%= render 'users/combo_favorites/favorite',combo: favorite.combo %>
               <%= form_with model: @cart_item,url:users_cart_items_path,method: :post do |f| %>
                 <p>個数選択:<%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %></p>
                 <%= f.hidden_field :combo_id, :value => favorite.combo.id %>

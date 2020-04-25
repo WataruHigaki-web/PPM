@@ -16,16 +16,17 @@ class Order < ApplicationRecord
   validates :get_status, presence: true
 
   validate :presence_date
+  validate :date_connot_be_in_the_past?
 
-  def date_connot_be_in_the_past
-    unless start_date.present? && start_date < Date.today && start_date < finish_date
-      errors.add(:start_date, ": 日付が不正な値です")
+  def date_connot_be_in_the_past?
+    if !day.present? || start_date < Date.today && start_date > finish_date
+      errors.add(:start_date, "日付が不正な値です")
     end
   end
 
   def presence_date
-    unless start_date.present? && finish_date.present?
-      errors.add(:start_date, '両方の日付を入力してください')
+    if !start_date.present? || !finish_date.present?
+      errors.add(:start_date, '日付が未記入です')
     end
   end
   

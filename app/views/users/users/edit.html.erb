@@ -1,28 +1,36 @@
 <h2>登録情報編集</h2>
-
+<% if @user.errors.any? %>
+  <div id="error_explanation" class="alert alert-danger">
+    <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 <%= form_with model:@user,url:users_user_path(@user),method: :patch do |f| %>
 <table class="table">
   <tr>
     <th>プロフィール画像</th>
     <td><%= f.attachment_field :profile_image %></td>
   <tr>
-    <th>名前</th>
+    <th>名前<span class="label label-danger">必須</span></th>
     <td><%= f.text_field :name %></td>
   </tr>
   <tr>
-    <th>カナ</th>
+    <th>カナ<span class="label label-danger">必須</span></th>
     <td><%= f.text_field :name_kana %></td>
   </tr>
   <tr>
-    <th>郵便番号</th>
+    <th>郵便番号<span class="label label-danger">必須</span></th>
     <td><%= f.text_field :zip_code %></td>
   </tr>
   <tr>
-    <th>住所</th>
+    <th>住所<span class="label label-danger">必須</span></th>
     <td><%= f.text_field :address %></td>
   </tr>
   <tr>
-    <th>電話番号</th>
+    <th>電話番号<span class="label label-danger">必須</span></th>
     <td><%= f.text_field :phone_number %></td>
   </tr>
   <tr>
