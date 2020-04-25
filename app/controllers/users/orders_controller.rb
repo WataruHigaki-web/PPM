@@ -74,6 +74,11 @@ class Users::OrdersController < ApplicationController
       )
     out_point.save
     cart_items = current_user.cart_items
+    if cart_items == []
+      order.destroy
+      out_point.destroy
+      render 'confirm'
+    end
     cart_items.each do |item|
       order_record = OrderRecord.new(
         user_id:  current_user.id,
@@ -84,7 +89,7 @@ class Users::OrdersController < ApplicationController
         quantity:   item.quantity,
         status: 0
       )
-      order_record.save!
+      order_record.save
     end
     current_user.cart_items.destroy_all
     redirect_to users_orders_thanks_path

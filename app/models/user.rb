@@ -9,17 +9,17 @@ class User < ApplicationRecord
   has_many :sns_credentials, dependent: :destroy
   has_many :likes
   has_many :product_comments
-  has_many :cart_items
-  has_many :orders
-  has_many :favorites
-  has_many :combo_favorites
-  has_many :pays
-  has_many :out_points
-  has_many :in_points
-  attachment :profile_image
+  has_many :cart_items, dependent: :destroy
+  has_many :orders, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :combo_favorites, dependent: :destroy
+  has_many :pays, dependent: :destroy
+  has_many :out_points, dependent: :destroy
+  has_many :in_points, dependent: :destroy
   has_many :inquiries, dependent: :destroy
   attachment :profile_image
 
+  validates :name,:email, presence: true
 
   def self.search(method, search)
     if method == 'partial_match'
