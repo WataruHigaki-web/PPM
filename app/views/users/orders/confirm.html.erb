@@ -46,7 +46,7 @@
     </tr>
     <% @sum = 0 %>
     <% @cart_items.each do |item| %>
-        <tr>
+        <tr class="cart_item"data-presence="<%= item %>">
           <% if item.combo.id == 1 %>
               <%= link_to users_product_path(item.product) do %>
       　　　     <td><%= item.product.name %></td>
@@ -131,7 +131,11 @@
         <% end %>
 
     <script type="text/javascript">
-      var sum = Number("<%= @final_sum %>");
+      if(!$('.cart_item').data()){
+        alert ('カート商品がありません。追加してください')
+        document.getElementById("button").disabled = false;
+      }
+      sum = Number("<%= @final_sum %>");
       var create_point = Number("<%= ((@sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i) / 100.to_i).floor %>");
       var day = Number("<%= session[:order]["day"] %>");
       var discount = 0;
@@ -185,4 +189,4 @@
     <%= f.submit '注文を確定',class: "btn btn-danger",id: "button","data-confirm" => "注文を確定しますか？（利用日時や商品内容は正しいですか？) "%>
   <% end %>
 
-<%= link_to '商品一覧に戻る',users_combo_items_path,class: "btn btn-info" %>
+<%= link_to '商品一覧に戻る',users_combo_items_path,class: "btn btn-info", data: {"turbolinks" => false}%>

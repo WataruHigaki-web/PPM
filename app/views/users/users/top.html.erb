@@ -1,3 +1,10 @@
+<% if current_user.phone_number.blank? || current_user.zip_code.blank? || current_user.address.blank? %>
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>ユーザー必須項目が未記入です。設定 → 編集 から必須項目を記入してください</strong>
+  </div>
+<% end %>
+
 <h2><%= current_user.name %>さんのページ</h2>
 
 <% if current_user.status == false || current_user.is_deleted == true %>

@@ -7,23 +7,23 @@
     <td><%= attachment_image_tag @user ,:profile_image,:fill,200,200, fallback:"no_image.jpg" %></td>
   </tr>
   <tr>
-    <th>名前</th>
+    <th>名前<span class="label label-danger">必須</span></h2></th>
     <td><%= @user.name %></td>
   </tr>
   <tr>
-    <th>カナ</th>
+    <th>カナ<span class="label label-danger">必須</span></th>
     <td><%= @user.name_kana %></td>
   </tr>
   <tr>
-    <th>郵便番号</th>
+    <th>郵便番号<span class="label label-danger">必須</span></th>
     <td><%= @user.zip_code %></td>
   </tr>
   <tr>
-    <th>住所</th>
+    <th>住所<span class="label label-danger">必須</span></th>
     <td><%= @user.address %></td>
   </tr>
   <tr>
-    <th>電話番号</th>
+    <th>電話番号<span class="label label-danger">必須</span></th>
     <td><%= @user.phone_number %></td>
   </tr>
   <tr>
@@ -41,7 +41,7 @@
   </tr>
   
   <tr>
-    <th>クレジット</th>
+    <th>クレジット<span class="label label-danger">必須</span></th>
     <td>
       <%= link_to 'クレジット情報',users_pays_path,class: "btn btn-info" %>
     </td>

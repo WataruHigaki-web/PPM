@@ -12,10 +12,13 @@ class Users::UsersController < ApplicationController
   end
 
   def update
-    user = User.find(params[:id])
-    user.update(user_params)
-    flash[:notice] = '登録情報を編集しました'
-    redirect_to users_user_path(user)
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      flash[:notice] = '登録情報を編集しました'
+      redirect_to users_user_path(@user)
+    else
+      render 'edit'
+    end
   end
 
   def top
@@ -53,7 +56,7 @@ class Users::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:user_id, :name, :name_kana, :zip_code, :address, :phone_nunber, :email, :profile_image, :is_deleted)
+    params.require(:user).permit(:user_id, :name, :name_kana, :zip_code, :address, :phone_number, :email, :profile_image, :is_deleted)
   end
 
   def ensure_correct_user

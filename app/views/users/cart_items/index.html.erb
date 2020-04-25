@@ -10,7 +10,7 @@
       <% else %>
         <%= link_to "カートを空にする",users_cart_items_destroy_all_path,class: "btn btn-danger",method: :delete, "data-confirm" => "本当に削除しますか？" %>
       <% end %>
-          <table class="table table-bordered tbl-r04">
+          <table class="table table-bordered tbl-r04"align="center">
             <tr class="thead">
               <th>画像</th>
               <th>セットまたは商品名</th>
@@ -20,7 +20,7 @@
             </tr>
             <% @sum = 0 %>
               <% @cart_items.each do |cart_item| %>
-              <tr>
+              <tr class="cart_item"data-presence="<% @cart_items %>">
                 <% if cart_item.combo.id == 1 %>
                   <td><%= attachment_image_tag cart_item.product,:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
                     <td>
@@ -127,7 +127,7 @@
             </div>
           <% else %>
             <% session[:cart_item].each do |cart_item| %>
-              <tr class="cart_item"data-cart-item="cart_item">
+              <tr>
                 <% if cart_item["combo_id"] == 1 %>
                   <td><%= attachment_image_tag Product.find(cart_item["product_id"]),:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
                     <td>
@@ -267,15 +267,19 @@
   <div class="col-md-12">
     <% if user_signed_in? %>
       <% unless current_user.status == false || current_user.is_deleted == true %>
-        <%= link_to '購入手続きへ進む',new_users_order_path,class: "btn btn-info" %>
+
+        <%= link_to new_users_order_path do %>
+          <button class="btn btn-info go_button">購入手続きへ進む</button>
+        <%= link_to '買い物を続ける',users_combo_items_path,class: "btn btn-info", data: {"turbolinks" => false} %>
+        <% end %>
+
       <% else %>
         <h4>購入手続きへは進むには、利用再開申請または管理者へお問い合わせください</h4><br/>
       <% end %>
     <% else %>
        <%= link_to 'ユーザー登録してこの商品を注文',new_user_registration_path,class: "btn btn-info cart-button" %>
        <%= link_to 'アカウントをお持ちの方はこちら',new_user_session_path,class: "btn btn-info cart-button" %>
+       <%= link_to '買い物を続ける',users_combo_items_path,class: "btn btn-info cart-button", data: {"turbolinks" => false} %>
     <% end %>
-
-      <%= link_to '買い物を続ける',users_combo_items_path,class: "btn btn-info cart-button", data: {"turbolinks" => false} %>
   </div>
 </div>
