@@ -13,16 +13,20 @@
     </tr>
     <tr>
       <th>受取場所</th>
-      <td><%= session[:order]["get_status"] %></td>
+      <td class="get_status"data-presence="<%= session[:order]["get_status"]%>"><%= session[:order]["get_status"] %></td>
     </tr>
     <tr>
       <th>返却場所</th>
       <td>
         <% if session[:order]["return_status"] == 0 %>
-        <%= session[:order]["get_status"] %>
+          <div class="return_status"data-presence="<%= session[:order]["get_status"] %>">
+            <%= session[:order]["get_status"] %>
+          </div>
         <% else %>
-          <%= session[:order]["zip_code"] %>
-          <%= session[:order]["address"] %>
+          <div class="return_status"data-zip_code="<%= session[:order]["zip_code"] %>"data-address="<%= session[:order]["address"] %>">
+            <%= session[:order]["zip_code"] %>
+            <%= session[:order]["address"] %>
+          </div>
         <% end %>
       </td>
     </tr>
@@ -67,7 +71,7 @@
   <h4>クーポン</h4>
     <table class="table table-bordered">
       <tr>
-          <%= form_tag(users_orders_confirm_path, method: :get, remote: false) do %>
+          <%= form_tag(users_orders_confirm_path, method: :get, local: true) do %>
             <th>クーポン番号を入力
                 <%= number_field(@search_content, :search) %>
                 <%= submit_tag '適用',class: "btn btn-info",id: "discount-button" %>
@@ -117,9 +121,11 @@
             <th>発行ポイント数</th>
             <td id="create_point"><%= ((@sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i) / 100.to_i).floor %>ポイント</td>
           </tr>
+        </table>
+        <table class="table">
           <tr>
             <th>最終請求金額</th>
-            <td id="final_sum"><%= @final_sum %></td>
+            <td id="sum"><%= @final_sum %></td>
           </tr>
         </table>
         <%= f.hidden_field :create_point, :value => ((@sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i)/ 100.to_i).floor.to_i %>
@@ -133,12 +139,30 @@
     <script type="text/javascript">
       if(!$('.cart_item').data()){
         alert ('カート商品がありません。追加してください')
-        document.getElementById("button").disabled = false;
       }
-      sum = Number("<%= @final_sum %>");
+
+      if($('.get_status').data('presence') == "選択してください"){
+        alert ('受取場所未入力です。購入情報画面からやり直しが必要です。')
+      }
+
+      if($('.return_status').data('zip_code') == []){
+        alert ('返却場所の郵便番号が未記入です。購入情報画面からやり直しが必要です。')
+      }else if($('.return_status').data('address') == [] ){
+        alert ('返却場所の住所が未記入です。購入情報画面からやり直しが必要です。')
+      }
+
+      day = Number("<%= session[:order]["day"] %>");
+      if(day == 0 ){
+        alert ('レンタル期間の値が不正です。購入情報画面からやり直しが必要です。')
+      }
+
+
+
+      sum = Number(document.getElementById('sum').textContent);
       var create_point = Number("<%= ((@sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i) / 100.to_i).floor %>");
       var day = Number("<%= session[:order]["day"] %>");
       var discount = 0;
+      var point = 0;
       var final_sum = sum;
       if ($("#discount-price").length) {
         discount = Number($("#discount-price").data("price"));
@@ -153,12 +177,12 @@
         }
 
           if (day >= require_day && combo_count >= require_combo && item_count >= require_item){
-            final_sum = final_sum - discount;
-            $('#final_sum').text(String(final_sum) + '円');
+            final_sum = sum - discount - point;
+            $('#sum').text(String(final_sum) + '円');
             $('#create_point').text(String(create_point) - (discount / 100) + 'pt');
           }else{
             alert ('クーポン条件にマッチしておりません。')
-            $('#final_sum').text(String(final_sum) + '円');
+            $('#sum').text(String(final_sum) + '円');
             $('#create_point').text(String(create_point) + 'pt');
           }
       }
@@ -168,20 +192,32 @@
             point = Number($('#not_point').val());
             var final_sum = sum;
           }else if ($('#all_point').prop('checked')){
-            point = Number($('#all_point').val());
-            var final_sum = sum;
+            if(Number($('#all_point').val()) - sum - discount >= 0){
+              console.log("a")
+              point = sum - discount;
+            }else if(Number($('#all_point').val()) - sum < 0){
+              console.log("bb")
+              point = Number($('#all_point').val());
+            }
           }else{
             point = Number($('#part_point').val());
             var all_point = Number($('#all_point').val());
             var final_sum = sum;
-            if (point > all_point){
+            if (point > all_point || point > final_sum){
               document.getElementById("button").disabled = true;
             }else{
               document.getElementById("button").disabled = false;
             }
           }
-           final_sum = final_sum - point;
-           $('#final_sum').text(String(final_sum) + '円');
+          console.log(point);
+          console.log(discount);
+          console.log(sum);
+           final_sum = sum - discount - point;
+           $('#sum').text(String(final_sum) + '円');
+           if(final_sum < 0){
+            alert ('利用ポイントが不正な値です')
+           }
+           $('#sum').text(String(final_sum) + '円');
         });
 
     </script>
@@ -189,4 +225,4 @@
     <%= f.submit '注文を確定',class: "btn btn-danger",id: "button","data-confirm" => "注文を確定しますか？（利用日時や商品内容は正しいですか？) "%>
   <% end %>
 
-<%= link_to '商品一覧に戻る',users_combo_items_path,class: "btn btn-info", data: {"turbolinks" => false}%>
+<%= link_to '商品一覧に戻る',users_combo_items_path,class: "btn btn-info confirm-button", data: {"turbolinks" => false}%>

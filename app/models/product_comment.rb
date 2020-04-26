@@ -4,5 +4,4 @@ class ProductComment < ApplicationRecord
   belongs_to :user
   belongs_to :product
   attachment :product_image
-  default_scope -> { order(created_at: :desc) }
 end
