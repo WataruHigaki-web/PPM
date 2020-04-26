@@ -268,7 +268,7 @@
     <% if user_signed_in? %>
       <% unless current_user.status == false || current_user.is_deleted == true %>
 
-        <%= link_to new_users_order_path do %>
+        <%= link_to new_users_order_path, data: {"turbolinks" => false} do %>
           <button class="btn btn-info go_button">購入手続きへ進む</button>
         <%= link_to '買い物を続ける',users_combo_items_path,class: "btn btn-info", data: {"turbolinks" => false} %>
         <% end %>
