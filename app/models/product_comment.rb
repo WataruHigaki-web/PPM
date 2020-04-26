@@ -3,5 +3,5 @@
 class ProductComment < ApplicationRecord
   belongs_to :user
   belongs_to :product
-  attachment :product_image
+  validates :content,presence: true
 end

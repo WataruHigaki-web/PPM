@@ -30,7 +30,7 @@ class Order < ApplicationRecord
       errors.add(:start_date, '日付が未記入です')
     end
   end
-  
+
   def self.search(kind, search)
     if kind == 'start_date'
       Order.where(start_date: search)

@@ -52,7 +52,7 @@
             </tr>
           <% end %>
         <% if user_signed_in? %>
-          <% if @combo_item.nil? %>
+          <% unless @combo_item.nil? %>
             <tr>
               <th>お気に入り</th>
               <td>
