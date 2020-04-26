@@ -140,7 +140,7 @@ class Users::OrdersController < ApplicationController
   end
 
   def index
-    @orders = current_user.orders(created_at: :desc)
+    @orders = current_user.orders
   end
 
   def show
