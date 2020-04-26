@@ -94,11 +94,11 @@
   <%= form_with model: @order,url:users_orders_path,mothod: :post do |f| %>
     <table class="table table-bordered">
       <tr>
-        <th>合計金額/1日あたり</th>
+        <th>商品金額/1日あたり</th>
         <td><%= @sum %></td>
       </tr>
       <tr>
-        <th>合計金額</th>
+        <th>商品合計金額</th>
         <td><%= @sum.to_i * (session[:order]["day"]).to_i %></td>
       </tr>
 
