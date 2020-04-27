@@ -45,9 +45,9 @@
 <商品内容>
 <% @order.order_records.each do |order_record| %>
   <% if order_record.combo_id == 1 %>
-<%= order_record.product.name %>
+<%= order_record.product.name %> : <%= order_record.quantity %>個
   <% else %>
-<%= order_record.combo.name %>
+<%= order_record.combo.name %> : <%= order_record.quantity %>個
   <% end %>
 <% end %>
 
@@ -62,7 +62,7 @@
 
 <クーポン>
 <% if @order.discount == 0 %>
-  <%= discount = 0 %>0円
+  <% discount = 0 %>なし
 <% else %>
   <%= discount = @order.discount.price %>円
 <% end %>
