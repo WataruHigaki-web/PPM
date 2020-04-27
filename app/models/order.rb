@@ -16,7 +16,6 @@ class Order < ApplicationRecord
   validates :day, :numericality => { :greater_than => 0 }
   validate :presence_date
   validate :date_connot_be_in_the_past?
-  validate
 
   def date_connot_be_in_the_past?
     if !day.present? || start_date < Date.today && start_date > finish_date
