@@ -18,7 +18,7 @@
 
 <%- if devise_mapping.omniauthable? %>
   <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= link_to "#{OmniAuth::Utils.camelize(provider)}で簡単ログイン", omniauth_authorize_path(resource_name, provider),class: "btn btn btn-info btn-block btn-signin" %><br />
+    <%= link_to "#{OmniAuth::Utils.camelize(provider)}でログイン", omniauth_authorize_path(resource_name, provider),class: "btn btn btn-primary btn-block btn-signin" %><br />
   <% end %>
 <% end %>
 
