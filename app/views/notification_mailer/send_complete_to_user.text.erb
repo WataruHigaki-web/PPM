@@ -4,16 +4,16 @@
 
 <ご予約内容>
 
-注文日
+<注文日>
 <%= @order.created_at.strftime('%Y/%m/%d　%H:%M') %>
 
-受取場所
+<受取場所>
 <%= @order.get_status %>
 
-受取日
+<受取日>
 <%= @order.start_date %>
 
-返却場所
+<返却場所>
 <% if @order.return_status == 0 %>
   <%= @order.get_status %>
 <% else %>
@@ -21,30 +21,28 @@
   <%= @order.address %></br>
 <% end %>
 
-予定返却時間
+<予定返却時間>
 <%= @order.finish_date %>
 
-レンタル期間
+<レンタル期間>
 <%= @order.day %>日間
 
-クレジット情報
-
-番号:<%= Pay.find(@order.pay_id).number %></br/>
+<クレジット情報>
+番号:<%= Pay.find(@order.pay_id).number %></br>
 名義:<%= Pay.find(@order.pay_id).name %>
 
 
-貸し出し返却ステータス
+<貸し出し返却ステータス>
 <%= @order.status %>
 
-支払いステータス
+<支払いステータス>
 <% if @order.pay_status %>
   支払済
 <% else %>
   未支払
 <% end %>
 
-商品内容
-
+<商品内容>
 <% @order.order_records.each do |order_record| %>
   <% if order_record.combo_id == 1 %>
 <%= order_record.product.name %>
@@ -53,38 +51,44 @@
   <% end %>
 <% end %>
 
-小計/１日レンタルあたり
-
+<小計/１日レンタルあたり>
 <% @order.order_records.each do |order_record| %>
   <% if order_record.combo_id == 1 %>
-    <%= order_record.product.name %>
-    <%= order_record.end_price %>円
+    <%= order_record.product.name %>:<%= order_record.end_price %>円
   <% else %>
-    <%= order_record.combo.name %>
-    <%= order_record.end_price %>円
+    <%= order_record.combo.name %>:<%= order_record.end_price %>円
   <% end %>
 <% end %>
 
-クーポン
-
+<クーポン>
 <% if @order.discount == 0 %>
   <%= discount = 0 %>
 <% else %>
   <%= discount = @order.discount.price %>円
 <% end %>
 
+<利用ポイント>
+<% if @order.out_point.point.blank? %>
+  <%= point = 0 %>pt
+<% else %>
+  <%= point = @order.out_point.point %>pt
+<% end %>
 
-
-
-最終請求内容
+<請求内容>
+<% @final_sum = 0 %>
 <% @sum = 0 %>
 <% @order.order_records.each do |order_record| %>
   <% @sum += (order_record.end_price.to_i) * order_record.quantity.to_i * @order.day %>
 <% end %>
-<%= @sum - discount %>円
+<%= @final_sum = @sum.to_i - discount.to_i - point.to_i %>円
 
-税込価格
-<%= (@sum * 1.1).floor %>円
+<発行ポイント>
+
+<%= @order.create_point %>pt
+
+<最終請求価格（税込価格)>
+
+<%= (@final_sum.to_i * 1.1).floor %>円
 
 
 それでは当日、お待ちしております。素敵な旅を。

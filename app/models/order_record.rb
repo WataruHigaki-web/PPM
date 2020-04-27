@@ -6,7 +6,7 @@ class OrderRecord < ApplicationRecord
   belongs_to :order
   belongs_to :combo
   enum status: { 予約受付中: 0, 貸出中: 1, 返却済: 2, 郵送中: 3 }
-  validates :combo_id,:product_id,:quantity,:end_price, presence: true
+  validates :combo_id,:quantity,:end_price, presence: true
 
   # def how_many?(order_record)
   #   @orders.each do |order|

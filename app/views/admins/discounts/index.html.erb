@@ -1,36 +1,55 @@
 <h2>クーポン追加・一覧画面</h2>
 <%= form_with model: @discount,url:admins_discounts_path,method: :post do |f| %>
-  <%= f.label :クーポン名 %>
-  <%= f.text_field :name %><br/>
+<table class="table">
+  <tr>
+    <th><%= f.label :クーポン名 %></th>
+    <td><%= f.text_field :name %></td>
+  </tr>
+  <tr>
+    <th><%= f.label :クーポン番号 %></th>
+    <td><%= f.text_field :number %></td>
+  </tr>
+  <tr>
+    <th><%= f.label :説明 %></th>
+    <td><%= f.text_area :introduction %></td>
+  </tr>
+  <tr>
+    <th><%= f.label :割引金額 %></th>
+    <td><%= f.text_field :price %></td>
+  </tr>
+  <tr>
+    <th>
+      <%= f.label :最低日数 %>
+    </th>
+    <td><%= f.text_field :require_day %></td>
+  </tr>
+  <tr>
+    <th><%= f.label :最低コンボ数 %></th>
+    <td><%= f.text_field :require_combo %></td>
+  </tr>
+  <tr>
+    <th><%= f.label :最低アイテム数 %></th>
+    <td><%= f.text_field :require_item %></td>
+  </tr>
+  <tr>
+    <th><%= f.label :期間 %></th>
+    <td>
+      <%= date_field_tag :start_date %>から<br/>
+      <%= date_field_tag :finish_date %>０時まで
+    </td>
+  </tr>
+  <tr>
+    <th><%= f.label :ステータス %></th>
+    <td>
+      <%= f.radio_button :status,true %>
+      <%= f.label :有効 %>
 
-  <%= f.label :クーポン番号 %>
-  <%= f.text_field :number %><br/>
+      <%= f.radio_button :status,false, checked: "checked" %>
+      <%= f.label :無効 %>
 
-  <%= f.label :説明 %>
-  <%= f.text_area :introduction %><br/>
-
-  <%= f.label :割引金額 %>
-  <%= f.text_field :price %><br/>
-
-<h4>適応条件設定</h4>
-  <%= f.label :最低日数 %>
-  <%= f.text_field :require_day %><br/>
-
-  <%= f.label :最低コンボ数 %>
-  <%= f.text_area :require_combo %><br/>
-
-  <%= f.label :最低アイテム数 %>
-  <%= f.text_field :require_item %><br/>
-
-  <%= f.label :期間 %>
-  <%= date_field_tag :start_date %>から<br/>
-  <%= date_field_tag :finish_date %>０時まで<br/>
-
-  <%= f.radio_button :status,true %>
-  <%= f.label :有効 %>
-
-  <%= f.radio_button :status,false, checked: "checked" %>
-  <%= f.label :無効 %><br/>
+    </td>
+  </tr>
+</table>
 
   <%= f.submit '追加',class:'btn btn-info' %>
 <% end %>

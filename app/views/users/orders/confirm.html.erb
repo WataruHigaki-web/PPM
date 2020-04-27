@@ -71,10 +71,10 @@
   <h4>クーポン</h4>
     <table class="table table-bordered">
       <tr>
-          <%= form_tag(users_orders_confirm_path, method: :get, local: true) do %>
+          <%= form_tag(users_orders_confirm_path, method: :get, remote: false) do %>
             <th>クーポン番号を入力
                 <%= number_field(@search_content, :search) %>
-                <%= submit_tag '適用',class: "btn btn-info",id: "discount-button" %>
+                <%= submit_tag '適用',class: "btn btn-info",id: "discount-button",remote: false %>
             </th>
               <% unless @discount.blank? %>
                 <td id="discount">
@@ -114,24 +114,29 @@
       </tr>
         <tr>
           <th>ポイントイベント(<%= @point_event.name %>)</th>
-          <td>ポイント<%= @point_event.bonus %>倍</td>
+          <td class="bonus"data-point="<%= @point_event.bonus %>">ポイント<%= @point_event.bonus %>倍</td>
         </tr>
           <% @final_sum = (@sum.to_i * (session[:order]["day"]).to_i) %>
           <tr>
             <th>発行ポイント数</th>
-            <td id="create_point"><%= ((@sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i) / 100.to_i).floor %>ポイント</td>
+            <td id="create_point"><%= ((@sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i) / 100.to_i).floor %>pt</td>
           </tr>
         </table>
+
         <table class="table">
           <tr>
             <th>最終請求金額</th>
             <td id="sum"><%= @final_sum %></td>
           </tr>
         </table>
-        <%= f.hidden_field :create_point, :value => ((@sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i)/ 100.to_i).floor.to_i %>
+        <%# if @discount.blank? %>
+          <%= f.hidden_field :create_point, :value => ((@sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i)/ 100.to_i).floor.to_i, id: "create"%>
+        <%# end %>
+
         <%= f.hidden_field :point_event, :value => @point_event.id %>
+
         <% if @discount.blank? %>
-          <%= f.hidden_field :discount, :value => 1 %>
+          <%= f.hidden_field :discount, :value => 2 %>
         <% else %>
           <%= f.hidden_field :discount, :value => @discount.id %>
         <% end %>
@@ -159,7 +164,7 @@
 
 
       sum = Number(document.getElementById('sum').textContent);
-      var create_point = Number("<%= ((@sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i) / 100.to_i).floor %>");
+      var create_point = Number("<%= ((@sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i) / 100).floor %>");
       var day = Number("<%= session[:order]["day"] %>");
       var discount = 0;
       var point = 0;
@@ -178,12 +183,12 @@
 
           if (day >= require_day && combo_count >= require_combo && item_count >= require_item){
             final_sum = sum - discount - point;
+            var bonus = Number("<%= @point_event.bonus %>");
             $('#sum').text(String(final_sum) + '円');
-            $('#create_point').text(String(create_point) - (discount / 100) + 'pt');
+            $('#create_point').text(String(create_point) - (discount * bonus / 100)   + 'pt');
           }else{
             alert ('クーポン条件にマッチしておりません。')
             $('#sum').text(String(final_sum) + '円');
-            $('#create_point').text(String(create_point) + 'pt');
           }
       }
 
@@ -193,10 +198,8 @@
             var final_sum = sum;
           }else if ($('#all_point').prop('checked')){
             if(Number($('#all_point').val()) - sum - discount >= 0){
-              console.log("a")
               point = sum - discount;
             }else if(Number($('#all_point').val()) - sum < 0){
-              console.log("bb")
               point = Number($('#all_point').val());
             }
           }else{
@@ -209,17 +212,19 @@
               document.getElementById("button").disabled = false;
             }
           }
-          console.log(point);
-          console.log(discount);
-          console.log(sum);
            final_sum = sum - discount - point;
            $('#sum').text(String(final_sum) + '円');
            if(final_sum < 0){
             alert ('利用ポイントが不正な値です')
            }
+           var bonus = Number("<%= @point_event.bonus %>");
            $('#sum').text(String(final_sum) + '円');
+           $('#create_point').text(String(final_sum * bonus / 100) + 'pt');
+           var create_point = final_sum * bonus / 100
+           // console.log(create_point);
+           document.getElementById("create").value = create_point;
+           console.log(document.getElementById("create").value);
         });
-
     </script>
 
     <%= f.submit '注文を確定',class: "btn btn-danger",id: "button","data-confirm" => "注文を確定しますか？（利用日時や商品内容は正しいですか？) "%>
