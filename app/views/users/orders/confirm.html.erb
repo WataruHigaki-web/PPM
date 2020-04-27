@@ -25,7 +25,7 @@
         <% else %>
           <div class="return_status"data-zip_code="<%= session[:order]["zip_code"] %>"data-address="<%= session[:order]["address"] %>">
             <%= session[:order]["zip_code"] %>
-            <%= session[:order]["address"] %>
+            <%= session[:order]["address"] %>から郵送返却
           </div>
         <% end %>
       </td>

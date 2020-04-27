@@ -28,7 +28,7 @@
                         <%= cart_item.product.name %>
                       <% end %>
                     </td>
-                    <%= form_with model: cart_item,url:users_cart_item_path(cart_item) do |f| %>
+                    <%= form_with model: cart_item,url:users_cart_item_path(cart_item),remote: false do |f| %>
                       <td>
                           <span class="combo_count"data-combo-count="<%= cart_item.quantity %>"><%= f.number_field :quantity %></span>
                         <%= f.submit "更新",class: "btn btn-info" %>
