@@ -129,9 +129,8 @@
             <td id="sum"><%= @final_sum %></td>
           </tr>
         </table>
-        <%# if @discount.blank? %>
-          <%= f.hidden_field :create_point, :value => ((@sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i)/ 100.to_i).floor.to_i, id: "create"%>
-        <%# end %>
+          <%= f.hidden_field :create_point, :value => ((@sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i)/ 100.to_i).floor.to_i, id: "create" %>
+          <%= f.hidden_field :out_point, :value => 0, id: "out" %>
 
         <%= f.hidden_field :point_event, :value => @point_event.id %>
 
@@ -202,6 +201,7 @@
             }else if(Number($('#all_point').val()) - sum < 0){
               point = Number($('#all_point').val());
             }
+            document.getElementById("out").value = point;
           }else{
             point = Number($('#part_point').val());
             var all_point = Number($('#all_point').val());
@@ -210,6 +210,7 @@
               document.getElementById("button").disabled = true;
             }else{
               document.getElementById("button").disabled = false;
+              document.getElementById("out").value = point;
             }
           }
            final_sum = sum - discount - point;
@@ -221,9 +222,7 @@
            $('#sum').text(String(final_sum) + '円');
            $('#create_point').text(String(final_sum * bonus / 100) + 'pt');
            var create_point = final_sum * bonus / 100
-           // console.log(create_point);
            document.getElementById("create").value = create_point;
-           console.log(document.getElementById("create").value);
         });
     </script>
 
