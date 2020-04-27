@@ -13,6 +13,7 @@ class Users::OrdersController < ApplicationController
     @out_points = current_user.out_points
     @point = @in_points.sum(:point) - @out_points.sum(:point)
     @part_point = OutPoint.new
+    @out_point = OutPoint.new
     @combo_items = ComboItem.all
     @point_event = PointEvent.find_by(status: true)
     unless params[:search].blank?

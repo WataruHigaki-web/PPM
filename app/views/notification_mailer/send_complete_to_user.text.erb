@@ -62,7 +62,7 @@
 
 <クーポン>
 <% if @order.discount == 0 %>
-  <%= discount = 0 %>
+  <%= discount = 0 %>0円
 <% else %>
   <%= discount = @order.discount.price %>円
 <% end %>
