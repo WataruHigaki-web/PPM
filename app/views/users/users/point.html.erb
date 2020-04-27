@@ -31,7 +31,7 @@
           <th>ポイント</th>
         </tr>
         <% @out_points.each do |point| %>
-          <% unless point.point.nil? %>
+          <% unless point.point.nil? || point.point == 0 %>
             <tr>
               <td>
 

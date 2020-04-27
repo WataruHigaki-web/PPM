@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_20_085659) do
+ActiveRecord::Schema.define(version: 2020_04_27_082327) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -64,14 +64,6 @@ ActiveRecord::Schema.define(version: 2020_04_20_085659) do
     t.boolean "status", default: false, null: false
   end
 
-  create_table "creditcards", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "customer_id"
-    t.integer "card_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "discounts", force: :cascade do |t|
     t.integer "number"
     t.string "name"
@@ -114,12 +106,6 @@ ActiveRecord::Schema.define(version: 2020_04_20_085659) do
   create_table "likes", force: :cascade do |t|
     t.integer "user_id"
     t.integer "product_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "messages", force: :cascade do |t|
-    t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -118,7 +118,7 @@
         </tr>
           <% @final_sum = (@sum.to_i * (session[:order]["day"]).to_i) %>
           <tr>
-            <th>発行ポイント数</th>
+            <th>発行ポイント数(小数点は切り捨て）</th>
             <td id="create_point"><%= ((@sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i) / 100.to_i).floor %>pt</td>
           </tr>
         </table>
@@ -208,6 +208,7 @@
             var final_sum = sum;
             if (point > all_point || point > final_sum){
               document.getElementById("button").disabled = true;
+              alert ('利用ポイントが不正な値です')
             }else{
               document.getElementById("button").disabled = false;
               document.getElementById("out").value = point;
@@ -221,7 +222,7 @@
            var bonus = Number("<%= @point_event.bonus %>");
            $('#sum').text(String(final_sum) + '円');
            $('#create_point').text(String(final_sum * bonus / 100) + 'pt');
-           var create_point = final_sum * bonus / 100
+           var create_point = final_sum * bonus / 100;
            document.getElementById("create").value = create_point;
         });
     </script>
