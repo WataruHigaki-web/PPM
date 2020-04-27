@@ -60,12 +60,9 @@
   <% end %>
 <% end %>
 
-<クーポン>
-<% if @order.discount == 0 %>
-  <% discount = 0 %>なし
-<% else %>
-  <%= discount = @order.discount.price %>円
-<% end %>
+<割引金額（クーポン）>
+  <% discount = @order.discount.price %>円
+
 
 <利用ポイント>
 <% if @order.out_point.point.blank? %>
