@@ -110,7 +110,7 @@
 
     <% else %>
     <div class="col-md-12">
-      <%= form_with url: users_cart_items_delete2_path, method: :post  do |f| %>
+      <%= form_with url: users_cart_items_session_delete_path, method: :post  do |f| %>
         <table class="table table-bordered tbl-r04">
           <tr class="thead">
             <th>画像</th>
@@ -136,7 +136,7 @@
                       <% end %>
                     </td>
                     <td>
-                      <input type="number" class="item_count" name="quantity" id="" data-item-count="<%= cart_item["quantity"] %>" value="<%= cart_item["quantity"]%>">
+                      <%= cart_item["quantity"] %>
                     </td>
                 <% else %>
                   <td><%= attachment_image_tag Combo.find(cart_item["combo_id"]), :combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
@@ -146,14 +146,12 @@
                     <% end %>
                   </td>
                   <td class="quantity">
-                    <input type="number"class="combo_count" name="quantity" id="" data-combo-count="<%= cart_item["quantity"] %>" value="<%= cart_item["quantity"]%>">
+                    <%= cart_item["quantity"] %>
                   </td>
                 <% end %>
                   <td class="price"data-price="<%= Combo.find(cart_item["combo_id"]).price %>"><%= Combo.find(cart_item["combo_id"]).price %>円</td>
                   <td data=cart_item>
-
                       <%= f.submit '削除', class: "btn btn-danger",name: "delete_button",'data-cart-item': session[:cart_item], 'data-item': cart_item %>
-
                   </td>
               </tr>
                 <% @sum += (Combo.find(cart_item["combo_id"]).price).to_i * (cart_item["quantity"]).to_i %>
