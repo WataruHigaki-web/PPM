@@ -18,6 +18,11 @@ class Admins::OrdersController < ApplicationController
   def update
     order = Order.find(params[:id])
     order.update(order_params)
+    order.order_records.each do |record|
+      record.update(
+        status: params[:order]["status"]
+      )
+    end
     if order.status == '返却済' && order.pay_status == true && order.give_point == false
       in_point = InPoint.new(
         point: order.create_point,

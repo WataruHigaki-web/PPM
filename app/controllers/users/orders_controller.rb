@@ -134,7 +134,6 @@ class Users::OrdersController < ApplicationController
       address:  address,
       status: params[:order]["status"]
       )
-    binding.pry
     flash[:notice] = '返却情報を送信しました。'
     redirect_to users_root_path(current_user)
   end
