@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_27_082327) do
+ActiveRecord::Schema.define(version: 2020_04_28_063600) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -52,6 +52,13 @@ ActiveRecord::Schema.define(version: 2020_04_27_082327) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "quantity"
+  end
+
+  create_table "combo_likes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "combo_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "combos", force: :cascade do |t|

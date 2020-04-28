@@ -11,13 +11,13 @@
       <td><%= @inquiry.user.name %></td>
       <td><%= @inquiry.created_at.strftime("%Y-%m-%d %H:%M") %></td>
       <td><%= @inquiry.content %></td>
-      <%= form_with model: @inquiry,url:admins_path(@inquiry),method: :patch do |f| %>
       <td><%= @inquiry.staff %></td>
         <td>
           <%= f.select :status, Inquiry.statuses.keys.to_a, {} %>
           <%= f.hidden_field :staff, :value => current_admin.name %>
-          <%= f.submit '更新',class: "btn btn-info" %>
+          <%= form_with model: @inquiry,url:admins_path(@inquiry),method: :patch do |f| %>
+            <%= f.submit '更新',class: "btn btn-info" %>
+          <% end %>
         </td>
-      <% end %>
     </tr>
 </table>

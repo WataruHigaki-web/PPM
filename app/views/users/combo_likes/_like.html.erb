@@ -1,0 +1,14 @@
+<div class="combo-like-link" id="combo-like-link-<%= combo.id %>">
+  <% if current_user.combo_likes.find_by(combo_id: combo.id) %>
+    <%= link_to users_combo_combo_likes_path(combo),method: :delete,remote:true do %>
+      <span class="glyphicon glyphicon-heart"></span>
+    <% end %>
+
+  <% else %>
+
+    <%= link_to users_combo_combo_likes_path(combo),method: :post,remote:true do %>
+      <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
+    <% end %>
+  <% end %>
+  <%= combo.combo_likes.count %>
+</div>

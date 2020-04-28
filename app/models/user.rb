@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :orders, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :combo_favorites, dependent: :destroy
+  has_many :combo_likes, dependent: :destroy
   has_many :pays, dependent: :destroy
   has_many :out_points, dependent: :destroy
   has_many :in_points, dependent: :destroy
