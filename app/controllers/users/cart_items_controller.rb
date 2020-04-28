@@ -72,7 +72,13 @@ class Users::CartItemsController < ApplicationController
     redirect_to users_cart_items_path(current_user)
   end
 
-  def delete2
+  def session_update
+    binding.pry
+    session[:cart_item][params['number'].to_i]["quantity"] = params["quantity"]
+    redirect_to users_cart_items_path
+  end
+
+  def session_delete
     session[:cart_item].delete_at(params['number'].to_i)
     redirect_to users_cart_items_path
   end
