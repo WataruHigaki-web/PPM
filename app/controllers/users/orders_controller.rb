@@ -134,6 +134,11 @@ class Users::OrdersController < ApplicationController
       address:  address,
       status: params[:order]["status"]
       )
+    order.order_records.each do |record|
+      record.update(
+        status: params[:order]["status"]
+      )
+    end
     flash[:notice] = '返却情報を送信しました。'
     redirect_to users_root_path(current_user)
   end

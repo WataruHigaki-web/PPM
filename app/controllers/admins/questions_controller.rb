@@ -3,7 +3,7 @@
 class Admins::QuestionsController < ApplicationController
   before_action :authenticate_admin!
   def index
-    @inquiries = Inquiry.all(created_at: :desc)
+    @inquiries = Inquiry.all
   end
 
   def index2
