@@ -75,6 +75,7 @@ Rails.application.routes.draw do
     resources :combos, only: %i[show] do
       resource :combo_favorites, only: %i[create destroy]
       resource :combo_likes, only: %i[create destroy]
+      resources :combo_comments, only: %i[create destroy]
     end
     resources :questions,    only:[:index,:create,:destroy]
     resources :discounts, only: %i[index]
