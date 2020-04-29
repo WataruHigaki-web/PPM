@@ -72,8 +72,8 @@
 <h2>未返却物一覧</h2>
   <% @orders.each do |order|%>
     <% if order.status == "貸出中" %>
-    <div class="alert alert-warning">延滞の方は1,2を記入後、延滞情報送信を押してください。<br/>
-    郵送返却のお客様は、郵送完了後、３,4を記入後郵送完了ボタンを押してください。
+    <div class="alert alert-warning">返却日を<strong>延滞の方は1,2</strong>を記入後、延滞情報送信を押してください。<br/>
+    郵送返却のお客様は、<strong>郵送完了後、３,4</strong>を記入後郵送完了ボタンを押してください。
   </div>
       <table class="table table-bordered">
         <tr class="d3">
