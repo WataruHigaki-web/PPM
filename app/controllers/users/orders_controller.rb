@@ -140,7 +140,7 @@ class Users::OrdersController < ApplicationController
       )
     end
     flash[:notice] = '返却情報を送信しました。'
-    redirect_to users_root_path(current_user)
+    redirect_to users_root_path
   end
 
   def index

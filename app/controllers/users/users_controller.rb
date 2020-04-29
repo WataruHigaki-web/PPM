@@ -2,7 +2,7 @@
 
 class Users::UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :ensure_correct_user, only: [:update]
+  before_action :ensure_correct_user, only: [:update,:show]
   def show
     @user = User.find(params[:id])
   end
@@ -22,7 +22,8 @@ class Users::UsersController < ApplicationController
   end
 
   def top
-    @orders = current_user.orders
+    @reserves = current_user.orders.where(status: "予約受付中")
+    @lendings = current_user.orders.where(status: "貸出中")
     @in_points = current_user.in_points
     @out_points = current_user.out_points
     @point = @in_points.sum(:point) - @out_points.sum(:point)
