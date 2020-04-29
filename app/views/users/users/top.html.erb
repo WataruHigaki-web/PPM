@@ -168,18 +168,17 @@
     <% end %>
   <% end %>
 
-<script type="text/javascript">
-
+<script>
   $('input[name="order[return_status]"]').parent().find(".form_class").hide();
-  $('input[name="order[return_status]"]').change(function(){
-    if($(this).val() == "2"){
+$('input[name="order[return_status]"]').change(function(){
+  if($(this).val() == "2"){
       $(this).parent().find(".form_class").show();
-    }else{
+  }else{
       $(this).parent().find(".form_class").hide();
-    }
-  });
+  }
+});
 
-  document.getElementById("button").disabled = true;
+document.getElementById("button").disabled = true;
   document.getElementById("button2").disabled = true;
 
   $('input[name="order[status]"]').change(function() {
@@ -219,3 +218,6 @@
     }
   }
 </script>
+
+
+

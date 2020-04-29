@@ -61,15 +61,23 @@
     <tr>
       <th>貸し出し返却ステータス</th>
         <td width="300">
-        　<%= f.select :status, Order.statuses.keys.to_a, {} %>
-          <%= f.submit '更新',class: "btn btn-info" %>
+          <% if @order.status == "返却済" %>
+            <%= @order.status %>
+          <% else %>
+            <%= f.select :status, Order.statuses.keys.to_a, {} %>
+            <%= f.submit '更新',class: "btn btn-info" %>
+          <% end %>
         </td>
     </tr>
     <tr>
       <th>支払いステータス</th>
       <td width="300">
-      　<%= f.select :pay_status,[['未支払', false], ['支払済', true]] %>
-      　<%= f.submit '更新',class: "btn btn-info" %>
+        <% if @order.pay_status %>
+          支払済
+        <% else %>
+      　   <%= f.select :pay_status,[['未支払', false], ['支払済', true]] %>
+      　   <%= f.submit '更新',class: "btn btn-info" %>
+        <% end %>
       </td>
     </tr>
   <% end %>
