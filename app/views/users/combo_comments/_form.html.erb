@@ -1,0 +1,4 @@
+<%= form_with model: [combo, comment],url:users_combo_combo_comments_path(combo.id,comment) do |f| %>
+  <%= f.text_area :content %>
+  <%= f.submit "コメントする" %>
+<% end %>
