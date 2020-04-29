@@ -120,7 +120,7 @@ class Users::OrdersController < ApplicationController
       address = params["address"]
     end
     if params[:order]["status"].nil?
-      params["status"] = "貸出中"
+      params[:order]["status"] = "貸出中"
     end
     if params["day"].nil? && params["finish_date"].nil?
       params["day"] = order.day
