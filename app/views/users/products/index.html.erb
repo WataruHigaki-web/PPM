@@ -1,9 +1,12 @@
 <h2>お気に入り商品一覧</h2>
 <div class="row">
-  <%= form_with(url:users_cart_items_path,method: :post) do |f| %>
-    <%= f.hidden_field :favorite, :value => "all" %>
-    <%= f.submit '全商品をカートに入れる',class: "btn btn-info",id: "button" %>
-  <% end %>
+
+    <%= form_with(url:users_cart_items_path,method: :post) do |f| %>
+      <%= f.hidden_field :favorite, :value => "all" %>
+      <%= f.submit '全商品をカートに入れる',class: "btn btn-info",id: "button" %>
+    <% end %>
+
+
     <div class="col-md-12">
       <table class="table table-bordered tbl-r04"align="center">
         <tr class="thead">
@@ -22,24 +25,20 @@
               <% end %>
             </td>
             <td><%= attachment_image_tag favorite.product,:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
-
-                <% @re_q = OrderRecord.where(combo_id: 1, product_id: favorite.product.id, status: "予約受付中").sum(:quantity) %>
-                <% @le_q = OrderRecord.where(combo_id: 1, product_id: favorite.product.id, status: "貸出中").sum(:quantity) %>
-                <% @tur_q = OrderRecord.where(combo_id: 1, product_id: favorite.product.id, status: "郵送中").sum(:quantity) %>
-                <% if favorite.product.stock - @re_q.to_i - @le_q.to_i - @tur_q.to_i == 0 %>
-                  <td>売切</td>
-                <% else %>
-                  <td>販売中</td>
+              <td>
+                <%= favorite.product.on_sale_or_sold_out(favorite.product) %>
+              </td>
+                <% if favorite.product.on_sale_or_sold_out(favorite.product) == '販売中' %>
+                  <td>
+                    <%= form_with model: @cart_item,url:users_cart_items_path,method: :post do |f| %>
+                      <p>個数選択:<%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %></p>
+                      <%= f.hidden_field :combo_id, :value => 1 %>
+                      <%= f.hidden_field :user_id, :value => current_user.id %>
+                      <%= f.hidden_field :product_id, :value => favorite.product.id %>
+                      <%= f.submit 'カートに追加',name: "favorite",class: "btn btn-info",id: "button"%>
+                    <% end %>
+                  </td>
                 <% end %>
-            <td>
-              <%= form_with model: @cart_item,url:users_cart_items_path,method: :post do |f| %>
-                <p>個数選択:<%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %></p>
-                <%= f.hidden_field :combo_id, :value => 1 %>
-                <%= f.hidden_field :user_id, :value => current_user.id %>
-                <%= f.hidden_field :product_id, :value => favorite.product.id %>
-                <%= f.submit 'カートに追加',class: "btn btn-info",id: "button" %>
-              <% end %>
-            </td>
           </tr>
 
      <% end %>
@@ -69,16 +68,4 @@
       <% end %>
       </table>
     </div>
-
-  <script>
-    $('input[name="cart_item[product_id]"]').on("change", function(){
-      var status = $(this).parent().parent().find(".product_status").data("status");
-      if(status == "売切"){
-        document.getElementById("button").disabled = true;
-        alert('この商品は売り切れのためカートに入れることはできません')
-      }else{
-        document.getElementById("button").disabled = false;
-      }
-    });
-  </script>
 </div>

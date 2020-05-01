@@ -92,8 +92,43 @@
   <% @sum += (order_record.end_price.to_i) * order_record.quantity.to_i * @order.day.to_i  %>
 <% end %>
 
-  <h4>請求情報</h4>
- 
+<h4>注文内容</h4>
+<table class="table-bordered">
+  <tr>
+    <th>商品</th>
+    <th>価格</th>
+    <th>個数</th>
+    <th>レンタル日数</th>
+    <th>小計</th>
+  </tr>
+
+  <% @order.order_records.each do |order_record| %>
+  <tr>
+      <td width="300">
+        <% if order_record.combo.id == 1 %>
+          <%= order_record.product.name %>
+        <% else %>
+          <%= order_record.combo.name %>
+        <% end %>
+      </td>
+      <td width="100">
+          <%= (order_record.end_price.to_i) * 1.1.floor %>
+      </td>
+      <td width="100">
+        <%= order_record.quantity %>
+      </td>
+      <td width="100">
+        <%= @order.day %>日
+      </td>
+      <td width="100">
+        <%= ((order_record.end_price.to_i) * 1.1.floor) * order_record.quantity.to_i * @order.day.to_i %>
+      </td>
+  </tr>
+  <% @sum += ((order_record.end_price.to_i) * 1.1.floor) * order_record.quantity.to_i * @order.day.to_i  %>
+  <% end %>
+</table>
+
+<h4>請求情報</h4>
   <table class="table-bordered">
   <tr>
     <th width="100">商品合計</th>
@@ -145,39 +180,4 @@
   </tr>
   </table>
 
-<h4>注文内容</h4>
-<table class="table-bordered">
-  <tr>
-    <th>商品</th>
-    <th>価格</th>
-    <th>個数</th>
-    <th>レンタル日数</th>
-    <th>小計</th>
-  </tr>
-
-  <% @order.order_records.each do |order_record| %>
-  <tr>
-      <td width="300">
-        <% if order_record.combo.id == 1 %>
-          <%= order_record.product.name %>
-        <% else %>
-          <%= order_record.combo.name %>
-        <% end %>
-      </td>
-      <td width="100">
-          <%= (order_record.end_price.to_i) * 1.1.floor %>
-      </td>
-      <td width="100">
-        <%= order_record.quantity %>
-      </td>
-      <td width="100">
-        <%= @order.day %>日
-      </td>
-      <td width="100">
-        <%= ((order_record.end_price.to_i) * 1.1.floor) * order_record.quantity.to_i * @order.day.to_i %>
-      </td>
-  </tr>
-  <% @sum += ((order_record.end_price.to_i) * 1.1.floor) * order_record.quantity.to_i * @order.day.to_i  %>
-  <% end %>
-</table>
 <%= link_to '注文一覧へ戻る',admins_orders_path, class: "btn btn-info" %>

@@ -76,14 +76,14 @@
               <td>
                 <%= combo_item.combo.name %>
                   <% if combo_item.combo.id == 1 %>
-                    <%= form_with model:@cart_item,url:users_cart_items_path(@cart_item),method: :post do |f| %>
+                    <%= form_with model:@cart_item,url:users_cart_items_path(@cart_item),method: :post, data: {"turbolinks" => false} do |f| %>
                       <%= f.hidden_field :combo_id, :value => 1 %>
                       <%= f.hidden_field :product_id, :value => combo_item.product.id %>
                       <%= f.hidden_field :quantity, :value => 1 %>
                        <% if user_signed_in? %>
                           <%= f.hidden_field :user_id, :value => current_user.id %>
                         <% end %>
-                        <%= f.submit 'カートに入れる',class: "btn btn-info", id: 'button', data: {"turbolinks" => false} %>
+                        <%= f.submit 'カートに入れる',class: "btn btn-info", id: 'button' %>
                   <% end %>
                 <% end %>
               </td>

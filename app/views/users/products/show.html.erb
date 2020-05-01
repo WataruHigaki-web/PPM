@@ -35,21 +35,18 @@
             </tr>
             <tr>
               <th>ステータス</th>
-                <% @re_q = OrderRecord.where(combo_id: 1, product_id: @product.id, status: "予約受付中").sum(:quantity) %>
-                <% @le_q = OrderRecord.where(combo_id: 1, product_id: @product.id, status: "貸出中").sum(:quantity) %>
-                <% @tur_q = OrderRecord.where(combo_id: 1, product_id: @product.id, status: "郵送中").sum(:quantity) %>
-                <% if @product.stock - @re_q.to_i - @le_q.to_i - @tur_q.to_i == 0 %>
-                  <td>売切</td>
-                <% else %>
-                  <td>販売中</td>
-                <% end %>
+                <td>
+                  <%= @product.on_sale_or_sold_out(@product) %>
+                </td>
             </tr>
-            <tr>
-             <th>個数</th>
-             <td>
-               <%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %>
-             </td>
-            </tr>
+            <% if @product.on_sale_or_sold_out(@product) == '販売中'%>
+              <tr>
+               <th>個数</th>
+               <td>
+                 <%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %>
+               </td>
+              </tr>
+            <% end %>
           <% end %>
         <% if user_signed_in? %>
           <% unless @combo_item.nil? %>
@@ -71,20 +68,11 @@
     <% if @combo_item.nil? %>
       <h4>こちらの単品注文は受け付けておりません</h4>
     <% else %>
-      <%= f.submit 'カートに入れる',class: "btn btn-info", id: 
-      'button', data: {"turbolinks" => false} %>
+      <% if @product.on_sale_or_sold_out(@product) == '販売中'%>
+        <%= f.submit 'カートに入れる',class: "btn btn-info", id: 'button', data: {"turbolinks" => false} %>
+      <% end %>
     <% end %>
   <% end %>
-
-  <script>
-    const status = $('#status').text();
-    if(status == "売切"){
-      document.getElementById("button").disabled = true;
-      alert('この商品は売切のためカートに入れることはできません')
-    }else{
-      document.getElementById("button").disabled = false;
-    }
-  </script>
 
   <h4>コメント</h4>
   <% if user_signed_in? %>
