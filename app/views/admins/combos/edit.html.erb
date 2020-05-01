@@ -26,10 +26,10 @@
       <th><%= f.label :ステータス %></th>
       <td>
         <%= f.radio_button :status,true, checked: "checked" %>
-        <%= f.label :有効 %>
+        <%= f.label :販売中 %>
 
         <%= f.radio_button :status,false, checked: "checked" %>
-        <%= f.label :無効 %>
+        <%= f.label :売切 %>
       </td>
     </tr>
   </table>

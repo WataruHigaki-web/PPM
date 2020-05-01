@@ -27,7 +27,7 @@
             <tr>
               <th>ステータス</th>
               <% if @combo.status %>
-                <td id="status">販売中</td>
+                <td>販売中</td>
               <% else %>
                 <td>売切</td>
               <% end %>
@@ -54,8 +54,10 @@
             <% end %>
         </table>
       </div>
-        <% if user_signed_in? %>
+        <% if @combo.status %>
           <%= f.submit 'カートに入れる',class: "btn btn-info", id: 'button', data: {"turbolinks" => false} %>
+        <% else %>
+          <div class="alert alert-danger">この商品は現在売切です</div>
         <% end %>
   <% end %>
 
@@ -68,14 +70,4 @@
   <div id="comments_area">
     <%= render 'users/combo_comments/index',comments: @comments %>
   </div>
-
-  <script>
-    const status = $('#status').text();
-    if(status == "売切"){
-      document.getElementById("button").disabled = true;
-      alert('この商品は売切のためカートに入れることはできません')
-    }else{
-      document.getElementById("button").disabled = false;
-    }
-  </script>
 </div>
