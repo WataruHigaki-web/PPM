@@ -28,12 +28,19 @@
               </td>
               <td><%= combo.price %></td>
               <% unless combo.id == 1 %>
-                <td>
-                  <%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %>個
-                </td>
-                <td>
-                  <%= f.submit 'カートに入れる',class: "btn btn-info" %>
-                </td>
+                <% if combo.status %>
+                  <td>
+                    <%= f.select :quantity,[1,2,3,4,5,6,7,8,9,10] %>個
+                  </td>
+                  <td>
+                    <%= f.submit 'カートに入れる',class: "btn btn-info" %>
+                  </td>
+                <% else %>
+                  <td></td>
+                  <td>
+                    <div class="alert alert-danger">このセットは現在売切です</div>
+                  </td>
+                <% end %>
               <% else %>
                 <td></td>
                 <td>単品商品購入は商品名をクリック!!</td>
