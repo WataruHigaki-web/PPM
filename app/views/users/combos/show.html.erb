@@ -6,7 +6,7 @@
         <%= f.hidden_field :user_id, :value => current_user.id %>
       <% end %>
 
-      <div class="col-md-6">
+      <div class="col-md-6"align="center">
         <%= attachment_image_tag @combo ,:combo_image,:fill,300,300, fallback:"no_image.jpg" %>
       </div>
       <div class="col-md-6">
@@ -56,8 +56,6 @@
       </div>
         <% if @combo.status %>
           <%= f.submit 'カートに入れる',class: "btn btn-info", id: 'button', data: {"turbolinks" => false} %>
-        <% else %>
-          <div class="alert alert-danger">この商品は現在売切です</div>
         <% end %>
   <% end %>
 

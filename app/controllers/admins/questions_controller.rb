@@ -2,11 +2,11 @@
 
 class Admins::QuestionsController < ApplicationController
   before_action :authenticate_admin!
-  def index
+  def inquery_index
     @inquiries = Inquiry.all
   end
 
-  def index2
+  def index
     @questions = Question.all
     @question = Question.new
   end
@@ -15,14 +15,14 @@ class Admins::QuestionsController < ApplicationController
     question = Question.new(question_params)
     question.save
     flash[:notice] = '質問内容を作成しました。'
-    redirect_to admins_questions_index2_path
+    redirect_to admins_questions_path
   end
 
   def destroy
     question = Question.find(params[:id])
     question.destroy
     flash[:notice] = '質問内容を消去しました。'
-    redirect_to admins_questions_index2_path
+    redirect_to admins_questions_path
   end
 
   def edit
@@ -33,17 +33,17 @@ class Admins::QuestionsController < ApplicationController
     question = Question.find(params[:id])
     question.update(question_params)
     flash[:notice] = '質問内容を変更しました。'
-    redirect_to admins_questions_index2_path
+    redirect_to admins_questions_path
   end
 
-  def update2
+  def inquery_update
     inquiry = Inquiry.find(params[:id])
     inquiry.update(
       status: params[:inquiry]['status'],
       staff: params[:inquiry]['staff']
     )
     flash[:notice] = '質問ステータスを変更しました'
-    redirect_to admins_questions_path
+    redirect_to admins_questions_inquery_index_path
   end
 
   def show

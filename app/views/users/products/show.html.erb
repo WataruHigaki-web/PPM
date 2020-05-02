@@ -8,7 +8,7 @@
       <%= f.hidden_field :user_id, :value => current_user.id %>
     <% end %>
 
-    <div class="col-md-6">
+    <div class="col-md-6"align="center">
         <%= attachment_image_tag @product ,:product_image,:fill,300,300, fallback:"no_image.jpg", class: "img-fluid" %>
     </div>
     <div class="col-md-6">

@@ -1,0 +1,31 @@
+<h2>ご利用者からの質問</h2>
+
+<table class="table table-bordered">
+  <tr>
+    <th>名前</th>
+    <th>質問日時</th>
+    <th>内容</th>
+    <th>担当者</th>
+    <th>ステータス</th>
+    <th>最新対応日時</th>
+  </tr>
+  <% @inquiries.each do |inquiry| %>
+    <tr>
+      <td>
+        <%= link_to admins_user_path(inquiry.user),data: {"turbolinks" => false} do%>
+        <%= inquiry.user.name %>
+        <% end %>
+      </td>
+      <td><%= inquiry.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+      <td>
+        <%= link_to admins_question_path(inquiry),data: {"turbolinks" => false} do%>
+          <%= inquiry.content %>
+        <% end %>
+      </td>
+      <td><%= inquiry.staff %></td>
+      <td><%= inquiry.status %></td>
+      <td><%= inquiry.updated_at.strftime("%Y-%m-%d %H:%M") %></td>
+    </tr>
+  <% end %>
+</table>
+
