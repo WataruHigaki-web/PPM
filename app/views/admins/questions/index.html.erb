@@ -1,31 +1,30 @@
-<h2>ご利用者からの質問</h2>
+<h2>よくある質問作成フォーム</h2>
+<%= form_with model: @question,url: admins_questions_path,method: :post do |f| %>
+  Q:<%= f.text_area :question %><br/>
+  A:<%= f.text_area :answer %>
+  <%= f.submit '作成',class: "btn btn-info" %>
+<% end %>
 
-<table class="table table-bordered">
-  <tr>
-    <th>名前</th>
-    <th>質問日時</th>
-    <th>内容</th>
-    <th>担当者</th>
-    <th>ステータス</th>
-    <th>最新対応日時</th>
-  </tr>
-  <% @inquiries.each do |inquiry| %>
+<h2>よくある質問一覧</h2>
+
+<% @questions.each do |question| %>
+  <table class="table">
     <tr>
-      <td>
-        <%= link_to admins_user_path(inquiry.user),data: {"turbolinks" => false} do%>
-        <%= inquiry.user.name %>
-        <% end %>
-      </td>
-      <td><%= inquiry.created_at.strftime("%Y-%m-%d %H:%M") %></td>
-      <td>
-        <%= link_to admins_question_path(inquiry),data: {"turbolinks" => false} do%>
-          <%= inquiry.content %>
-        <% end %>
-      </td>
-      <td><%= inquiry.staff %></td>
-      <td><%= inquiry.status %></td>
-      <td><%= inquiry.updated_at.strftime("%Y-%m-%d %H:%M") %></td>
+      <th>質問</th>
+      <td><%= question.question %></td>
     </tr>
-  <% end %>
-</table>
-
+    <tr>
+      <th>回答</th>
+      <td>
+        <%= question.answer %>
+      </td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>
+        <%= link_to '編集する',edit_admins_question_path(question),method: :get, class: "btn btn-info" %>
+        <%= link_to '削除',admins_question_path(question),method: :delete,class: "btn btn-danger","data-confirm" => "本当に削除しますか？" %>
+      </td>
+    </tr>
+  </table>
+<% end %>

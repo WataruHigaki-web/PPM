@@ -1,8 +1,16 @@
 <h2>よくある質問</h2>
 
 <% @questions.each do |q| %>
-  Q:<%= q.question %><br/>
-  A:<%= q.answer %><br/>
+  <table class="table">
+    <tr>
+      <th>Q</th>
+      <td><%= q.question %></td>
+    </tr>
+    <tr>
+      <th>A</th>
+      <td><%= q.answer %></td>
+    </tr>
+  </table>
 <% end %>
 
 <h4>お問い合わせ</h4>

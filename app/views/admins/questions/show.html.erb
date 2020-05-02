@@ -13,9 +13,9 @@
       <td><%= @inquiry.content %></td>
       <td><%= @inquiry.staff %></td>
         <td>
-          <%= f.select :status, Inquiry.statuses.keys.to_a, {} %>
-          <%= f.hidden_field :staff, :value => current_admin.name %>
           <%= form_with model: @inquiry,url:admins_path(@inquiry),method: :patch do |f| %>
+            <%= f.select :status, Inquiry.statuses.keys.to_a, {} %>
+            <%= f.hidden_field :staff, :value => current_admin.name %>
             <%= f.submit '更新',class: "btn btn-info" %>
           <% end %>
         </td>

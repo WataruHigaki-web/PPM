@@ -1,6 +1,14 @@
 <h2>よくある質問フォーム</h2>
 <%= form_with model: @question,url: admins_question_path,method: :patch do |f| %>
-  <%= f.text_field :question %>
-  <%= f.text_field :answer %>
+<table class="table">
+  <tr>
+    <th><%= f.label :質問 %></th>
+    <td><%= f.text_area :question %></td>
+  </tr>
+  <tr>
+    <th><%= f.label :回答 %></th>
+    <td><%= f.text_area :answer %></td>
+  </tr>
+</table>
   <%= f.submit '変更を保存',class: "btn btn-info" %>
 <% end %>

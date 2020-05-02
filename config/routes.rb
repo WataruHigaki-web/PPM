@@ -17,10 +17,10 @@ Rails.application.routes.draw do
 
   namespace :admins do
     root 'orders#top'
-    get 'questions/index2'
+    get 'questions/inquery_index'
     get 'orders/stock'
-    patch 'admins/:id', to: 'questions#update2'
-    put 'admins/:id', to: 'questions#update2'
+    patch 'admins/:id', to: 'questions#inquery_update'
+    put 'admins/:id', to: 'questions#inquery_update'
     resources :users, only: %i[index show edit update] do
       collection do
         get :search
