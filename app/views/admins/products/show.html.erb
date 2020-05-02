@@ -1,14 +1,11 @@
 <h2>商品詳細(セットアイテム追加画面）</h2>
-
-
 <div class="row">
    <%= form_for @combo_item,url:admins_combo_items_path(@combo_item) do |f| %>
     <%= f.hidden_field :product_id, :value => @product.id %>
 
-
     <div class="col-md-12">
-      <div class="product-image">
-        <%= attachment_image_tag @product,:product_image,:fill,300,300, fallback:"no_image.jpg",:fill,300,300,class: "img-fluid" %>
+      <div class="product-image"align="center">
+        <%= attachment_image_tag @product, :product_image, :fill, 300, 300, fallback: "no_image.jpg" %>
       </div>
     </div>
 
@@ -57,7 +54,7 @@
               <tr>
                <th>セット選択</th>
                <td>
-                 <%= f.collection_select :combo_id,Combo.all, :id, :name %>
+                 <%= f.collection_select :combo_id,Combo.all, :id, :name, prompt: "選択してください"%>
                </td>
               </tr>
             <% end %>

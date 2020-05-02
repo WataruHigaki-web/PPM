@@ -38,7 +38,7 @@
       <tr>
         <th>セット選択</th>
         <td>
-          <%= f.collection_select :combo_id,Combo.all, :id, :name %>
+          <%= f.collection_select :combo_id,Combo.all, :id, :name, prompt: "選択してください" %>
         </td>
       </tr>
       </table>
