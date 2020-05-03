@@ -1,3 +1,11 @@
+document.querySelectorAll('.update-button').forEach(x=>{
+x.disabled = true;
+});
+
+document.querySelectorAll('.return-button').forEach(x=>{
+x.disabled = true;
+});
+
 $('input[name="order[return_status]"]').parent().find(".form_class").hide();
 $('input[name="order[return_status]"]').change(function(){
   if($(this).val() == "2"){
@@ -7,13 +15,6 @@ $('input[name="order[return_status]"]').change(function(){
   }
 });
 
-document.querySelectorAll('.update-button').forEach(x=>{
-x.disabled = true;
-});
-
-document.querySelectorAll('.return-button').forEach(x=>{
-x.disabled = true;
-});
 
 
 $('input[name="order[status]"]').change(function() {
@@ -22,8 +23,8 @@ $('input[name="order[status]"]').change(function() {
   });
 });
 
-// console.log(document.getElementsByClassName('finish_date'));
-// console.log(document.getElementById("finish_date").value);
+
+
 $('.finish_date').change(function() {
   const delIndex = $('.finish_date').index(this);
   console.log(delIndex);
