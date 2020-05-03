@@ -8,4 +8,17 @@ class Combo < ApplicationRecord
   has_many :combo_likes
   has_many :combo_comments
   attachment :combo_image
+
+  def reserve(combo)
+    OrderRecord.where(combo_id: combo.id, status: "予約受付中").sum(:quantity)
+  end
+
+  def lending(combo)
+    OrderRecord.where(combo_id: combo.id, status: "貸出中").sum(:quantity)
+  end
+
+  def return(combo)
+    OrderRecord.where(combo_id: combo.id, status: "郵送中").sum(:quantity)
+  end
+
 end
