@@ -32,10 +32,9 @@
             <%= combo.name %>
           <% end %>
         </td>
-
-        <td><%= @re_q1 = OrderRecord.where(combo_id: 1,status: "予約受付中").sum(:quantity) %></td>
-        <td><%= @re_q1 = OrderRecord.where(combo_id: 1,status: "貸出中").sum(:quantity) %></td>
-        <td><%= @re_q1 = OrderRecord.where(combo_id: 1,status: "郵送中").sum(:quantity) %></td>
+        <td><%= @re_q1 = combo.reserve(combo) %></td>
+        <td><%= @le_q1 = combo.lending(combo) %></td>
+        <td><%= @tur_q1 = combo.return(combo) %></td>
       </tr>
 
     <% elsif combo.id == 2 %>
@@ -45,9 +44,9 @@
             <%= combo.name %>
           <% end %>
         </td>
-        <td><%= @re_q2 = OrderRecord.where(combo_id: 2,status: "予約受付中").sum(:quantity) %></td>
-        <td><%= @le_q2 = OrderRecord.where(combo_id: 2,status: "貸出中").sum(:quantity) %></td>
-        <td><%= @tur_q2 = OrderRecord.where(combo_id: 2,status: "郵送中").sum(:quantity) %></td>
+        <td><%= @re_q2 = combo.reserve(combo) %></td>
+        <td><%= @le_q2 = combo.lending(combo) %></td>
+        <td><%= @tur_q2 = combo.return(combo) %></td>
       </tr>
 
     <% elsif combo.id == 3 %>
@@ -57,9 +56,9 @@
             <%= combo.name %>
           <% end %>
         </td>
-        <td><%= @re_q3 = OrderRecord.where(combo_id: 3,status: "予約受付中").sum(:quantity) %></td>
-        <td><%= @le_q3 = OrderRecord.where(combo_id: 3,status: "貸出中").sum(:quantity) %></td>
-        <td><%= @tur_q3 = OrderRecord.where(combo_id: 3,status: "郵送中").sum(:quantity) %></td>
+        <td><%= @re_q3 = combo.reserve(combo) %></td>
+        <td><%= @le_q3 = combo.lending(combo) %></td>
+        <td><%= @tur_q3 = combo.return(combo) %></td>
       </tr>
 
     <% else %>
@@ -69,9 +68,9 @@
             <%= combo.name %>
           <% end %>
         </td>
-        <td><%= @re_q4 = OrderRecord.where(combo_id: 4,status: "予約受付中").sum(:quantity) %></td>
-        <td><%= @le_q4 = OrderRecord.where(combo_id: 4,status: "貸出中").sum(:quantity) %></td>
-        <td><%= @tur_q4 = OrderRecord.where(combo_id: 4,status: "郵送中").sum(:quantity) %></td>
+        <td><%= @re_q4 = combo.reserve(combo) %></td>
+        <td><%= @le_q4 = combo.lending(combo) %></td>
+        <td><%= @tur_q4 = combo.return(combo) %></td>
       </tr>
     <% end %>
   <% end %>
@@ -91,9 +90,9 @@
   <% @combos.each do |combo| %>
     <% if combo.id == 1 %>
       <% combo.combo_items.each do |combo_item| %>
-        <% @re_q = OrderRecord.where(combo_id: 1, product_id: combo_item.product.id, status: "予約受付中").sum(:quantity) %>
-        <% @le_q = OrderRecord.where(combo_id: 1, product_id: combo_item.product.id, status: "貸出中").sum(:quantity) %>
-        <% @tur_q = OrderRecord.where(combo_id: 1, product_id: combo_item.product.id, status: "郵送中").sum(:quantity) %>
+        <% @re_q = combo_item.reserve(combo_item.product, combo_item.combo) %>
+        <% @le_q = combo_item.lending(combo_item.product, combo_item.combo) %>
+        <% @tur_q = combo_item.return(combo_item.product, combo_item.combo) %>
         <tr>
           <td>
             <%= link_to admins_product_path(combo_item.product) do %>
@@ -144,7 +143,6 @@
           <td><%= @re_q3 %></td>
           <td><%= @le_q3 %></td>
           <td><%= @tur_q3 %></td>
-
           <% if combo_item.product.stock - @re_q3.to_i - @le_q3.to_i - @tur_q3.to_i <= 0 %>
             <td>売切</td>
           <% else %>

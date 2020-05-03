@@ -7,7 +7,7 @@
   <% @combos.each do |combo| %>
   <tr>
     <td>
-      <%= link_to("#{combo.name}",admins_combo_items_path(combo_id: combo.id)) %>
+      <%= link_to combo.name,admins_combo_items_path(combo_id: combo.id) %>
     </td>
   </tr>
   <% end %>
@@ -31,17 +31,7 @@
     </td>
     <td><%= combo_item.product.name %></td>
     <td><%= attachment_image_tag combo_item.product,:product_image,:fill,60,60, fallback:"no_image.jpg" %></td>
-    <% @product_records = OrderRecord.where(product_id: combo_item.product.id) %>
-    <% @product_records.each do |record| %>
-      <% @quantity = record.quantity %>
-    <% end %>
-
-    <% if combo_item.product.stock.to_i - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count.to_i * @quantity.to_i) <= 0 %>
-      <td>売切</td>
-    <% else %>
-      <td>販売中</td>
-    <% end %>
-
+    <td><%= combo_item.on_sale_or_sold_out(combo_item.product, combo_item.combo) %></td>
     <td><%= combo_item.combo.name %></td>
   </tr>
 

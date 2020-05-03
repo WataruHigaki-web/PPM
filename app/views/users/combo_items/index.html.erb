@@ -71,15 +71,7 @@
                 <% end %>
               </td>
               <td><%= attachment_image_tag combo_item.product,:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
-                <% @re_q = OrderRecord.where(combo_id: 1, product_id: combo_item.product.id, status: "予約受付中").sum(:quantity) %>
-                <% @le_q = OrderRecord.where(combo_id: 1, product_id: combo_item.product.id, status: "貸出中").sum(:quantity) %>
-                <% @tur_q = OrderRecord.where(combo_id: 1, product_id: combo_item.product.id, status: "郵送中").sum(:quantity) %>
-                <% if combo_item.product.stock - @re_q.to_i - @le_q.to_i - @tur_q.to_i == 0 %>
-                  <td>売切</td>
-                <% else %>
-                  <td>販売中</td>
-                <% end %>
-
+              <td><%= combo_item.on_sale_or_sold_out(combo_item.product, combo_item.combo) %></td>
               <td>
                 <%= combo_item.combo.name %>
                   <% if combo_item.combo.id == 1 %>

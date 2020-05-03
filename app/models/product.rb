@@ -21,4 +21,6 @@ class Product < ApplicationRecord
       '販売中'
     end
   end
+
+
 end
