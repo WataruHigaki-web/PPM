@@ -4,6 +4,7 @@ class Users::DiscountsController < ApplicationController
   before_action :authenticate_user!
   def index
     @discounts = Discount.all
+    @discount = Discount.find_by(price: 0)
   end
 
   def show

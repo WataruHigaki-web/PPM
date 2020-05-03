@@ -116,18 +116,18 @@
 
       　<%= form_with model:order,url:users_order_path(order),method: :patch do |f| %>
           <tr>
-            <th class="danger">1.郵送返却方法の変更(延ご希望の方)</th>
-              <td id="radio_all">
-                <%= f.radio_button :return_status,0 %>受取場所と同様<br/>
-                <%= f.radio_button :return_status,1 %>現住所から郵送返却<br/>
-                <%= current_user.zip_code %>
-                <%= current_user.address %><br/>
-                <%= f.radio_button :return_status,2 %>新しい住所から郵送返却<br/>
-                <div class="form_class">
-                  <%= f.text_field :zip_code %>
-                  <%= f.text_field :address %><br/>
-                </div>
-              </td>
+            <th class="danger">1.郵送返却方法の変更(延滞ご希望の方)</th>
+            <td id="radio_all">
+              <%= f.radio_button :return_status,0 %>受取場所と同様<br/>
+              <%= f.radio_button :return_status,1 %>現住所から郵送返却<br/>
+              <%= current_user.zip_code %>
+              <%= current_user.address %><br/>
+              <%= f.radio_button :return_status,2 %>新しい住所から郵送返却<br/>
+              <div class="form_class">
+                <%= f.text_field :zip_code %>
+                <%= f.text_field :address %><br/>
+              </div>
+            </td>
           </tr>
 
           <tr>
@@ -135,7 +135,7 @@
             <td id="setting">
               <div id="start_date"><%= order.start_date %></div>~
               <%= date_field_tag :finish_date,"",class: "finish_date",'data-start-date': order.start_date, 'data-finish-date': order.finish_date %>
-              <%= f.submit '延滞情報送信',data:{confirm: "終了日時を本当に変更しますか？変更した日付より前の日付には変更はできません"},class: "btn btn-info update-button" %>
+              <%= f.submit '延滞情報送信',"data-confirm" => "返却日時を本当に変更しますか？変更した日付より前の日付には変更はできません",class: "btn btn-info update-button" %>
             </td>
           </tr>
         <% end %>
