@@ -12,6 +12,9 @@
       <td><%= @inquiry.created_at.strftime("%Y-%m-%d %H:%M") %></td>
       <td><%= @inquiry.content %></td>
       <td><%= @inquiry.staff %></td>
+      <% if @inquiry.status == "解決済" %>
+        <td><%= @inquiry.status %></td>
+      <% else %>
         <td>
           <%= form_with model: @inquiry,url:admins_path(@inquiry),method: :patch do |f| %>
             <%= f.select :status, Inquiry.statuses.keys.to_a, {} %>
@@ -19,5 +22,6 @@
             <%= f.submit '更新',class: "btn btn-info" %>
           <% end %>
         </td>
+      <% end %>
     </tr>
 </table>

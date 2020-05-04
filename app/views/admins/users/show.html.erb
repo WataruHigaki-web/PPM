@@ -11,6 +11,7 @@
          無効会員
         <% end %>
       </span>
+      <%= link_to '編集する',edit_admins_user_path(@user),class:'btn' %>
     </td>
   </tr>
   <tr>
@@ -46,7 +47,6 @@
 </table>
 </div>
 
-
-  <%= link_to '編集する',edit_admins_user_path(@user),class:'btn btn-info' %>
   <%= link_to '注文一覧を見る',admins_orders_path,class:"btn btn-info" %>
+  
 

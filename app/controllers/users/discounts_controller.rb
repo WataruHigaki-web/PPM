@@ -3,7 +3,7 @@
 class Users::DiscountsController < ApplicationController
   before_action :authenticate_user!
   def index
-    @discounts = Discount.all
+    @discounts = Discount.page(params[:page]).per(10).order('created_at DESC')
     @discount = Discount.find_by(price: 0)
   end
 
