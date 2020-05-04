@@ -5,9 +5,9 @@ class Users::QuestionsController < ApplicationController
   before_action :ensure_correct_user, only: [:destroy]
 
   def index
-    @questions = Question.all
+    @questions = Question.page(params[:page]).per(10)
     @inquiry = Inquiry.new
-    @inquiries = current_user.inquiries
+    @inquiries = current_user.inquiries.page(params[:page]).per(10)
   end
 
   def create

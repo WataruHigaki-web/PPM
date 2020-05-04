@@ -8,7 +8,7 @@ class Users::ComboItemsController < ApplicationController
       @combo = Combo.find(params[:combo_id])
       @combo_items = ComboItem.where(combo_id: @combo.id)
     else
-      @combo_items = ComboItem.all
+      @combo_items = ComboItem.page(params[:page]).per(10)
     end
   end
 

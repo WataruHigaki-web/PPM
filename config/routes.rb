@@ -17,7 +17,9 @@ Rails.application.routes.draw do
 
   namespace :admins do
     root 'orders#top'
-    get 'questions/inquery_index'
+    get 'questions/inquiry_index'
+    get 'questions/working_on_index'
+    get 'questions/resolve_index'
     get 'orders/stock'
     patch 'admins/:id', to: 'questions#inquery_update'
     put 'admins/:id', to: 'questions#inquery_update'

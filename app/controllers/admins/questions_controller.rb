@@ -3,11 +3,19 @@
 class Admins::QuestionsController < ApplicationController
   before_action :authenticate_admin!
   def inquery_index
-    @inquiries = Inquiry.all
+    @inquiries = Inquiry.where(status: "未対応").page(params[:page]).per(10)
   end
 
+  def working_on_index
+    @working_on = Inquiry.where(status: "対応中").page(params[:page]).per(10)
+  end
+
+  def resolve_index
+     @resolves = Inquiry.where(status: "解決済").page(params[:page]).per(10)
+  end
+  
   def index
-    @questions = Question.all
+    @questions = Question.page(params[:page]).per(10).order('created_at DESC')
     @question = Question.new
   end
 

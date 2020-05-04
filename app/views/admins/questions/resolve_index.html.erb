@@ -1,4 +1,4 @@
-<h2>ご利用者からの質問</h2>
+<h2>解決済質問</h2>
 <table class="table table-bordered">
   <tr>
     <th>名前</th>
@@ -8,7 +8,7 @@
     <th>ステータス</th>
     <th>最新対応日時</th>
   </tr>
-  <% @inquiries.each do |inquiry| %>
+  <% @resolves.each do |inquiry| %>
     <tr>
       <td>
         <%= link_to admins_user_path(inquiry.user),data: {"turbolinks" => false} do%>
@@ -27,7 +27,9 @@
     </tr>
   <% end %>
 </table>
-<%= paginate @inquiries %>
+<%= paginate @resolves %>
+
+<%= link_to '未解決質問', admins_questions_inquiry_index_path,class: "btn btn-info" %>
+
 <%= link_to '対応中質問', admins_questions_working_on_index_path,class: "btn btn-info" %>
 
-<%= link_to '解決済質問', admins_questions_resolve_index_path,class: "btn btn-info" %>
