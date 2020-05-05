@@ -52,6 +52,7 @@ Rails.application.routes.draw do
     post 'cart_items/session_delete'
     get 'orders/thanks'
     delete 'cart_items/destroy_all'
+    post 'cart_items/save_day'
     get 'cart_items/save'
     patch 'users/withdrawal/:id', to: 'users#withdrawal'
     put 'users/withdrawal/:id', to: 'users#withdrawal'

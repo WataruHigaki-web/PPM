@@ -12,6 +12,12 @@ class Users::CartItemsController < ApplicationController
     render 'index'
   end
 
+  def save_day
+    session["day"] = params["day"].to_i
+    redirect_to users_cart_items_path
+  end
+
+
   def save
     session[:cart_item].each do |cart_item|
       if cart_item['status'] == true

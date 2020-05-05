@@ -33,11 +33,11 @@
                           <span class="combo_count"data-combo-count="<%= cart_item.quantity %>"><%= f.number_field :quantity %></span>
                         <%= f.submit "更新",class: "btn btn-info" %>
                       </td>
+                    <% end %>
                       <td><%= cart_item.combo.price %></td>
                       <td>
                         <%= link_to '削除',users_cart_item_path(cart_item),method: :delete,class: "btn btn-danger" %>
                       </td>
-                    <% end %>
                 <% else %>
                   <td><%= attachment_image_tag cart_item.combo,:combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
                   <td>
@@ -50,11 +50,11 @@
                           <span class="combo_count"data-combo-count="<%= cart_item.quantity %>"><%= f.number_field :quantity %></span>
                         <%= f.submit "更新",class: "btn btn-info" %>
                       </td>
+                    <% end %>
                       <td><%= cart_item.combo.price %></td>
                       <td>
                         <%= link_to '削除',users_cart_item_path(cart_item),method: :delete,class: "btn btn-danger" %>
                       </td>
-                    <% end %>
                 <% end %>
               </tr>
             <% @sum += (cart_item.combo.price).to_i * (cart_item.quantity).to_i %>
@@ -70,12 +70,24 @@
           <table class="table table-bordered">
             <tr>
               <th>お見積もり金額</th>
-              <td id="cart_item_sum"><%= @sum %></td>
+              <td id="cart_item_sum"data-sum="<%= @sum %>">
+                <% if session["day"].blank? %>
+                  <%= @sum %>
+                <% else %>
+                  <%= @sum.to_i * session["day"] %>
+                <% end %>
+              </td>
             </tr>
             <tr>
               <th>レンタル日数</th>
               <td>
-                <input id="day"type="number">日間
+                <%= form_with url: users_cart_items_save_day_path do |f| %>
+                  <% if session["day"].blank? %>
+                    <%= f.number_field :day, id: "day", type: "number" %>日間
+                  <% else %>
+                    <%= f.number_field :day, value: session["day"], id: "day", type: "number" %>日間
+                  <% end %>
+                <% end %>
               </td>
             </tr>
             <tr>
@@ -120,7 +132,7 @@
             <th></th>
           </tr>
           <% @sum = 0 %>
-          <% if session[:cart_item].nil? %>
+          <% if session[:cart_item].nil? || session[:cart_item] == [] %>
             <div class="alert alert-warning alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>カートに商品がありません</strong>
@@ -169,12 +181,24 @@
         <table class="table table-bordered">
           <tr>
             <th>お見積もり金額(円）</th>
-            <td id="cart_item_sum"data-sum="<%= @sum %>"><%= @sum %></td>
+            <td id="cart_item_sum"data-sum="<%= @sum %>">
+              <% if session["day"].blank? %>
+                <%= @sum %>
+              <% else %>
+                <%= @sum.to_i * session["day"] %>
+              <% end %>
+            </td>
           </tr>
           <tr>
             <th>レンタル日数</th>
             <td>
-              <input id="day"type="number"value="1">日間
+              <%= form_with url: users_cart_items_save_day_path do |f| %>
+                <% if session["day"].blank? %>
+                  <%= f.number_field :day, id: "day", type: "number" %>日間
+                <% else %>
+                  <%= f.number_field :day, value: session["day"], id: "day", type: "number" %>日間
+                <% end %>
+              <% end %>
             </td>
           </tr>
           <tr>
@@ -219,7 +243,7 @@
            document.forms[0].appendChild(q);
       });
       
-      sum = document.getElementById('cart_item_sum').textContent;
+      sum = $('#cart_item_sum').data('sum');
       final_sum = sum;
       point_sum = Number($("#point_sum").data('point'));
 
@@ -228,7 +252,7 @@
         var price = Number($('.price').data('price'));
         var day = Number($('#day').val());
         $('#cart_item_sum').text(String(quantity * price * day));
-        sum = document.getElementById('cart_item_sum').textContent;
+        sum = $('#cart_item_sum').data('sum');
       });
       $('#day').change(function(){
         var day = Number($(this).val());
