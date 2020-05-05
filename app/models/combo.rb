@@ -17,7 +17,7 @@ class Combo < ApplicationRecord
     OrderRecord.where(combo_id: combo.id, status: "貸出中").sum(:quantity)
   end
 
-  def git return(combo)
+  def return(combo)
     OrderRecord.where(combo_id: combo.id, status: "郵送中").sum(:quantity)
   end
 end
