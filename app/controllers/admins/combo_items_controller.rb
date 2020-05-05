@@ -30,7 +30,7 @@ class Admins::ComboItemsController < ApplicationController
   end
 
   def update
-    combo_item = ComboItem.find(params[:id])
+    combo_item = ComboItem.find_by(product_id: params[:id])
     combo_item.update(
       product_id: params['product_id'],
       combo_id: params['combo_id'],

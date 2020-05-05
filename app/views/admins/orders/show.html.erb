@@ -88,20 +88,6 @@
   </tr>
   </table>
 
-<script>
-  $('.update_button').click(function() {
-    if($('.select_box').val() == "貸出中"){
-      $(".receiver").remove();
-    }else if($('.select_box').val() == "返却済"){
-      $(".lender").remove();
-    }else{
-      $(".receiver").remove();
-      $(".lender").remove();
-    }
-  });
-</script>
-
-
 <% @sum = 0 %>
 <% @order.order_records.each do |order_record| %>
   <% @sum += (order_record.end_price.to_i) * order_record.quantity.to_i * @order.day.to_i  %>
@@ -207,3 +193,4 @@
   </table>
 
 <%= link_to '注文一覧へ戻る',admins_orders_path, class: "btn btn-info" %>
+<%= javascript_include_tag 'order_show' %>

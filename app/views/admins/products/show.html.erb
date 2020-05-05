@@ -31,18 +31,6 @@
               <td><%= @product.product_kind.name %></td>
             </tr>
 
-            <tr>
-              <th>販売ステータス</th>
-              <% @product_records = OrderRecord.where(product_id: @product.id) %>
-                <% @product_records.each do |record| %>
-                <% @quantity = record.quantity %>
-                <% end %>
-                  <% if @product.stock.to_i - (@product_records.joins(:order).where(orders: {status: "予約受付中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "貸出中"}).count.to_i * @quantity.to_i) - (@product_records.joins(:order).where(orders: {status: "郵送中"}).count.to_i * @quantity.to_i) <= 0 %>
-                    <td>売切</td>
-                  <% else %>
-                    <td>販売中</td>
-                  <% end %>
-            </tr>
             <% unless @comboitem.blank? %>
               <tr>
                 <th>追加セット名</th>

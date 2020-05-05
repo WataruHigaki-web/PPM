@@ -25,54 +25,16 @@
   </tr>
 
   <% @combos.each do |combo| %>
-    <% if combo.id == 1 %>
-      <tr>
-        <td>
-          <%= link_to admins_combo_items_path do %>
-            <%= combo.name %>
-          <% end %>
-        </td>
-        <td><%= @re_q1 = combo.reserve(combo) %></td>
-        <td><%= @le_q1 = combo.lending(combo) %></td>
-        <td><%= @tur_q1 = combo.return(combo) %></td>
-      </tr>
-
-    <% elsif combo.id == 2 %>
-      <tr>
-        <td>
-          <%= link_to admins_combo_items_path do %>
-            <%= combo.name %>
-          <% end %>
-        </td>
-        <td><%= @re_q2 = combo.reserve(combo) %></td>
-        <td><%= @le_q2 = combo.lending(combo) %></td>
-        <td><%= @tur_q2 = combo.return(combo) %></td>
-      </tr>
-
-    <% elsif combo.id == 3 %>
-      <tr>
-        <td>
-          <%= link_to admins_combo_items_path do %>
-            <%= combo.name %>
-          <% end %>
-        </td>
-        <td><%= @re_q3 = combo.reserve(combo) %></td>
-        <td><%= @le_q3 = combo.lending(combo) %></td>
-        <td><%= @tur_q3 = combo.return(combo) %></td>
-      </tr>
-
-    <% else %>
-      <tr>
-        <td>
-          <%= link_to admins_combo_items_path do %>
-            <%= combo.name %>
-          <% end %>
-        </td>
-        <td><%= @re_q4 = combo.reserve(combo) %></td>
-        <td><%= @le_q4 = combo.lending(combo) %></td>
-        <td><%= @tur_q4 = combo.return(combo) %></td>
-      </tr>
-    <% end %>
+    <tr>
+      <td>
+        <%= link_to admins_combo_items_path do %>
+          <%= combo.name %>
+        <% end %>
+      </td>
+      <td><%= combo.reserve(combo) %></td>
+      <td><%= combo.lending(combo) %></td>
+      <td><%= combo.return(combo) %></td>
+    </tr>
   <% end %>
 </table>
 
@@ -90,80 +52,42 @@
   <% @combos.each do |combo| %>
     <% if combo.id == 1 %>
       <% combo.combo_items.each do |combo_item| %>
-        <% @re_q = combo_item.reserve(combo_item.product, combo_item.combo) %>
-        <% @le_q = combo_item.lending(combo_item.product, combo_item.combo) %>
-        <% @tur_q = combo_item.return(combo_item.product, combo_item.combo) %>
+        <% @reserve_sum = combo_item.reserve(combo_item.product, combo_item.combo) %>
+        <% @lending_sum = combo_item.lending(combo_item.product, combo_item.combo) %>
+        <% @return_sum = combo_item.return(combo_item.product, combo_item.combo) %>
         <tr>
           <td>
             <%= link_to admins_product_path(combo_item.product) do %>
             　<%= combo_item.product.name %>
           　<% end %>
           </td>
-          <td><%= combo_item.product.stock - @re_q.to_i - @le_q.to_i - @tur_q.to_i %></td>
-          <td><%= @re_q %></td>
-          <td><%= @le_q %></td>
-          <td><%= @tur_q %></td>
-          <% if combo_item.product.stock - @re_q.to_i - @le_q.to_i - @tur_q.to_i == 0 %>
+          <td><%= combo_item.product.stock - @reserve_sum.to_i - @lending_sum.to_i - @return_sum.to_i %></td>
+          <td><%= @reserve_sum %></td>
+          <td><%= @lending_sum %></td>
+          <td><%= @return_sum %></td>
+          <% if combo_item.product.stock - @reserve_sum.to_i - @lending_sum.to_i - @return_sum.to_i == 0 %>
             <td>売切</td>
           <% else %>
             <td>販売中</td>
           <% end %>
         </tr>
       <% end %>
-
-    <% elsif combo.id == 2 %>
-      <% combo.combo_items.each do |combo_item| %>
-        <tr>
-          <td>
-            <%= link_to admins_product_path(combo_item.product) do %>
-            　<%= combo_item.product.name %>
-          　<% end %>
-          </td>
-          <td><%= combo_item.product.stock - @re_q2.to_i - @le_q2.to_i - @tur_q2.to_i %></td>
-          <td><%= @re_q2 %></td>
-          <td><%= @le_q2 %></td>
-          <td><%= @tur_q2 %></td>
-          <% if combo_item.product.stock - @re_q2.to_i - @le_q2.to_i - @tur_q2.to_i <= 0 %>
-            <td>売切</td>
-          <% else %>
-            <td>販売中</td>
-          <% end %>
-        </tr>
-      <% end %>
-
-    <% elsif combo.id == 3 %>
-      <% combo.combo_items.each do |combo_item| %>
-        <tr>
-          <td>
-            <%= link_to admins_product_path(combo_item.product) do %>
-            　<%= combo_item.product.name %>
-          　<% end %>
-          </td>
-          <td><%= combo_item.product.stock - @re_q3.to_i - @le_q3.to_i - @tur_q3.to_i %></td>
-          <td><%= @re_q3 %></td>
-          <td><%= @le_q3 %></td>
-          <td><%= @tur_q3 %></td>
-          <% if combo_item.product.stock - @re_q3.to_i - @le_q3.to_i - @tur_q3.to_i <= 0 %>
-            <td>売切</td>
-          <% else %>
-            <td>販売中</td>
-          <% end %>
-        </tr>
-      <% end %>
-
     <% else %>
       <% combo.combo_items.each do |combo_item| %>
+        <% @combo_reserve_sum = combo_item.combo_reserve(combo_item.combo) %>
+        <% @combo_lending_sum = combo_item.combo_lending(combo_item.combo) %>
+        <% @combo_return_sum = combo_item.combo_return(combo_item.combo) %>
         <tr>
           <td>
             <%= link_to admins_product_path(combo_item.product) do %>
             　<%= combo_item.product.name %>
           　<% end %>
           </td>
-          <td><%= combo_item.product.stock - @re_q4.to_i - @le_q4.to_i - @tur_q4.to_i %></td>
-          <td><%= @re_q4 %></td>
-          <td><%= @le_q4 %></td>
-          <td><%= @tur_q4 %></td>
-          <% if combo_item.product.stock - @re_q4.to_i - @le_q4.to_i - @tur_q4.to_i <= 0 %>
+          <td><%= combo_item.product.stock - @combo_reserve_sum.to_i - @combo_lending_sum.to_i - @combo_return_sum.to_i %></td>
+          <td><%= @combo_reserve_sum %></td>
+          <td><%= @combo_lending_sum %></td>
+          <td><%= @combo_return_sum %></td>
+          <% if combo_item.product.stock - @combo_reserve_sum.to_i - @combo_lending_sum.to_i - @combo_return_sum.to_i == 0 %>
             <td>売切</td>
           <% else %>
             <td>販売中</td>

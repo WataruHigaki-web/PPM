@@ -27,4 +27,16 @@ class ComboItem < ApplicationRecord
   def return(product, combo)
     OrderRecord.where(combo_id: combo.id, product_id: product.id, status: "郵送中").sum(:quantity)
   end
+
+  def combo_reserve(combo)
+    OrderRecord.where(combo_id: combo.id, status: "予約受付中").sum(:quantity)
+  end
+
+  def combo_lending(combo)
+    OrderRecord.where(combo_id: combo.id, status: "貸出中").sum(:quantity)
+  end
+
+  def combo_return(combo)
+    OrderRecord.where(combo_id: combo.id, status: "郵送中").sum(:quantity)
+  end
 end
