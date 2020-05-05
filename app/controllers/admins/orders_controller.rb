@@ -56,7 +56,7 @@ class Admins::OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:status, :get_status, :return_status, :address, :zipcode, :day, :start_date, :finish_date, :user_id, :pay_status, :giv_point, :pay_id)
+    params.require(:order).permit(:status, :get_status, :return_status, :address, :zipcode, :day, :start_date, :finish_date, :user_id, :pay_status, :giv_point, :pay_id, :lender, :receiver)
   end
 
   def order_record_params

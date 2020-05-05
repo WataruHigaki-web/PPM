@@ -41,6 +41,4 @@ class Order < ApplicationRecord
       Order.all
     end
   end
-
-
 end
