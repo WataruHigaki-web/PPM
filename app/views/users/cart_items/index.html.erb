@@ -30,7 +30,7 @@
                     </td>
                     <%= form_with model: cart_item,url:users_cart_item_path(cart_item),remote: false do |f| %>
                       <td>
-                          <span class="combo_count"data-combo-count="<%= cart_item.quantity %>"><%= f.number_field :quantity %></span>
+                          <span class="item_count"data-item-count="<%= cart_item.quantity %>"><%= f.number_field :quantity %></span>
                         <%= f.submit "更新",class: "btn btn-info" %>
                       </td>
                     <% end %>
@@ -91,16 +91,24 @@
               </td>
             </tr>
             <tr>
-              <%= form_tag(users_cart_items_path, method: :get) do %>
-                <th>クーポン番号を入力
+              <%= form_tag(users_cart_items_path, method: :get, remote: false) do %>
+                <th>クーポン番号を入力(1注文につき１クーポンまで)
                     <%= text_field(@search_content, :search) %>
                     <%= submit_tag '適用',class: "btn btn-info",id: "discount-button" %>
                 </th>
-                  <% unless @discount.blank? %>
+                  <% if @discount.present? %>
                     <td id="discount">
                       <%= @discount.name %>:
                       <span id="discount-price" data-price="<%= @discount.price %>" data-require-day="<%= @discount.require_day %>" data-require-combo="<%= @discount.require_combo %>" data-require-item="<%= @discount.require_item %>">
                         <%= @discount.price %>
+                      </span>円割引
+                      <%= submit_tag '削除',class: "btn btn-danger" %>
+                    </td>
+                  <% elsif session["discount"].present? %>
+                    <td id="discount">
+                      <%= session["discount"]["name"] %>:
+                      <span id="discount-price" data-price="<%= session["discount"]["price"] %>" data-require-day="<%= session["discount"]["require_day"] %>" data-require-combo="<%= session["discount"]["require_combo"] %>" data-require-item="<%= session["discount"]["require_item"] %>">
+                        <%= session["discount"]["price"] %>
                       </span>円割引
                       <%= submit_tag '削除',class: "btn btn-danger" %>
                     </td>
@@ -147,7 +155,7 @@
                         <%= Product.find(cart_item["product_id"]).name %>
                       <% end %>
                     </td>
-                    <td>
+                    <td class="item_count"data-item-count="<%= cart_item["quantity"] %>">
                       <%= cart_item["quantity"] %>
                     </td>
                 <% else %>
@@ -157,7 +165,7 @@
                       <%= Combo.find(cart_item["combo_id"]).name%>
                     <% end %>
                   </td>
-                  <td class="quantity">
+                  <td class="combo_count"data-combo-count="<%= cart_item["quantity"] %>">
                     <%= cart_item["quantity"] %>
                   </td>
                 <% end %>
@@ -202,24 +210,32 @@
             </td>
           </tr>
           <tr>
-              <%= form_tag(users_cart_items_path, method: :get) do %>
-                <th>クーポン番号を入力
-                    <%= text_field(@search_content, :search) %>
-                    <%= submit_tag '適用',class: "btn btn-info",id: "discount-button" %>
-                </th>
-                  <% unless @discount.blank? %>
-                    <td id="discount">
-                      <%= @discount.name %>:
-                      <span id="discount-price" data-price="<%= @discount.price %>" data-require-day="<%= @discount.require_day %>" data-require-combo="<%= @discount.require_combo %>" data-require-item="<%= @discount.require_item %>">
-                        <%= @discount.price %>
-                      </span>円割引
-                      <%= submit_tag '削除',class: "btn btn-danger" %>
-                    </td>
-                  <% else %>
-                    <td>クーポン無し</td>
-                <% end %>
+            <%= form_tag(users_cart_items_path, method: :get, remote: false) do %>
+              <th>クーポン番号を入力(1注文につき１クーポンまで)
+                  <%= text_field(@search_content, :search) %>
+                  <%= submit_tag '適用',class: "btn btn-info",id: "discount-button" %>
+              </th>
+                <% if @discount.present? %>
+                  <td id="discount">
+                    <%= @discount.name %>:
+                    <span id="discount-price" data-price="<%= @discount.price %>" data-require-day="<%= @discount.require_day %>" data-require-combo="<%= @discount.require_combo %>" data-require-item="<%= @discount.require_item %>">
+                      <%= @discount.price %>
+                    </span>円割引
+                    <%= submit_tag '削除',class: "btn btn-danger" %>
+                  </td>
+                <% elsif session["discount"].present? %>
+                  <td id="discount">
+                    <%= session["discount"]["name"] %>:
+                    <span id="discount-price" data-price="<%= session["discount"]["price"] %>" data-require-day="<%= session["discount"]["require_day"] %>" data-require-combo="<%= session["discount"]["require_combo"] %>" data-require-item="<%= session["discount"]["require_item"] %>">
+                      <%= session["discount"]["price"] %>
+                    </span>円割引
+                    <%= submit_tag '削除',class: "btn btn-danger" %>
+                  </td>
+                <% else %>
+                  <td>クーポン無し</td>
               <% end %>
-            </tr>
+            <% end %>
+          </tr>
           <tr>
             <th>ポイントイベント(<%= @point_event.name %>)</th>
             <td>ポイント<%= @point_event.bonus %>倍</td>
@@ -242,7 +258,7 @@
            q.value = delIndex;
            document.forms[0].appendChild(q);
       });
-      
+
       sum = $('#cart_item_sum').data('sum');
       final_sum = sum;
       point_sum = Number($("#point_sum").data('point'));
@@ -266,10 +282,10 @@
           require_combo = Number($("#discount-price").data("require-combo"));
           require_item = Number($("#discount-price").data("require-item"));
           combo_count = Number($(".combo_count").data("combo-count"));
-          if ($(".item_count").data("item-count")){
-            item_count = Number($(".item_count").data("item-count"));
+          if ($(".item_count").data("item-count") == null){
+            item_count = 0
           }else{
-             item_count = 0
+            item_count = Number($(".item_count").data("item-count"));
           }
 
           if (day >= require_day && combo_count >= require_combo && item_count >= require_item){
@@ -285,23 +301,54 @@
           $('#point_sum').text(String(point_sum * day) + 'pt');
         }
       });
+
+      if ($("#discount-price").length) {
+          var day = Number($('#day').val());
+          discount = Number($("#discount-price").data("price"));
+          require_day = Number($("#discount-price").data("require-day"));
+          require_combo = Number($("#discount-price").data("require-combo"));
+          require_item = Number($("#discount-price").data("require-item"));
+          combo_count = Number($(".combo_count").data("combo-count"));
+          if ($(".item_count").data("item-count") == null){
+            item_count = 0
+          }else{
+             item_count = Number($(".item_count").data("item-count"));
+          }
+
+          if (day >= require_day && combo_count >= require_combo && item_count >= require_item){
+            $('#cart_item_sum').text(String(sum * day) - discount + '円');
+            $('#point_sum').text(String(point_sum * day) - (discount / 100) + 'pt');
+          }else{
+            alert ('クーポンの条件に一致しておりません')
+            $('#cart_item_sum').text(String(sum * day));
+            $('#point_sum').text(String(point_sum * day) + 'pt');
+          }
+        }else{
+          var day = Number($('#day').val());
+          $('#cart_item_sum').text(String(sum * day));
+          $('#point_sum').text(String(point_sum * day) + 'pt');
+        }
     </script>
 
   <div class="col-md-12">
     <% if user_signed_in? %>
       <% unless current_user.status == false || current_user.is_deleted == true %>
-
-        <%= link_to new_users_order_path, data: {"turbolinks" => false} do %>
-          <button class="btn btn-info go_button">購入手続きへ進む</button>
-        <%= link_to '買い物を続ける',users_combo_items_path,class: "btn btn-info", data: {"turbolinks" => false} %>
+        <% unless @cart_items == [] %>
+          <%= link_to new_users_order_path, data: {"turbolinks" => false} do %>
+            <button class="btn btn-info go_button">購入手続きへ進む</button>
+          <% end %>
         <% end %>
+
+        <%= link_to '買い物を続ける',users_combo_items_path,class: "btn btn-info", data: {"turbolinks" => false} %>
 
       <% else %>
         <h4>購入手続きへは進むには、利用再開申請または管理者へお問い合わせください</h4><br/>
       <% end %>
     <% else %>
-       <%= link_to 'ユーザー登録してこの商品を注文',new_user_registration_path,class: "btn btn-info cart-button" %>
-       <%= link_to 'アカウントをお持ちの方はこちら',new_user_session_path,class: "btn btn-info cart-button" %>
+      <% unless session[:cart_item].blank? %>
+        <%= link_to 'ユーザー登録してこの商品を注文',new_user_registration_path,class: "btn btn-info cart-button" %>
+        <%= link_to 'アカウントをお持ちの方はこちら',new_user_session_path,class: "btn btn-info cart-button" %>
+      <% end %>
        <%= link_to '買い物を続ける',users_combo_items_path,class: "btn btn-info cart-button", data: {"turbolinks" => false} %>
     <% end %>
   </div>

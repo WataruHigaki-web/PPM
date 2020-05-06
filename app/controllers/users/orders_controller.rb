@@ -4,7 +4,8 @@ class Users::OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_correct_user, only:[:destroy,:update]
   def new
-   @order = Order.new
+    session["day"] = []
+    @order = Order.new
   end
 
   def confirm

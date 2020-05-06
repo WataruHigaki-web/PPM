@@ -7,6 +7,10 @@ class Users::CartItemsController < ApplicationController
     unless params[:search].blank?
       search = params[:search]
       @discount = Discount.search(search)
+      session["discount"] = @discount
+    end
+    if params["commit"] == "削除"
+      session["discount"] = []
     end
     @cart_item = Combo.find(1)
     render 'index'
@@ -17,6 +21,10 @@ class Users::CartItemsController < ApplicationController
     redirect_to users_cart_items_path
   end
 
+  def save_discount
+    session["discount"] = params["discount"].to_i
+    redirect_to users_cart_items_path
+  end
 
   def save
     session[:cart_item].each do |cart_item|
