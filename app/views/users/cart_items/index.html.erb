@@ -83,7 +83,7 @@
               <td>
                 <%= form_with url: users_cart_items_save_day_path do |f| %>
                   <% if session["day"].blank? %>
-                    <%= f.number_field :day, id: "day", type: "number" %>日間
+                    <%= f.number_field :day, id: "day", type: "number",value: 1 %>日間
                   <% else %>
                     <%= f.number_field :day, value: session["day"], id: "day", type: "number" %>日間
                   <% end %>
@@ -194,7 +194,7 @@
             <td>
               <%= form_with url: users_cart_items_save_day_path do |f| %>
                 <% if session["day"].blank? %>
-                  <%= f.number_field :day, id: "day", type: "number" %>日間
+                  <%= f.number_field :day, id: "day", type: "number", value: 1 %>日間
                 <% else %>
                   <%= f.number_field :day, value: session["day"], id: "day", type: "number" %>日間
                 <% end %>
@@ -256,8 +256,9 @@
       });
       $('#day').change(function(){
         var day = Number($(this).val());
-        if(Math.sign(day) == -1){
+        if(Math.sign(day) == -1 || Math.sign(day) == 0 ){
           alert ('日数が不正な値です')
+          return
         }
         var discount = 0;
         if ($("#discount-price").length) {

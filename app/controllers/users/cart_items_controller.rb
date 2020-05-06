@@ -17,8 +17,12 @@ class Users::CartItemsController < ApplicationController
   end
 
   def save_day
-    session["day"] = params["day"].to_i
-    redirect_to users_cart_items_path
+    if params["day"].to_i > 0
+      session["day"] = params["day"].to_i
+      redirect_to users_cart_items_path
+    else
+      render 'index'
+    end
   end
 
   def save_discount
