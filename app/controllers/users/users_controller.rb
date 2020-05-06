@@ -51,7 +51,7 @@ class Users::UsersController < ApplicationController
       )
       flash[:notice] = '退会手続が完了しました。復活の際は再開手続をお願いいたします。今までのご利用ありがとうございました。'
     end
-    redirect_to users_root_path(current_user)
+    redirect_to users_root_path
   end
 
   private
