@@ -19,6 +19,10 @@ class Users::OrdersController < ApplicationController
     unless params[:search].blank?
       search = params[:search]
       @discount = Discount.search(search)
+      session["discount"] = @discount
+    end
+    if params["commit"] == "削除"
+      session["discount"] = []
     end
   end
 
@@ -68,6 +72,7 @@ class Users::OrdersController < ApplicationController
     )
     order.user_id = current_user.id
     order.save
+    session["discount"] = []
     out_point = OutPoint.new(
       point: params['out_point'],
       order_id:   order.id,

@@ -96,15 +96,7 @@
                     <%= text_field(@search_content, :search) %>
                     <%= submit_tag '適用',class: "btn btn-info",id: "discount-button" %>
                 </th>
-                  <% if @discount.present? %>
-                    <td id="discount">
-                      <%= @discount.name %>:
-                      <span id="discount-price" data-price="<%= @discount.price %>" data-require-day="<%= @discount.require_day %>" data-require-combo="<%= @discount.require_combo %>" data-require-item="<%= @discount.require_item %>">
-                        <%= @discount.price %>
-                      </span>円割引
-                      <%= submit_tag '削除',class: "btn btn-danger" %>
-                    </td>
-                  <% elsif session["discount"].present? %>
+                  <% if session["discount"].present? %>
                     <td id="discount">
                       <%= session["discount"]["name"] %>:
                       <span id="discount-price" data-price="<%= session["discount"]["price"] %>" data-require-day="<%= session["discount"]["require_day"] %>" data-require-combo="<%= session["discount"]["require_combo"] %>" data-require-item="<%= session["discount"]["require_item"] %>">
@@ -215,15 +207,7 @@
                   <%= text_field(@search_content, :search) %>
                   <%= submit_tag '適用',class: "btn btn-info",id: "discount-button" %>
               </th>
-                <% if @discount.present? %>
-                  <td id="discount">
-                    <%= @discount.name %>:
-                    <span id="discount-price" data-price="<%= @discount.price %>" data-require-day="<%= @discount.require_day %>" data-require-combo="<%= @discount.require_combo %>" data-require-item="<%= @discount.require_item %>">
-                      <%= @discount.price %>
-                    </span>円割引
-                    <%= submit_tag '削除',class: "btn btn-danger" %>
-                  </td>
-                <% elsif session["discount"].present? %>
+                <% if session["discount"].present? %>
                   <td id="discount">
                     <%= session["discount"]["name"] %>:
                     <span id="discount-price" data-price="<%= session["discount"]["price"] %>" data-require-day="<%= session["discount"]["require_day"] %>" data-require-combo="<%= session["discount"]["require_combo"] %>" data-require-item="<%= session["discount"]["require_item"] %>">

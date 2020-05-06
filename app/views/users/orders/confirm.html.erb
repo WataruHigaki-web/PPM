@@ -71,24 +71,24 @@
   <h4>クーポン</h4>
     <table class="table table-bordered">
       <tr>
-          <%= form_tag(users_orders_confirm_path, method: :get, remote: false) do %>
-            <th>クーポン番号を入力
-                <%= number_field(@search_content, :search) %>
-                <%= submit_tag '適用',class: "btn btn-info",id: "discount-button",remote: false %>
-            </th>
-              <% unless @discount.blank? %>
-                <td id="discount">
-                  <%= @discount.name %>:
-                  <span id="discount-price" data-price="<%= @discount.price %>" data-require-day="<%= @discount.require_day %>" data-require-combo="<%= @discount.require_combo %>" data-require-item="<%= @discount.require_item %>">
-                    <%= @discount.price %>
-                  </span>円割引
-                  <%= submit_tag '削除',class: "btn btn-danger" %>
-                </td>
-              <% else %>
-                <td>クーポン無し</td>
-              <% end %>
+        <%= form_tag(users_orders_confirm_path, method: :get, remote: false) do %>
+          <th>クーポン番号を入力(1注文につき１クーポンまで)
+              <%= text_field(@search_content, :search) %>
+              <%= submit_tag '適用',class: "btn btn-info",id: "discount-button" %>
+          </th>
+            <% if session["discount"].present? %>
+              <td id="discount">
+                <%= session["discount"]["name"] %>:
+                <span id="discount-price" data-price="<%= session["discount"]["price"] %>" data-require-day="<%= session["discount"]["require_day"] %>" data-require-combo="<%= session["discount"]["require_combo"] %>" data-require-item="<%= session["discount"]["require_item"] %>">
+                  <%= session["discount"]["price"] %>
+                </span>円割引
+                <%= submit_tag '削除',class: "btn btn-danger" %>
+              </td>
+            <% else %>
+              <td>クーポン無し</td>
           <% end %>
-        </tr>
+        <% end %>
+      </tr>
     </table>
 
   <%= form_with model: @order,url:users_orders_path,mothod: :post do |f| %>
@@ -134,10 +134,10 @@
 
         <%= f.hidden_field :point_event, :value => @point_event.id %>
 
-        <% if @discount.blank? %>
+        <% if session["discount"].blank? %>
           <%= f.hidden_field :discount, :value => 2 %>
-        <% else %>
-          <%= f.hidden_field :discount, :value => @discount.id %>
+        <% elsif  %>
+          <%= f.hidden_field :discount, :value => session["discount"]["id"] %>
         <% end %>
 
     <script type="text/javascript">
@@ -174,10 +174,10 @@
         require_combo = Number($("#discount-price").data("require-combo"));
         require_item = Number($("#discount-price").data("require-item"));
         combo_count = Number($(".combo_count").data("combo-count"));
-        if ($(".item_count").data("item-count")){
-        item_count = Number($(".item_count").data("item-count"));
+        if ($(".item_count").data("item-count") == null){
+          item_count = 0
         }else{
-         item_count = 0
+          item_count = Number($(".item_count").data("item-count"));
         }
 
           if (day >= require_day && combo_count >= require_combo && item_count >= require_item){
