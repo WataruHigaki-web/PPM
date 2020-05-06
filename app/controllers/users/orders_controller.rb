@@ -106,7 +106,7 @@ class Users::OrdersController < ApplicationController
     order = Order.find(params[:id])
     order.destroy
     flash[:notice] = "予約をキャンセルしました"
-    redirect_to users_root_path(current_user)
+    redirect_to users_root_path
   end
 
 

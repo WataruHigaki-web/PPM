@@ -1,10 +1,16 @@
 <h2>お気に入り商品一覧</h2>
 <div class="row">
-
+  <% if @favorites.any? {|favorite| favorite.product.on_sale_or_sold_out(favorite.product) == "売切"} || @combo_favorites.any? {|favorite| !favorite.combo.status} %>
+    <div class="alert alert-warning alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>売切商品が含まれている為、"まとめてカート入れ" ができません。</strong>
+    </div>
+  <% else %>
     <%= form_with(url:users_cart_items_path,method: :post) do |f| %>
       <%= f.hidden_field :favorite, :value => "all" %>
-      <%= f.submit '全商品をカートに入れる',class: "btn btn-info",id: "button" %>
+      <%= f.submit 'まとめてカート入れ',class: "btn btn-info",id: "button" %>
     <% end %>
+  <% end %>
 
 
     <div class="col-md-12">
@@ -41,7 +47,7 @@
                 <% end %>
           </tr>
 
-     <% end %>
+      <% end %>
         <% @combo_favorites.each do |favorite| %>
           <tr class="favorite">
             <td>
