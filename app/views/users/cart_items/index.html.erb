@@ -317,7 +317,7 @@
 
   <div class="col-md-12">
     <% if user_signed_in? %>
-      <% unless current_user.status == false || current_user.is_deleted == true %>
+      <% unless !current_user.status || current_user.is_deleted %>
         <% unless @cart_items == [] %>
           <%= link_to new_users_order_path, data: {"turbolinks" => false} do %>
             <button class="btn btn-info go_button">購入手続きへ進む</button>
