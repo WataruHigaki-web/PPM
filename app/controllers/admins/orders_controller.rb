@@ -7,6 +7,11 @@ class Admins::OrdersController < ApplicationController
     @discounts = Discount.where(status: true)
   end
 
+  def user_orders
+    @user = User.find(params["format"].to_i)
+    @orders = @user.orders.page(params[:page]).per(10).order('created_at DESC')
+  end
+
   def index
     @orders = Order.page(params[:page]).per(10).order('created_at DESC')
   end
