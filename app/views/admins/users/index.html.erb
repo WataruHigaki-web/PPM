@@ -16,7 +16,7 @@
   <% @users.each do |user| %>
   <tr>
     <td><%= user.id %></td>
-    <td><%= link_to user.name,admins_user_path(user) %>
+    <td><%= link_to user.name,　admins_user_path(user) %>
     </td>
     <td><%= user.email %></td>
 
@@ -38,7 +38,7 @@
     <th>ステータス</th>
   </tr>
   <% @users.each do |user| %>
-    <% if user.is_deleted == false && user.status == false %>
+    <% if !user.is_deleted && !user.status %>
       <tr>
         <td><%= user.id %></td>
         <td><%= link_to user.name,admins_user_path(user) %>
@@ -63,7 +63,7 @@
     <th>ステータス</th>
   </tr>
   <% @users.each do |user| %>
-    <% if user.is_deleted == true %>
+    <% if user.is_deleted %>
       <tr>
         <td><%= user.id %></td>
         <td><%= link_to user.name,admins_user_path(user) %>

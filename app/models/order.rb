@@ -23,7 +23,6 @@ class Order < ApplicationRecord
     end
   end
 
-
   def presence_date
     if !start_date.present? || !finish_date.present?
       errors.add(:start_date, '日付が未記入です')

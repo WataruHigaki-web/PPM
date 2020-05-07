@@ -13,7 +13,7 @@
       </div>
         <div class="collapse navbar-collapse" id="navbarEexample10">
           <ul class="nav navbar-nav">
-            <% if user_signed_in? && current_user.status == true && current_user.is_deleted == false %>
+            <% if user_signed_in? && current_user.status && !current_user.is_deleted %>
               <li>
                 <%= link_to users_root_path, data: {"turbolinks" => false} do %>
                   <span class="glyphicon glyphicon-home" aria-hidden="true"> ホーム</span>
@@ -82,7 +82,7 @@
                 <% end %>
               </li>
 
-            <% elsif user_signed_in? && current_user.status == false || user_signed_in? && current_user.is_deleted == true %>
+            <% elsif user_signed_in? && !current_user.status || user_signed_in? && current_user.is_deleted %>
               <li>
                 <%= link_to users_root_path(current_user), data: {"turbolinks" => false} do %>
                   <span class="glyphicon glyphicon-home" aria-hidden="true"> ホーム</span>

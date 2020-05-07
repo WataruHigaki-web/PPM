@@ -39,7 +39,7 @@ class Users::UsersController < ApplicationController
 
   def withdrawal
     user = User.find(params[:id])
-    if user.is_deleted == true
+    if user.is_deleted
       user.update(
         is_deleted: false
       )

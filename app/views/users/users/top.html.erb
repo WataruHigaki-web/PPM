@@ -7,7 +7,7 @@
 
 <h2><%= current_user.name %>さんのページ</h2>
 
-<% if current_user.status == false || current_user.is_deleted == true %>
+<% if !current_user.status || current_user.is_deleted %>
 <div class="alert alert-warning alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <strong>あなたは無効会員または退会手続済会員です。画面をロックしています</strong>
