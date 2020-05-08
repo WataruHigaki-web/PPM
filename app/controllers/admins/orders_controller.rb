@@ -8,7 +8,6 @@ class Admins::OrdersController < ApplicationController
   end
 
   def user_orders
-    binding.pry
     @user = User.find(params["format"].to_i)
     @orders = @user.orders.page(params[:page]).per(10).order('created_at DESC')
   end
