@@ -8,6 +8,7 @@ class Admins::OrdersController < ApplicationController
   end
 
   def user_orders
+    binding.pry
     @user = User.find(params["format"].to_i)
     @orders = @user.orders.page(params[:page]).per(10).order('created_at DESC')
   end
@@ -66,5 +67,9 @@ class Admins::OrdersController < ApplicationController
 
   def order_record_params
     params.require(:order_record).permit(:status)
+  end
+
+  def user_params
+    params.require(:user).permit(:user_id)
   end
 end
