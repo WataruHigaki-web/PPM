@@ -17,50 +17,50 @@ if(day == 0 ){
 
 
 var sum = Number($('#sum').data('sum'));
-var create_point = Number($('#create_point').data('create-point'));
+var createPoint = Number($('#create_point').data('create-point'));
 var day = Number($('#day').data('session-day'));
 var discount = 0;
 var point = 0;
-var final_sum = sum;
+var finalSum = sum;
 if ($("#discount-price").length) {
-  discount = Number($("#discount-price").data("price"));
-  require_day = Number($("#discount-price").data("require-day"));
-  require_combo = Number($("#discount-price").data("require-combo"));
-  require_item = Number($("#discount-price").data("require-item"));
-  combo_count = Number($(".combo_count").data("combo-count"));
-  if ($(".item_count").data("item-count") == null){
-    item_count = 0
-  }else{
-    item_count = Number($(".item_count").data("item-count"));
-  }
+    var discount = Number($("#discount-price").data("price"));
+    var requireDay = Number($("#discount-price").data("require-day"));
+    var requireCombo = Number($("#discount-price").data("require-combo"));
+    var requireItem = Number($("#discount-price").data("require-item"));
+    var comboCount = Number($(".combo_count").data("combo-count"));
+    if ($(".item_count").data("item-count") == null){
+      itemCount = 0
+    }else{
+      itemCount = Number($(".item_count").data("item-count"));
+    }
 
-    if (day >= require_day && combo_count >= require_combo && item_count >= require_item){
-      final_sum = sum - discount - point;
+    if (day >= requireDay && comboCount >= requireCombo && itemCount >= requireItem){
+      var finalSum = sum - discount - point;
       var bonus = Number($('#bonus').data('point-bonus'));
-      $('#sum').text(String(final_sum) + '円');
+      $('#sum').text(String(finalSum) + '円');
       $('#create_point').text(String(create_point) - (discount * bonus / 100) + 'pt');
     }else{
       alert ('クーポン条件にマッチしておりません。')
-      $('#sum').text(String(final_sum) + '円');
+      $('#sum').text(String(finalSum) + '円');
     }
 }
 
 $('#out_point').change(function(){
   if ($('#not_point').prop('checked')){
     var point = Number($('#not_point').val());
-    var final_sum = sum;
+    var finalSum = sum;
   }else if ($('#all_point').prop('checked')){
     if(Number($('#all_point').val()) - sum - discount >= 0){
-       point = sum - discount;
+      var point = sum - discount;
     }else if(Number($('#all_point').val()) - sum < 0){
       var point = Number($('#all_point').val());
     }
     document.getElementById("out").value = point;
   }else{
-    point = Number($('#part_point').val());
-    var all_point = Number($('#all_point').val());
-    var final_sum = sum;
-    if (point > all_point || point > final_sum){
+    var point = Number($('#part_point').val());
+    var allPoint = Number($('#all_point').val());
+    var finalSum = sum;
+    if (point > allPoint || point > finalSum){
       document.getElementById("button").disabled = true;
       alert ('利用ポイントが不正な値です')
     }else{
@@ -68,14 +68,14 @@ $('#out_point').change(function(){
       document.getElementById("out").value = point;
     }
   }
-   final_sum = sum - discount - point;
-   $('#sum').text(String(final_sum) + '円');
-   if(final_sum < 0){
+   finalSum = sum - discount - point;
+   $('#sum').text(String(finalSum) + '円');
+   if(finalSum < 0){
     alert ('利用ポイントが不正な値です')
    }
    var bonus = Number($('#bonus').data('point-bonus'));
-   $('#sum').text(String(final_sum) + '円');
-   $('#create_point').text(String(final_sum * bonus / 100) + 'pt');
-   var create_point = final_sum * bonus / 100;
-   document.getElementById("create").value = create_point;
+   $('#sum').text(String(finalSum) + '円');
+   $('#create_point').text(String(finalSum * bonus / 100) + 'pt');
+   var createPoint = finalSum * bonus / 100;
+   document.getElementById("create").value = createPoint;
 });

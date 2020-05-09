@@ -9,8 +9,8 @@ $('input[name="delete_button"]').click(function(){
 });
 
 var sum = $('#cart_item_sum').data('sum');
-var final_sum = sum;
-var point_sum = Number($("#point_sum").data('point'));
+var finalSum = sum;
+var pointSum = Number($("#point_sum").data('point'));
 
 $('input[name="quantity"]').change(function() {
   var quantity = Number($(this).val());
@@ -28,53 +28,53 @@ $('#day').change(function(){
   var discount = 0;
   if ($("#discount-price").length) {
     var discount = Number($("#discount-price").data("price"));
-    var require_day = Number($("#discount-price").data("require-day"));
-    var require_combo = Number($("#discount-price").data("require-combo"));
-    var require_item = Number($("#discount-price").data("require-item"));
-    var combo_count = Number($(".combo_count").data("combo-count"));
+    var requireDay = Number($("#discount-price").data("require-day"));
+    var requireCombo = Number($("#discount-price").data("require-combo"));
+    var requireItem = Number($("#discount-price").data("require-item"));
+    var comboCount = Number($(".combo_count").data("combo-count"));
     if ($(".item_count").data("item-count") == null){
-      item_count = 0
+      itemCount = 0
     }else{
-      item_count = Number($(".item_count").data("item-count"));
+      itemCount = Number($(".item_count").data("item-count"));
     }
 
-    if (day >= require_day && combo_count >= require_combo && item_count >= require_item){
+    if (day >= requireDay && comboCount >= requireCombo && itemCount >= requireItem){
       $('#cart_item_sum').text(String(sum * day) - discount + '円');
-      $('#point_sum').text(String(point_sum * day) - (discount / 100) + 'pt');
+      $('#point_sum').text(String(pointSum * day) - (discount / 100) + 'pt');
     }else{
       alert ('クーポンの条件に一致しておりません')
       $('#cart_item_sum').text(String(sum * day));
-      $('#point_sum').text(String(point_sum * day) + 'pt');
+      $('#point_sum').text(String(pointSum * day) + 'pt');
     }
   }else{
     $('#cart_item_sum').text(String(sum * day));
-    $('#point_sum').text(String(point_sum * day) + 'pt');
+    $('#point_sum').text(String(pointSum * day) + 'pt');
   }
 });
 
 if ($("#discount-price").length) {
     var day = Number($('#day').val());
     var discount = Number($("#discount-price").data("price"));
-    var require_day = Number($("#discount-price").data("require-day"));
-    var require_combo = Number($("#discount-price").data("require-combo"));
-    var require_item = Number($("#discount-price").data("require-item"));
-    var combo_count = Number($(".combo_count").data("combo-count"));
+    var requireDay = Number($("#discount-price").data("require-day"));
+    var requireCombo = Number($("#discount-price").data("require-combo"));
+    var requireItem = Number($("#discount-price").data("require-item"));
+    var comboCount = Number($(".combo_count").data("combo-count"));
     if ($(".item_count").data("item-count") == null){
       item_count = 0
     }else{
        item_count = Number($(".item_count").data("item-count"));
     }
 
-    if (day >= require_day && combo_count >= require_combo && item_count >= require_item){
+    if (day >= requireDay && comboCount >= requireCombo && item_count >= requireItem){
       $('#cart_item_sum').text(String(sum * day) - discount + '円');
-      $('#point_sum').text(String(point_sum * day) - (discount / 100) + 'pt');
+      $('#point_sum').text(String(pointSum * day) - (discount / 100) + 'pt');
     }else{
       alert ('クーポンの条件に一致しておりません')
       $('#cart_item_sum').text(String(sum * day));
-      $('#point_sum').text(String(point_sum * day) + 'pt');
+      $('#point_sum').text(String(pointSum * day) + 'pt');
     }
   }else{
     var day = Number($('#day').val());
     $('#cart_item_sum').text(String(sum * day));
-    $('#point_sum').text(String(point_sum * day) + 'pt');
+    $('#point_sum').text(String(pointSum * day) + 'pt');
   }
