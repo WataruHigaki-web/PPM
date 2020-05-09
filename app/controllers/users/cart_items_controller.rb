@@ -86,7 +86,7 @@ class Users::CartItemsController < ApplicationController
     cart_item = CartItem.find(params[:id])
     cart_item.update(cart_item_params)
     flash[:notice] = '個数を編集しました'
-    redirect_to users_cart_items_path(current_user)
+    redirect_to users_cart_items_path
   end
 
   def session_delete
@@ -97,17 +97,17 @@ class Users::CartItemsController < ApplicationController
   def destroy
     cart_item = CartItem.find(params[:id])
     cart_item.destroy
-    redirect_to users_cart_items_path(current_user)
+    redirect_to users_cart_items_path
   end
 
   def destroy_all
     if user_signed_in?
       current_user.cart_items.destroy_all
-      redirect_to users_cart_items_path(current_user)
+      redirect_to users_cart_items_path
     else
       user = User.find(1)
       user.cart_items.destroy_all
-      redirect_to users_cart_items_path(user)
+      redirect_to users_cart_items_path
     end
   end
 
