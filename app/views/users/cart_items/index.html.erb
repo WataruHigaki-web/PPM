@@ -1,126 +1,68 @@
 <div class="row">
-  <div class="col-md-12">
-    <h2>カート内一覧</h2>
-    <% if user_signed_in? %>
-      <% if @cart_items.blank? %>
-        <div class="alert alert-warning alert-dismissible" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>カートに商品がありません</strong>
-        </div>
-      <% else %>
-        <%= link_to "カートを空にする",users_cart_items_destroy_all_path,class: "btn btn-danger",method: :delete, "data-confirm" => "本当に削除しますか？" %>
-      <% end %>
-          <table class="table table-bordered tbl-r04"align="center">
-            <tr class="thead">
-              <th>画像</th>
-              <th>セットまたは商品名</th>
-              <th>個数</th>
-              <th>金額</th>
-              <th></th>
-            </tr>
-            <% @sum = 0 %>
-              <% @cart_items.each do |cart_item| %>
-              <tr class="cart_item"data-presence="<% @cart_items %>">
-                <% if cart_item.combo.id == 1 %>
-                  <td><%= attachment_image_tag cart_item.product,:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
+  <% if user_signed_in? %>
+    <div class="col-md-12">
+      <h2>カート内一覧</h2>
+        <% if @cart_items.blank? %>
+          <div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong>カートに商品がありません</strong>
+          </div>
+        <% else %>
+          <%= link_to "カートを空にする",users_cart_items_destroy_all_path,class: "btn btn-danger",method: :delete, "data-confirm" => "本当に削除しますか？" %>
+        <% end %>
+            <table class="table table-bordered tbl-r04"align="center">
+              <tr class="thead">
+                <th>画像</th>
+                <th>セットまたは商品名</th>
+                <th>個数</th>
+                <th>金額</th>
+                <th></th>
+              </tr>
+              <% sum = 0 %>
+                <% @cart_items.each do |cart_item| %>
+                <tr class="cart_item"data-presence="<% @cart_items %>">
+                  <% if cart_item.combo.id == 1 %>
+                    <td><%= attachment_image_tag cart_item.product,:product_image,:fill,200,200, fallback:"no_image.jpg" %></td>
+                      <td>
+                        <%= link_to users_product_path(cart_item.product) do %>
+                          <%= cart_item.product.name %>
+                        <% end %>
+                      </td>
+                      <%= form_with model: cart_item,url:users_cart_item_path(cart_item),remote: false do |f| %>
+                        <td>
+                            <span class="item_count"data-item-count="<%= cart_item.quantity %>"><%= f.number_field :quantity %></span>
+                          <%= f.submit "更新",class: "btn btn-info" %>
+                        </td>
+                      <% end %>
+                        <td><%= cart_item.combo.price %></td>
+                        <td>
+                          <%= link_to '削除',users_cart_item_path(cart_item),method: :delete,class: "btn btn-danger" %>
+                        </td>
+                  <% else %>
+                    <td><%= attachment_image_tag cart_item.combo,:combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
                     <td>
-                      <%= link_to users_product_path(cart_item.product) do %>
-                        <%= cart_item.product.name %>
+                      <%= link_to users_combo_path(cart_item.combo) do %>
+                        <%= cart_item.combo.name %>
                       <% end %>
                     </td>
-                    <%= form_with model: cart_item,url:users_cart_item_path(cart_item),remote: false do |f| %>
-                      <td>
-                          <span class="item_count"data-item-count="<%= cart_item.quantity %>"><%= f.number_field :quantity %></span>
-                        <%= f.submit "更新",class: "btn btn-info" %>
-                      </td>
-                    <% end %>
-                      <td><%= cart_item.combo.price %></td>
-                      <td>
-                        <%= link_to '削除',users_cart_item_path(cart_item),method: :delete,class: "btn btn-danger" %>
-                      </td>
-                <% else %>
-                  <td><%= attachment_image_tag cart_item.combo,:combo_image,:fill,200,200, fallback:"no_image.jpg" %></td>
-                  <td>
-                    <%= link_to users_combo_path(cart_item.combo) do %>
-                      <%= cart_item.combo.name %>
-                    <% end %>
-                  </td>
-                    <%= form_with model: cart_item,url:users_cart_item_path(cart_item) do |f| %>
-                      <td>
-                          <span class="combo_count"data-combo-count="<%= cart_item.quantity %>"><%= f.number_field :quantity %></span>
-                        <%= f.submit "更新",class: "btn btn-info" %>
-                      </td>
-                    <% end %>
-                      <td><%= cart_item.combo.price %></td>
-                      <td>
-                        <%= link_to '削除',users_cart_item_path(cart_item),method: :delete,class: "btn btn-danger" %>
-                      </td>
-                <% end %>
-              </tr>
-            <% @sum += (cart_item.combo.price).to_i * (cart_item.quantity).to_i %>
-            <% end %>
-          </table>
-  </div>
-
-      <div class="col-md-12">
-        <h2>料金早見表</h2>
-        <div class="alert alert-info alert-dismissible">
-          <p>商品の個数、レンタル日数、クーポン記入(<%= link_to 'クーポン一覧はこちら', users_discounts_path %>)</p>
-        </div>
-          <table class="table table-bordered">
-            <tr>
-              <th>お見積もり金額</th>
-              <td id="cart_item_sum"data-sum="<%= @sum %>">
-                <% if session["day"].blank? %>
-                  <%= @sum %>
-                <% else %>
-                  <%= @sum.to_i * session["day"] %>
-                <% end %>
-              </td>
-            </tr>
-            <tr>
-              <th>レンタル日数</th>
-              <td>
-                <%= form_with url: users_cart_items_save_day_path do |f| %>
-                  <% if session["day"].blank? %>
-                    <%= f.number_field :day, id: "day", type: "number",value: 1 %>日間
-                  <% else %>
-                    <%= f.number_field :day, value: session["day"], id: "day", type: "number" %>日間
+                      <%= form_with model: cart_item,url:users_cart_item_path(cart_item) do |f| %>
+                        <td>
+                            <span class="combo_count"data-combo-count="<%= cart_item.quantity %>"><%= f.number_field :quantity %></span>
+                          <%= f.submit "更新",class: "btn btn-info" %>
+                        </td>
+                      <% end %>
+                        <td><%= cart_item.combo.price %></td>
+                        <td>
+                          <%= link_to '削除',users_cart_item_path(cart_item),method: :delete,class: "btn btn-danger" %>
+                        </td>
                   <% end %>
-                <% end %>
-              </td>
-            </tr>
-            <tr>
-              <%= form_tag(users_cart_items_path, method: :get, remote: false) do %>
-                <th>クーポン番号を入力(1注文につき１クーポンまで)
-                    <%= text_field(@search_content, :search) %>
-                    <%= submit_tag '適用',class: "btn btn-info",id: "discount-button" %>
-                </th>
-                  <% if session["discount"].present? %>
-                    <td id="discount">
-                      <%= session["discount"]["name"] %>:
-                      <span id="discount-price" data-price="<%= session["discount"]["price"] %>" data-require-day="<%= session["discount"]["require_day"] %>" data-require-combo="<%= session["discount"]["require_combo"] %>" data-require-item="<%= session["discount"]["require_item"] %>">
-                        <%= session["discount"]["price"] %>
-                      </span>円割引
-                      <%= submit_tag '削除',class: "btn btn-danger" %>
-                    </td>
-                  <% else %>
-                    <td>クーポン無し</td>
-                <% end %>
+                </tr>
+              <% sum += (cart_item.combo.price).to_i * (cart_item.quantity).to_i %>
               <% end %>
-            </tr>
-            <tr>
-              <th>ポイントイベント(<%= @point_event.name %>)</th>
-              <td>ポイント<%= @point_event.bonus %>倍</td>
-            </tr>
-            <tr>
-              <th>ポイント獲得数</th>
-              <td id="point_sum"data-point="<%= (@sum / 100).floor * @point_event.bonus %>"><%= (@sum / 100).floor * @point_event.bonus %>pt</td>
-            </tr>
-          </table>
-        </div>
+            </table>
+    </div>
+  <% else %>
 
-    <% else %>
     <div class="col-md-12">
       <%= form_with url: users_cart_items_session_delete_path, method: :post  do |f| %>
         <table class="table table-bordered tbl-r04"align="center">
@@ -131,7 +73,7 @@
             <th>金額</th>
             <th></th>
           </tr>
-          <% @sum = 0 %>
+          <% sum = 0 %>
           <% if session[:cart_item].nil? || session[:cart_item] == [] %>
             <div class="alert alert-warning alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -166,12 +108,13 @@
                       <%= f.submit '削除', class: "btn btn-danger",name: "delete_button",'data-cart-item': session[:cart_item], 'data-item': cart_item %>
                   </td>
               </tr>
-                <% @sum += (Combo.find(cart_item["combo_id"]).price).to_i * (cart_item["quantity"]).to_i %>
+                <% sum += (Combo.find(cart_item["combo_id"]).price).to_i * (cart_item["quantity"]).to_i %>
             <% end %>
           <% end %>
         </table>
       <% end %>
     </div>
+  <% end %>
 
     <div class="col-md-12">
       <h2>料金早見表</h2>
@@ -183,9 +126,9 @@
             <th>お見積もり金額(円）</th>
             <td id="cart_item_sum"data-sum="<%= @sum %>">
               <% if session["day"].blank? %>
-                <%= @sum %>
+                <%= sum %>
               <% else %>
-                <%= @sum.to_i * session["day"] %>
+                <%= sum.to_i * session["day"] %>
               <% end %>
             </td>
           </tr>
@@ -226,10 +169,9 @@
           </tr>
           <tr>
             <th>ポイント獲得数</th>
-            <td id="point_sum"data-point="<%= (@sum / 100).floor * @point_event.bonus %>"><%= (@sum / 100).floor * @point_event.bonus %>pt</td>
+            <td id="point_sum"data-point="<%= (sum / 100).floor * @point_event.bonus %>"><%= (sum / 100).floor * @point_event.bonus %>pt</td>
           </tr>
         </table>
-    <% end %>
   </div>
 
     <script type="text/javascript">

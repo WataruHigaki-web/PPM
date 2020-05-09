@@ -48,7 +48,7 @@
       <th>個数</th>
       <th>価格/1日</th>
     </tr>
-    <% @sum = 0 %>
+    <% sum = 0 %>
     <% @cart_items.each do |item| %>
         <tr class="cart_item"data-presence="<%= item %>">
           <% if item.combo.id == 1 %>
@@ -64,7 +64,7 @@
           <% end %>
           <td><%= item.combo.price %></td>
         </tr>
-      <% @sum += (item.quantity).to_i * (item.combo.price).to_i %>
+      <% sum += (item.quantity).to_i * (item.combo.price).to_i %>
     <% end %>
   </table>
 
@@ -95,11 +95,11 @@
     <table class="table table-bordered">
       <tr>
         <th>商品金額/1日あたり</th>
-        <td><%= @sum %></td>
+        <td><%= sum %></td>
       </tr>
       <tr>
         <th>商品合計金額</th>
-        <td><%= @sum.to_i * (session[:order]["day"]).to_i %></td>
+        <td><%= sum.to_i * (session[:order]["day"]).to_i %></td>
       </tr>
 
       <tr>
@@ -116,20 +116,20 @@
           <th>ポイントイベント(<%= @point_event.name %>)</th>
           <td class="bonus"data-point="<%= @point_event.bonus %>">ポイント<%= @point_event.bonus %>倍</td>
         </tr>
-          <% @final_sum = (@sum.to_i * (session[:order]["day"]).to_i) %>
+          <% final_sum = (sum.to_i * (session[:order]["day"]).to_i) %>
           <tr>
             <th>発行ポイント数(小数点は切り捨て）</th>
-            <td id="create_point"><%= ((@sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i) / 100.to_i).floor %>pt</td>
+            <td id="create_point"><%= ((sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i) / 100.to_i).floor %>pt</td>
           </tr>
         </table>
 
         <table class="table">
           <tr>
             <th>最終請求金額</th>
-            <td id="sum"><%= @final_sum %></td>
+            <td id="sum"><%= final_sum %></td>
           </tr>
         </table>
-          <%= f.hidden_field :create_point, :value => ((@sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i)/ 100.to_i).floor.to_i, id: "create" %>
+          <%= f.hidden_field :create_point, :value => ((sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i)/ 100.to_i).floor.to_i, id: "create" %>
           <%= f.hidden_field :out_point, :value => 0, id: "out" %>
 
         <%= f.hidden_field :point_event, :value => @point_event.id %>
@@ -163,7 +163,7 @@
 
 
       sum = Number(document.getElementById('sum').textContent);
-      var create_point = Number("<%= ((@sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i) / 100).floor %>");
+      var create_point = Number("<%= ((sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i) / 100).floor %>");
       var day = Number("<%= session[:order]["day"] %>");
       var discount = 0;
       var point = 0;

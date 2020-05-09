@@ -13,7 +13,6 @@ class Users::CartItemsController < ApplicationController
       session["discount"] = []
     end
     @cart_item = Combo.find(1)
-    render 'index'
   end
 
   def save_day

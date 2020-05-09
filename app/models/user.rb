@@ -23,6 +23,7 @@ class User < ApplicationRecord
 
   validates :name,:email, presence: true
 
+
   def self.search(method, search)
     if method == 'partial_match'
       User.where('name LIKE?', "%#{search}%")
@@ -37,17 +38,6 @@ class User < ApplicationRecord
     end
   end
 
-  def liked_by?(user)
-    likes.where(user_id: user.id).exists?
-  end
-
-  def favorited_by?(user)
-    favorites.where(user_id: user.id).exists?
-  end
-
-  def combo_favorited_by?(user)
-    combo_favorites.where(user_id: user.id).exists?
-  end
 
   def self.without_sns_data(auth)
     user = User.where(email: auth.info.email).first

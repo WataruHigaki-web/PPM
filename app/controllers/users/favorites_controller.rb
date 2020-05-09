@@ -4,13 +4,11 @@ class Users::FavoritesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_variable
   def create
-    @product = Product.find(params[:product_id])
     favorite = @product.favorites.new(user_id: current_user.id)
     favorite.save
   end
 
   def destroy
-    @product = Product.find(params[:product_id])
     favorite = current_user.favorites.find_by(product_id: @product.id)
     favorite.destroy
   end
