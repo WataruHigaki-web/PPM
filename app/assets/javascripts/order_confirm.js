@@ -16,7 +16,7 @@ if(day == 0 ){
 
 
 
-sum = Number($('#sum').data('sum'));
+var sum = Number($('#sum').data('sum'));
 var create_point = Number($('#create_point').data('create-point'));
 var day = Number($('#day').data('session-day'));
 var discount = 0;

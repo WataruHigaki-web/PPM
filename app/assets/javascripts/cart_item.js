@@ -8,16 +8,16 @@ $('input[name="delete_button"]').click(function(){
      document.forms[0].appendChild(q);
 });
 
-sum = $('#cart_item_sum').data('sum');
-final_sum = sum;
-point_sum = Number($("#point_sum").data('point'));
+var sum = $('#cart_item_sum').data('sum');
+var final_sum = sum;
+var point_sum = Number($("#point_sum").data('point'));
 
 $('input[name="quantity"]').change(function() {
   var quantity = Number($(this).val());
   var price = Number($('.price').data('price'));
   var day = Number($('#day').val());
   $('#cart_item_sum').text(String(quantity * price * day));
-  sum = $('#cart_item_sum').data('sum');
+  var sum = $('#cart_item_sum').data('sum');
 });
 $('#day').change(function(){
   var day = Number($(this).val());
@@ -27,11 +27,11 @@ $('#day').change(function(){
   }
   var discount = 0;
   if ($("#discount-price").length) {
-    discount = Number($("#discount-price").data("price"));
-    require_day = Number($("#discount-price").data("require-day"));
-    require_combo = Number($("#discount-price").data("require-combo"));
-    require_item = Number($("#discount-price").data("require-item"));
-    combo_count = Number($(".combo_count").data("combo-count"));
+    var discount = Number($("#discount-price").data("price"));
+    var require_day = Number($("#discount-price").data("require-day"));
+    var require_combo = Number($("#discount-price").data("require-combo"));
+    var require_item = Number($("#discount-price").data("require-item"));
+    var combo_count = Number($(".combo_count").data("combo-count"));
     if ($(".item_count").data("item-count") == null){
       item_count = 0
     }else{
@@ -54,11 +54,11 @@ $('#day').change(function(){
 
 if ($("#discount-price").length) {
     var day = Number($('#day').val());
-    discount = Number($("#discount-price").data("price"));
-    require_day = Number($("#discount-price").data("require-day"));
-    require_combo = Number($("#discount-price").data("require-combo"));
-    require_item = Number($("#discount-price").data("require-item"));
-    combo_count = Number($(".combo_count").data("combo-count"));
+    var discount = Number($("#discount-price").data("price"));
+    var require_day = Number($("#discount-price").data("require-day"));
+    var require_combo = Number($("#discount-price").data("require-combo"));
+    var require_item = Number($("#discount-price").data("require-item"));
+    var combo_count = Number($(".combo_count").data("combo-count"));
     if ($(".item_count").data("item-count") == null){
       item_count = 0
     }else{
