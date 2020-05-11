@@ -2,17 +2,17 @@
  <h2>注文履歴詳細</h2>
 
   <h4>注文情報</h4>
-  <table class="table-bordered">
+  <table class="table table-bordered">
   <tr>
     <th>注文id</th>
-    <td width="300">
+    <td>
       <%= @order.id %>
     </td>
   </tr>
 
   <tr>
     <th>注文者名</th>
-    <td width="300">
+    <td>
       <%= link_to admins_user_path(@order.user) do %>
         <%= @order.user.name %>
       <% end %>
@@ -46,15 +46,15 @@
   </tr>
   <tr>
     <th>クレジット情報</th>
-    <td width="300">
-      番号:<%= Pay.find(@order.pay_id).number %></br/>
-      名義:<%= Pay.find(@order.pay_id).name %>
+    <td>
+      番号:<%= @order.pay.number %></br/>
+      名義:<%= @order.pay.name %>
     </td>
   </tr>
   <%= form_with model:@order,url:admins_order_path(@order) do |f| %>
     <tr>
       <th>貸し出し返却ステータス</th>
-        <td width="300">
+        <td>
           <% unless @order.status == "返却済" %>
         　  <%= f.select :status, Order.statuses.keys.to_a, {}, class: "select_box" %>
             <%= f.hidden_field :lender, :value => current_admin.name,class: "lender" %>
@@ -67,7 +67,7 @@
 
     <tr>
       <th>支払いステータス</th>
-      <td width="300">
+      <td>
         <% if @order.pay_status %>
           支払済
         <% else %>
@@ -81,16 +81,16 @@
   <tr>
     <th>付与ポイントステータス</th>
     <% if @order.give_point %>
-        <td width="300">付与済</td>
+        <td>付与済</td>
       <% else %>
-        <td width="300">付与してません</td>
+        <td>付与してません</td>
       <% end %>
   </tr>
   </table>
 
 <% sum = 0 %>
 <h4>注文内容</h4>
-<table class="table-bordered">
+<table class="table table-bordered">
   <tr>
     <th>商品</th>
     <th>価格</th>
@@ -101,40 +101,40 @@
 
   <% @order.order_records.each do |order_record| %>
   <tr>
-      <td width="300">
+      <td>
         <% if order_record.combo.id == 1 %>
           <%= order_record.product.name %>
         <% else %>
           <%= order_record.combo.name %>
         <% end %>
       </td>
-      <td width="100">
-          <%= (order_record.end_price.to_i) * 1.1.floor %>
+      <td>
+          <%= (order_record.end_price.to_i) * 1.1 %>
       </td>
-      <td width="100">
+      <td>
         <%= order_record.quantity %>
       </td>
-      <td width="100">
+      <td>
         <%= @order.day %>日
       </td>
-      <td width="100">
-        <%= ((order_record.end_price.to_i) * 1.1.floor) * order_record.quantity.to_i * @order.day.to_i %>
+      <td>
+        <%= (((order_record.end_price.to_i) * 1.1) * order_record.quantity.to_i * @order.day.to_i).floor %>
       </td>
   </tr>
-  <% sum += ((order_record.end_price.to_i) * 1.1.floor) * order_record.quantity.to_i * @order.day.to_i  %>
+  <% sum += (((order_record.end_price.to_i) * 1.1) * order_record.quantity.to_i * @order.day.to_i).floor  %>
   <% end %>
 </table>
 
 <h4>請求情報</h4>
-  <table class="table-bordered">
+  <table class="table table-bordered">
     <tr>
-      <th width="100">商品合計</th>
-      <td width="100"><%= sum %></td>
+      <th>商品合計</th>
+      <td><%= sum %></td>
     </tr>
     <tr>
-      <th width="100">利用ポイント</th>
-      <td width="100">
-        <% if @order.out_point.point == nil %>
+      <th>利用ポイント</th>
+      <td>
+        <% if @order.out_point.point.nil? %>
           <%= "0pt" %>
         <% else %>
           <%= @order.out_point.point %>pt
@@ -142,49 +142,45 @@
       </td>
     </tr>
     <tr>
-      <th width="100">クーポン</th>
-      <td width="100">
-        <% if @order.out_point.point == nil %>
-          <%= "0円" %>
-        <% else %>
-          <%= @order.discount.price %>円
-        <% end %>
+      <th>クーポン</th>
+      <td>
+        <%= @order.discount.price %>円
       </td>
     </tr>
     <tr>
-      <th width="100">ご請求金額</th>
-      <td width="100">
-        <% if @order.discount.id == nil %>
-          <% if @order.out_point.point == nil %>
-            <%= sum %>
+      <th>ご請求金額</th>
+      <td>
+        <% if @order.discount.id.nil? %>
+          <% if @order.out_point.point.nil? %>
+            <%= sum %>円
           <% else %>
-            <%= sum - @order.out_point.point %>
+            <%= sum - @order.out_point.point %>円
           <% end %>
         <% else %>
-          <% if @order.out_point.point == nil %>
-            <%= sum - @order.discount.price.to_i %>
+          <% if @order.out_point.point.nil? %>
+            <%= sum - @order.discount.price.to_i %>円
           <% else %>
-            <%= sum - @order.out_point.point - @order.discount.price.to_i %>
+            <%= sum - @order.out_point.point - @order.discount.price.to_i %>円
           <% end %>
         <% end %>
       </td>
     </tr>
     <tr>
-      <th width="100">発行ポイント</th>
-      <td width="100">
+      <th>発行ポイント</th>
+      <td>
         <%= @order.create_point * @order.point_event.bonus %>pt
       </td>
     </tr>
   </table>
   <h4>担当者</h4>
-  <table class="table-bordered">
+  <table class="table table-bordered">
     <tr>
-      <th width="100">貸出担当者</th>
-      <td width="100"><%= @order.lender %></td>
+      <th>貸出担当者</th>
+      <td><%= @order.lender %></td>
     </tr>
     <tr>
-      <th width="100">返却担当者</th>
-      <td width="100"><%= @order.receiver %></td>
+      <th>返却担当者</th>
+      <td><%= @order.receiver %></td>
     </tr>
   </table>
 

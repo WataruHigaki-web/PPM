@@ -7,8 +7,8 @@
     <tr>
       <th>クレジットカード情報</th>
       <td>
-        番号: <%= Pay.find(session["pay"]).number %><br/>
-        名義: <%= Pay.find(session["pay"]).name %>
+        番号: <%= @pay.number %><br/>
+        名義: <%= @pay.name %>
       </td>
     </tr>
     <tr>

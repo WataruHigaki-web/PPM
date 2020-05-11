@@ -38,7 +38,6 @@ class User < ApplicationRecord
     end
   end
 
-
   def self.without_sns_data(auth)
     user = User.where(email: auth.info.email).first
 
@@ -51,8 +50,7 @@ class User < ApplicationRecord
       else
         user = User.new(
           name: auth.info.name,
-          email: auth.info.email,
-          profile_image_id: auth.info.image
+          email: auth.info.email
         )
         sns = SnsCredential.new(
           uid: auth.uid,
@@ -67,7 +65,7 @@ class User < ApplicationRecord
     unless user.present?
       user = User.new(
         name: auth.info.name,
-        email: auth.info.email,
+        email: auth.info.email
       )
     end
     return {user: user}

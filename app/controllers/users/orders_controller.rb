@@ -16,6 +16,7 @@ class Users::OrdersController < ApplicationController
     @part_point = OutPoint.new
     @combo_items = ComboItem.all
     @point_event = PointEvent.find_by(status: true)
+    @pay = Pay.find(session["pay"])
     unless params[:search].blank?
       search = params[:search]
       @discount = Discount.search(search)
@@ -57,15 +58,15 @@ class Users::OrdersController < ApplicationController
     end
     order = Order.new(
       get_status:    session[:order]['get_status'],
-      return_status:  return_status,
-      zip_code: zip_code,
-      address:  address,
+      return_status: return_status,
+      zip_code:      zip_code,
+      address:       address,
       user_id:       current_user.id,
       start_date:    session[:order]['start_date'],
       finish_date:   session[:order]['finish_date'],
       day:           session[:order]['day'],
       create_point:  params['create_point'],
-      discount_id: params['discount'],
+      discount_id:   params['discount'],
       point_event_id: params['point_event'],
       pay_id: session["pay"],
       status: 0

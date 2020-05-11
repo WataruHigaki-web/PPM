@@ -68,14 +68,12 @@ $('#out_point').change(function(){
       document.getElementById("out").value = point;
     }
   }
-   finalSum = sum - discount - point;
+   var finalSum = sum - discount - point;
    $('#sum').text(String(finalSum) + '円');
    if(finalSum < 0){
     alert ('利用ポイントが不正な値です')
    }
    var bonus = Number($('#bonus').data('point-bonus'));
    $('#sum').text(String(finalSum) + '円');
-   $('#create_point').text(String(finalSum * bonus / 100) + 'pt');
-   var createPoint = finalSum * bonus / 100;
-   document.getElementById("create").value = createPoint;
+   $('#create_point').text(String(Math.floor(finalSum * bonus / 100)) + 'pt');
 });
