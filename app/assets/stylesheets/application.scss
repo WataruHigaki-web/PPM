@@ -152,7 +152,12 @@ h1, h2, p {
   font-family:"Work Sans", serif;
 }
 
-.wrapper{ display:block; height:auto; position:relative; padding-bottom:3em;}
+.wrapper{
+  display:block;
+  height:auto;
+  position:relative;
+  padding-bottom:3em;
+}
 
 //THE IMPORTANT BIT
 
@@ -162,6 +167,7 @@ h1, h2, p {
   width:100%;
   background-size:200%;
   overflow:hidden;
+  background: url('https://dl.dropbox.com/s/9u786zwyehzuvam/cliffSide_mini.jpg') no-repeat 50% 50% fixed;
 
   h1{
     position:relative;
@@ -326,6 +332,10 @@ article{
 }
 .cart-button{
   margin-bottom:30px;
+}
+
+.point_name{
+  color:red;
 }
 
 .btn-flat-border {

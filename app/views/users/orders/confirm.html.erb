@@ -71,7 +71,7 @@
   <h4>クーポン</h4>
     <table class="table table-bordered">
       <tr>
-        <%= form_tag(users_orders_confirm_path, method: :get, remote: false) do %>
+        <%= form_tag(users_orders_confirm_path, method: :get, local: true) do %>
           <th>クーポン番号を入力(1注文につき１クーポンまで)
               <%= text_field(@search_content, :search) %>
               <%= submit_tag '適用',class: "btn btn-info",id: "discount-button" %>

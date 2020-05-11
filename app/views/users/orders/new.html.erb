@@ -1,7 +1,7 @@
 <div class="row">
   <div class="order_new">
     <h2>購入情報入力<span class="label label-danger">全必須</span></h2>
-    <%= form_with url:users_orders_save_path,method: :post do |f| %>
+    <%= form_with url:users_orders_save_path,method: :post, local: true do |f| %>
     <h3>1.クレジットカード選択
     </h3>
 
