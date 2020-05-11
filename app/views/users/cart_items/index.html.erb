@@ -28,7 +28,7 @@
                           <%= cart_item.product.name %>
                         <% end %>
                       </td>
-                      <%= form_with model: cart_item,url:users_cart_item_path(cart_item),remote: false do |f| %>
+                      <%= form_with model: cart_item,url:users_cart_item_path(cart_item) do |f| %>
                         <td>
                             <span class="item_count"data-item-count="<%= cart_item.quantity %>"><%= f.number_field :quantity %></span>
                           <%= f.submit "更新",class: "btn btn-info" %>
@@ -135,7 +135,7 @@
           <tr>
             <th>レンタル日数</th>
             <td>
-              <%= form_with url: users_cart_items_save_day_path do |f| %>
+              <%= form_with url: users_cart_items_save_day_path,local: true do |f| %>
                 <% if session["day"].blank? %>
                   <%= f.number_field :day, id: "day", type: "number", value: 1 %>日間
                 <% else %>
@@ -145,10 +145,10 @@
             </td>
           </tr>
           <tr>
-            <%= form_tag(users_cart_items_path, method: :get, remote: false) do %>
+            <%= form_tag(users_cart_items_path, method: :get, local: true) do %>
               <th>クーポン番号を入力(1注文につき１クーポンまで)
                   <%= text_field(@search_content, :search) %>
-                  <%= submit_tag '適用',class: "btn btn-info",id: "discount-button" %>
+                  <%= submit_tag '適用',class: "btn btn-info",id: "discount-button",remote: false %>
               </th>
                 <% if session["discount"].present? %>
                   <td id="discount">
@@ -156,7 +156,7 @@
                     <span id="discount-price" data-price="<%= session["discount"]["price"] %>" data-require-day="<%= session["discount"]["require_day"] %>" data-require-combo="<%= session["discount"]["require_combo"] %>" data-require-item="<%= session["discount"]["require_item"] %>">
                       <%= session["discount"]["price"] %>
                     </span>円割引
-                    <%= submit_tag '削除',class: "btn btn-danger" %>
+                    <%= submit_tag '削除',class: "btn btn-danger",remote: false %>
                   </td>
                 <% else %>
                   <td>クーポン無し</td>
@@ -165,7 +165,15 @@
           </tr>
           <tr>
             <th>ポイントイベント(<%= @point_event.name %>)</th>
-            <td>ポイント<%= @point_event.bonus %>倍</td>
+            <td>
+              <% unless @point_event.id == 2 %>
+                <div class="point_name">
+                  ポイント<%= @point_event.bonus %>倍
+                </div>
+              <% else %>
+                ポイント<%= @point_event.bonus %>倍
+              <% end %>
+            </td>
           </tr>
           <tr>
             <th>ポイント獲得数</th>

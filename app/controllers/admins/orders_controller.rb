@@ -4,7 +4,6 @@ class Admins::OrdersController < ApplicationController
   before_action :authenticate_admin!
   def top
     @point_event = PointEvent.find_by(status: true)
-    @discounts = Discount.where(status: true)
   end
 
   def user_orders

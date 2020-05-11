@@ -2,7 +2,9 @@
 
 class Users::ProductsController < ApplicationController
   before_action :authenticate_user!, only: [:index]
-  def top; end
+  def top
+    @point_event = PointEvent.find_by(status: true)
+  end
 
   def index
     @favorites = current_user.favorites

@@ -93,7 +93,7 @@
 <table class="table table-bordered">
   <tr>
     <th>商品</th>
-    <th>価格</th>
+    <th>価格(税込)</th>
     <th>個数</th>
     <th>レンタル日数</th>
     <th>小計</th>
@@ -109,7 +109,7 @@
         <% end %>
       </td>
       <td>
-          <%= (order_record.end_price.to_i) * 1.1 %>
+          <%= ((order_record.end_price.to_i) * 1.1).floor %>
       </td>
       <td>
         <%= order_record.quantity %>
@@ -118,7 +118,7 @@
         <%= @order.day %>日
       </td>
       <td>
-        <%= (((order_record.end_price.to_i) * 1.1) * order_record.quantity.to_i * @order.day.to_i).floor %>
+        <%= (((order_record.end_price.to_i) * 1.1).floor * order_record.quantity.to_i * @order.day.to_i).floor %>
       </td>
   </tr>
   <% sum += (((order_record.end_price.to_i) * 1.1) * order_record.quantity.to_i * @order.day.to_i).floor  %>

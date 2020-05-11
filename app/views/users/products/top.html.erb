@@ -2,22 +2,16 @@
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <strong>
     <h4>イベント情報</h4>
-      <% unless @discount.nil? %>
-        <%= @discounts.each do |discount| %>
-          <h4><%= discount.name %>開催中！！</h4></br>
-        <% end %>
-      <% end %>
-      <% unless @point_event.nil? %>
+      <% unless @point_event.id == 2 %>
         <h4><%= @point_event.name %>開催中！！</h4>
-      <% end %>
-      <% if !@discount && !@point_event %>
-        <h6>現在開催イベントはありません</h6>
+      <% else %>
+        <h4>現在ポイントイベントはありません</h4>
       <% end %>
   </strong>
 </div>
 
 <div class="wrapper">
-  <section class="hero vertical-center" style="background: url('https://dl.dropbox.com/s/9u786zwyehzuvam/cliffSide_mini.jpg') no-repeat 50% 50% fixed;">
+  <section class="hero vertical-center">
     <div class="container text-center">
       <h1>
         Great Journey with only phone
@@ -32,7 +26,7 @@
     <div class="container">
       <article>
         <div class="col-md-6 article-left">
-          <img src="https://www.pakutaso.com/shared/img/thumb/YUKI0211009_TP_V.jpg?dl=1" alt="top-image" class="article-image" style="width:100%;">
+          <img src="https://www.pakutaso.com/shared/img/thumb/YUKI0211009_TP_V.jpg" alt="top-image" class="article-image" style="width:100%;">
         </div>
         <div class="col-md-6 article-right">
           <h2>About</h2>
