@@ -32,7 +32,6 @@ class Admins::UsersController < ApplicationController
     render 'index'
   end
 
-  def destroy; end
 
   private
 
