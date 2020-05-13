@@ -2,7 +2,7 @@
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <strong>
     <h4>イベント情報</h4>
-      <% unless @point_event.id == 2 %>
+      <% unless @point_event.id == 1 %>
         <h4><%= @point_event.name %>開催中！！</h4>
       <% else %>
         <h4>現在ポイントイベントはありません</h4>
@@ -25,10 +25,7 @@
   <section class="content">
     <div class="container">
       <article>
-        <div class="col-md-6 article-left">
-          <img src="https://www.pakutaso.com/shared/img/thumb/YUKI0211009_TP_V.jpg" alt="top-image" class="article-image" style="width:100%;">
-        </div>
-        <div class="col-md-6 article-right">
+        <div class="col-md-12 article-right">
           <h2>About</h2>
           <p>トラベルグッズを旅先でレンタル！<br/>手ぶらで旅に！<br/>（国内のみ）</p>
           <p>ミニマリスト向けのサービスです！！</p>
@@ -36,7 +33,7 @@
             自分なりの組み合わせを見つけよう！
           </p>
           <p>①トラベルグッズ予約<br/>②指定場所で受け取り<br/>③好きな場所で返却</p>
-          <p><%= link_to 'さあ、旅に出よう',users_combo_items_path %></p>
+          <p><%= link_to 'さあ、旅に出よう',users_combo_items_path,class: "btn btn-info" %></p>
           <div class="control row">
             <%= link_to '管理者はこちら',new_admin_session_path %>
           </div>

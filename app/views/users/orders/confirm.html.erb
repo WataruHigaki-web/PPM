@@ -118,7 +118,7 @@
         </tr>
           <% final_sum = (sum.to_i * (session[:order]["day"]).to_i) %>
           <tr>
-            <th>発行ポイント数(小数点は切り捨て)</th>
+            <th>発行ポイント数</th>
             <td id="create_point"data-create-point="<%= ((sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i) / 100).floor %>"><%= ((sum.to_i * (session[:order]["day"]).to_i * @point_event.bonus.to_i) / 100).floor %>pt</td>
           </tr>
         </table>
