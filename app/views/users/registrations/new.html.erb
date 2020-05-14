@@ -24,13 +24,28 @@
             </div>
 
             <div class="field">
-              <%= f.label :郵便番号 %><br />
-              <%= f.text_field :zip_code,autofocus: true,autocomplete: "zip_code" %>
+              <%= f.label :郵便番号 %>(住所自動入力,ハイフンなし)<br />
+              <%= f.text_field :zip_code,autofocus: true,autocomplete: "zip_code",class: "zip_code" %>
             </div>
 
             <div class="field">
-              <%= f.label :住所 %><br />
-              <%= f.text_field :address,autofocus: true,autocomplete: "address" %>
+              <%= f.label :都道府県名 %></br>
+              <%= f.collection_select :prefecture_code, JpPrefecture::Prefecture.all, :code,:name, include_blank: '都道府県' %>
+            </div>
+
+            <div class="field">
+              <%= f.label :市区名 %></br>
+              <%= f.text_field :address_city%>
+            </div>
+
+            <div class="field">
+              <%= f.label :町村番地%></br>
+              <%= f.text_field :address_street %>
+            </div>
+
+            <div class="field">
+              <%= f.label :建物名 %>(アパート、マンション等)</br>
+              <%= f.text_field :address_building %>
             </div>
 
             <div class="field">

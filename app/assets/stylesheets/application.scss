@@ -17,12 +17,6 @@
 @import "bootstrap";
 
 
-body, html {
-    height: 100%;
-    background-repeat: no-repeat;
-
-}
-
 .card-container.card {
     max-width: 350px;
     padding: 40px 40px;
@@ -37,9 +31,6 @@ body, html {
     cursor: default;
 }
 
-/*
- * Card component
- */
 .card {
     background-color: #F7F7F7;
     padding: 20px 25px 30px;
@@ -118,7 +109,6 @@ header{
   margin-bottom:50px;
   width: 200px;
   height: 70px;
-  font-family: 'Roboto', sans-serif;
   font-size: 30px;
   text-transform: uppercase;
   letter-spacing: 2.5px;
@@ -174,50 +164,14 @@ h1, h2, p {
     font-size:80px;
     font-weight:200;
   }
-
-  &.fadeout{
-    .optional-rainbow{
-      display:block;
-    }
-    &:before{
-    display:none;
-    }
-  }
-
-  &:before{
-    display:block;
-    position:absolute;
-    height:100%;
-    width:100%;
-    z-index:5;
-    content:"";
-
-  }
-
-  &:after{
-    display:block;
-    position:absolute;
-    bottom:0;
-    left:0;
-    content:"";
-    width:100%;
-    height:6px;
-  }
-
-
-
 }
-
 
 article{
   padding:3em 0;
   color:white;
-  font-size:18px;
+  font-size:25px;
+  text-align:center;
 
-  .article-right{
-    margin:0 auto;
-    text-align:center;
-  }
 
   @media(max-width:767px){
     text-align:center;
@@ -233,7 +187,7 @@ article{
   }
 
   h2{
-    font-size:54px;
+    font-size:64px;
     font-weight:200;
     margin-top:0;
     text-transform:uppercase;
@@ -252,43 +206,9 @@ article{
   margin:0 auto;
 }
 
-.selectable{
-  display:block;
-  position:relative;
-  width:40px;
-  height:20px;
-  background:rgba(255,44,44,0.6);
-  border-radius:10px;
-  box-shadow:inset 0 1px 2px rgba(0,0,0,0.2);
-  transition:all .2s linear;
-
-  &:before{
-    display:block;
-    position:absolute;
-    content:"";
-    width:20px;
-    height:20px;
-    border-radius:50%;
-    background:white;
-    box-shadow:0 2px 1px rgba(0,0,0,0.2);
-    top:0;
-    left:0;
-    transition:all .2s linear;
-  }
-
-  &.on {
-    background:rgba(44,255,44,0.5);
-
-    &:before{
-      left:calc(100% - 20px);
-    }
-  }
-}
-
 .vertical-center{
-    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
-  min-height: 100vh; /* These two lines are counted as one :-)       */
-
+  min-height: 100%;
+  min-height: 100vh;
   display: flex;
   align-items: center;
 }
