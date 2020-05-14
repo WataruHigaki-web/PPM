@@ -23,11 +23,20 @@
   </tr>
   <tr>
     <th>郵便番号<span class="label label-danger">必須</span></th>
-    <td><%= f.text_field :zip_code %></td>
+    <td><%= f.text_field :zip_code,class: "zip_code" %></td>
   </tr>
   <tr>
     <th>住所<span class="label label-danger">必須</span></th>
-    <td><%= f.text_field :address %></td>
+    <td>
+      <%= f.label :都道府県名 %>:
+      <%= f.collection_select :prefecture_code, JpPrefecture::Prefecture.all, :code,:name, include_blank: '都道府県' %></br>
+      <%= f.label :市区名 %>:
+      <%= f.text_field :address_city%></br>
+      <%= f.label :町村番地%>:
+      <%= f.text_field :address_street %></br>
+      <%= f.label :建物名 %>(アパート、マンション等):
+      <%= f.text_field :address_building %>
+    </td>
   </tr>
   <tr>
     <th>電話番号<span class="label label-danger">必須</span></th>

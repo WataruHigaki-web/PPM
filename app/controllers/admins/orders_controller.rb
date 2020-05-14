@@ -11,6 +11,10 @@ class Admins::OrdersController < ApplicationController
     @orders = @user.orders.page(params[:page]).per(10).order('created_at DESC')
   end
 
+  def staff_orders
+    @orders = Order.where(lender: current_admin.name).or(Order.where(receiver: current_admin.name)).page(params[:page]).per(10).order('created_at DESC')
+  end
+
   def index
     @orders = Order.page(params[:page]).per(10).order('created_at DESC')
   end

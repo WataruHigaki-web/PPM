@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_04_085306) do
+ActiveRecord::Schema.define(version: 2020_05_14_062337) do
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -79,6 +79,14 @@ ActiveRecord::Schema.define(version: 2020_05_04_085306) do
     t.boolean "status", default: false, null: false
   end
 
+  create_table "creditcards", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "customer_id"
+    t.integer "card_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "discounts", force: :cascade do |t|
     t.integer "number"
     t.string "name"
@@ -121,6 +129,12 @@ ActiveRecord::Schema.define(version: 2020_05_04_085306) do
   create_table "likes", force: :cascade do |t|
     t.integer "user_id"
     t.integer "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -239,17 +253,18 @@ ActiveRecord::Schema.define(version: 2020_05_04_085306) do
     t.string "name_kana"
     t.string "profile_image_id"
     t.string "zip_code"
-    t.string "address"
     t.string "phone_number"
-    t.integer "credit_number"
-    t.string "credit_name"
-    t.integer "security_code"
     t.boolean "status", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "provider"
     t.string "uid"
     t.boolean "is_deleted", default: false, null: false
+    t.string "address_city"
+    t.string "address_street"
+    t.string "address_building"
+    t.integer "prefecture_code"
+    t.string "address"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     get 'questions/working_on_index'
     get 'questions/resolve_index'
     get 'orders/user_orders'
+    get 'orders/staff_orders'
     get 'orders/stock'
     patch 'admins/:id', to: 'questions#inquery_update'
     put 'admins/:id', to: 'questions#inquery_update'
