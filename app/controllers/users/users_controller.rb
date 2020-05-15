@@ -12,7 +12,6 @@ class Users::UsersController < ApplicationController
   end
 
   def update
-    binding.pry
     @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:notice] = '登録情報を編集しました'
