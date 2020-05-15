@@ -97,7 +97,9 @@ class User < ApplicationRecord
   end
 
   def address
-    self.address = self.prefecture_name + self.address_city + self.address_street + self.address_building
+    unless prefecture_name.nil?
+      self.address = self.prefecture_name + self.address_city + self.address_street + self.address_building
+    end
   end
 
 end
