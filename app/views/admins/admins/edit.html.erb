@@ -1,5 +1,5 @@
 <h2>会員編集画面</h2>
-<%= form_with model: @admin,url:admins_admin_path do |f| %>
+<%= form_with model: @admin,url:admins_admin_path,method: :patch do |f| %>
 <table class="table table-bordered">
   <tr>
     <th>profile画像</th>

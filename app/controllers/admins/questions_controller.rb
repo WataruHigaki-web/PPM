@@ -2,7 +2,7 @@
 
 class Admins::QuestionsController < ApplicationController
   before_action :authenticate_admin!
-  def inquery_index
+  def inquiry_index
     @inquiries = Inquiry.where(status: "未対応").page(params[:page]).per(10)
   end
 
@@ -44,7 +44,7 @@ class Admins::QuestionsController < ApplicationController
     redirect_to admins_questions_path
   end
 
-  def inquery_update
+  def inquiry_update
     inquiry = Inquiry.find(params[:id])
     inquiry.update(
       status: params[:inquiry]['status'],
