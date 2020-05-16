@@ -165,7 +165,7 @@
           </tr>
           <tr>
             <th>ポイントイベント(<%= @point_event.name %>)</th>
-            <td>
+            <td class="point_bonus"data-bonus="<%= @point_event.bonus %>">
               <% unless @point_event.id == 2 %>
                 <div class="point_name">
                   ポイント<%= @point_event.bonus %>倍

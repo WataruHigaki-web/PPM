@@ -27,6 +27,7 @@ $('#day').change(function(){
   }
   var discount = 0;
   if ($("#discount-price").length) {
+    var bonus = Number($(".point_bonus").data('bonus'));
     var discount = Number($("#discount-price").data("price"));
     var requireDay = Number($("#discount-price").data("require-day"));
     var requireCombo = Number($("#discount-price").data("require-combo"));
@@ -40,7 +41,7 @@ $('#day').change(function(){
 
     if (day >= requireDay && comboCount >= requireCombo && itemCount >= requireItem){
       $('#cart_item_sum').text(String(sum * day) - discount + '円');
-      $('#point_sum').text(String(pointSum * day) - (discount / 100) + 'pt');
+      $('#point_sum').text(String(pointSum * day) - (discount * bonus / 100) + 'pt');
     }else{
       alert ('クーポンの条件に一致しておりません')
       $('#cart_item_sum').text(String(sum * day));
@@ -53,6 +54,7 @@ $('#day').change(function(){
 });
 
 if ($("#discount-price").length) {
+    var bonus = Number($(".point_bonus").data('bonus'));
     var day = Number($('#day').val());
     var discount = Number($("#discount-price").data("price"));
     var requireDay = Number($("#discount-price").data("require-day"));
@@ -67,14 +69,14 @@ if ($("#discount-price").length) {
 
     if (day >= requireDay && comboCount >= requireCombo && item_count >= requireItem){
       $('#cart_item_sum').text(String(sum * day) - discount + '円');
-      $('#point_sum').text(String(pointSum * day) - (discount / 100) + 'pt');
+      $('#point_sum').text(String(pointSum * day) - (discount * bonus / 100) + 'pt');
     }else{
       alert ('クーポンの条件に一致しておりません')
       $('#cart_item_sum').text(String(sum * day));
       $('#point_sum').text(String(pointSum * day) + 'pt');
     }
-  }else{
-    var day = Number($('#day').val());
-    $('#cart_item_sum').text(String(sum * day));
-    $('#point_sum').text(String(pointSum * day) + 'pt');
-  }
+}else{
+  var day = Number($('#day').val());
+  $('#cart_item_sum').text(String(sum * day));
+  $('#point_sum').text(String(pointSum * day) + 'pt');
+}
