@@ -20,6 +20,7 @@ class User < ApplicationRecord
   has_many :in_points, dependent: :destroy
   has_many :inquiries, dependent: :destroy
   attachment :profile_image
+  enum gender: { 男性: 0, 女性: 1}
 
   validates :name,:email, presence: true
 
