@@ -44,9 +44,13 @@ if ($("#discount-price").length) {
       $('#sum').text(String(finalSum) + '円');
     }
 }
+
 if ($('#not_point').prop('checked')){
+  if ($("#discount-price").length) {
+    var discount = Number($("#discount-price").data("price"));
+  }
   var point = Number($('#not_point').val());
-  var finalSum = sum;
+  var finalSum = sum - discount;
   var bonus = Number($('#bonus').data('point-bonus'));
   $('#sum').text(String(finalSum) + '円');
   $('#create_point').text(String(Math.floor(finalSum * bonus / 100)) + 'pt');
@@ -59,8 +63,10 @@ $('#out_point').change(function(){
   }else if ($('#all_point').prop('checked')){
     if(Number($('#all_point').val()) - sum - discount >= 0){
       var point = sum - discount;
+      document.getElementById("out").value = point;
     }else if(Number($('#all_point').val()) - sum < 0){
       var point = Number($('#all_point').val());
+      document.getElementById("out").value = point;
     }
   }else{
     var point = Number($('#part_point').val());
