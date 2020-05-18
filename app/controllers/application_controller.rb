@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys:
-      %i[name name_kana zip_code prefecture_code address_city address_street address_building phone_number])
+      %i[name name_kana zip_code prefecture_code address_city address_street address_building phone_number gender])
   end
 
   def after_sign_out_path_for(_resource)

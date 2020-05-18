@@ -22,6 +22,10 @@
     <td><%= f.text_field :name_kana %></td>
   </tr>
   <tr>
+    <th>性別<span class="label label-danger">必須</span></th>
+    <td><%= f.select :gender, User.genders.keys.to_a, {},autofocus: true, select: "selected" %></td>
+  </tr>
+  <tr>
     <th>郵便番号<span class="label label-danger">必須</span></th>
     <td><%= f.text_field :zip_code,class: "zip_code" %></td>
   </tr>
