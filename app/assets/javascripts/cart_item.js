@@ -1,6 +1,5 @@
 $('input[name="delete_button"]').click(function(){
   const delIndex = $(this).closest('tr')[0].rowIndex - 1;
-  console.log(delIndex);
   var q = document.createElement('input');
      q.type = 'hidden';
      q.name = "number";

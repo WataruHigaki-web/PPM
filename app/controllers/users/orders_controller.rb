@@ -74,6 +74,7 @@ class Users::OrdersController < ApplicationController
     order.user_id = current_user.id
     order.save
     session["discount"] = []
+    binding.pry
     out_point = OutPoint.new(
       point: params['out_point'],
       order_id:   order.id,
