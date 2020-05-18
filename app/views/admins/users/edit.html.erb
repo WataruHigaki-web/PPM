@@ -1,9 +1,13 @@
 <h2>会員編集画面</h2>
 <%= form_with model: @user,url:admins_user_path(@user) do |f| %>
-<table>
+<table class="table table-bordered">
   <tr>
     <th>会員ID</th>
     <td><%= @user.id %></td>
+  </tr>
+  <tr>
+    <th>画像</th>
+    <td><%= attachment_image_tag @user, :profile_image,:fill,200,200, fallback:"no_image.jpg" %></td>
   </tr>
   <tr>
     <th>氏名</th>
